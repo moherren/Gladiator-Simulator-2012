@@ -67,9 +67,9 @@ public class Render2D extends Render{
 			for(int y=0;y<height;y++){
 				int dRight=width-x,dBottom=height-y-30;
 				int color=Texture.stone.pixels[(x%Texture.stone.width)+(y%Texture.stone.height)*Texture.stone.width];
-				if(x<20&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)))
+				if(x<20&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.20);
-				else if(dRight<20&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)))
+				else if(dRight<20&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)||(y==height/2)))
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.50);
 				else if(y<20)
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.30);
@@ -90,8 +90,45 @@ public class Render2D extends Render{
 	}
 	public void displayFightInformation(Game game){
 		draw(game.species1.getNameArt(),20,700);
+		drawHealthBar(20,650,game.player1,true);
 		draw(game.species2.getNameArt(),1200-20-game.species2.getNameArt().width,700);
+		drawHealthBar(width-20,650,game.player2,false);
 	}
+	
+	public void drawHealthBar(int x,int y,Player p,boolean leftToRight){
+		drawHealthBar(this,x,y,p,leftToRight);
+	}
+	
+	public static void drawHealthBar(Render r,int x,int y,Player p,boolean leftToRight){
+		int width=220;
+		int height=30;
+		Render stone=Texture.stone;
+		int line=x+5+(int) ((p.health/p.maxHealth)*(width-10));
+		if(!leftToRight){
+			line=x-5-(int) ((p.health/p.maxHealth)*(width-10));
+			x-=width;
+		}
+		for(int X=0;X<width;X++){
+			for(int Y=0;Y<height;Y++){
+				int dRight=width-X,dBottom=height-Y;
+				int color=stone.pixels[(X%stone.width)+(Y%stone.height)*stone.width];
+				if(X<5&&((Y>height/2&&X<dBottom)||(Y<height/2&&X<Y)||(Y==height/2)))
+					r.pixels[(X+x)+(Y+y)*r.width]=Render.mixColor(color, 0, 0.20);
+				else if(dRight<5&&((Y>height/2&&dRight<dBottom)||(Y<height/2&&dRight<Y)||(Y==height/2)))
+					r.pixels[(X+x)+(Y+y)*r.width]=Render.mixColor(color, 0, 0.50);
+				else if(Y<5)
+					r.pixels[(X+x)+(Y+y)*r.width]=Render.mixColor(color, 0, 0.30);
+				else if(dBottom<5)
+					r.pixels[(X+x)+(Y+y)*r.width]=Render.mixColor(color, 0, 0.40);
+				else if((!leftToRight&&x+X<line)||(leftToRight&&x+X>line))
+					r.pixels[(X+x)+(Y+y)*r.width]=0xff0000;
+				else
+					r.pixels[(X+x)+(Y+y)*r.width]=0x00ff00;
+
+			}
+		}
+	}
+	
 	public void drawOutlinedWordArt(String s,int x,int y,int text){
 		FontRenderContext frc=new FontRenderContext(null,true,true);
 		GlyphVector gv=font.deriveFont(0, font.getSize()).createGlyphVector(frc, s);

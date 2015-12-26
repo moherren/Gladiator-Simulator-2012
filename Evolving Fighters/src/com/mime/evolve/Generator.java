@@ -57,7 +57,7 @@ public class Generator{
 	
 	public synchronized void addLoad(double add) {
 		loadAmount+=add*2/numOfPlayers;
-		Display.display.lRender(Display.display.game,loadAmount/1.25);
+		Display.display.lRender(Display.display.game,loadAmount);
 	}
 		
 	public synchronized void addPlayer(Player p){
