@@ -7,7 +7,8 @@ import neuralNet.NeuralNet;
 public class NeuralIntelligence implements AI{
 
 	NeuralNet net;
-	private static int inputs=16,outputs=3,hiddenLayers=2,neuronsPerHiddenLayer=6;
+	private static int inputs=18,outputs=3,hiddenLayers=2,neuronsPerHiddenLayer=7;
+	public int fitness=0;
 	
 	public NeuralIntelligence(double[] weights){
 		net=new NeuralNet(inputs,outputs,hiddenLayers,neuronsPerHiddenLayer);
@@ -25,5 +26,16 @@ public class NeuralIntelligence implements AI{
 	public ArrayList<Double> step(ArrayList<Double> input) {
 		return net.update(input);
 	}
-
+	
+	public NeuralNet getNeuralNet(){
+		return net;
+	}
+	
+	public void setFitness(int f){
+		fitness=f;
+	}
+	
+	public int getFitness(){
+		return fitness;
+	}
 }

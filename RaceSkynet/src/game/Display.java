@@ -65,11 +65,12 @@ public class Display extends Canvas implements ActionListener{
 	}
 	
 	public void step() {
-			render();
+			//if(game.species[0].getElite().fitness>1000)
+				render();
+			game.tick(input.key);
 			for(Car c:Game.getTrack().getCars()){
 				c.update();
 			}
-			game.getTrack().updatePosistions();
 			
 			world.step(1/40f,8,3);
 	}
@@ -78,7 +79,7 @@ public class Display extends Canvas implements ActionListener{
 		if (Running)
 			return;
 		Running=true;
-		timer=new Timer(8, this);
+		timer=new Timer(1, this);
 		timer.start();
 	}
 	
@@ -123,7 +124,12 @@ public class Display extends Canvas implements ActionListener{
 		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
 		
 		Graphics2D g2=(Graphics2D) g;
+		g2.drawString(Game.species[0]+"", 0, 10);
+		g2.drawString(Game.species[1]+"", 0, 25);
+		g2.drawString(new Vec2(input.MouseX,input.MouseY)+" "+Game.getTrack().getSegment(Game.getTrack().getDistance(new Vec2(input.MouseX,input.MouseY)), 3), 0, 40);
+		g2.translate(-(Screen.centerX-Screen.width/2), -(Screen.centerY-Screen.height/2));
 		g2.fill(Track.wallArea);
+		g2.translate(Screen.centerX-Screen.width/2, Screen.centerY-Screen.height/2);
 		g.dispose();
 		bs.show();	
 	}

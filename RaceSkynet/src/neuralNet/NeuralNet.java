@@ -18,7 +18,7 @@ public class NeuralNet {
 	}
 
 	public void createNet(){
-		layers=new NeuronLayer[numHiddenLayers+1];
+		layers=new NeuronLayer[numHiddenLayers];
 		layers[0]=new NeuronLayer(neuronsPerHiddenLayer,numInputs);
 		for(int i=1;i<numHiddenLayers;i++){
 			layers[i]=new NeuronLayer(neuronsPerHiddenLayer,neuronsPerHiddenLayer);
@@ -64,6 +64,7 @@ public class NeuralNet {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Double> update(ArrayList<Double> inputs){
 		ArrayList<Double> outputs=new ArrayList<Double>();
 		int weight=0;
@@ -97,10 +98,7 @@ public class NeuralNet {
 		for(NeuronLayer layer:layers){
 			for(Neuron n:layer.neurons){
 				for(int j=0;j<n.weights.length;j++){
-					if(Math.random()>0.5)
-						n.weights[j]=Math.random();
-					else
-						n.weights[j]=-Math.random();
+					n.weights[j]=Math.random()*2-1;
 				}
 			}
 		}

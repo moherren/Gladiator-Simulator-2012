@@ -16,8 +16,11 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
 import game.Display;
 import graphics.Render;
+import graphics.Screen;
 
 public class CarBody {
+	public final static float maxForwardSpeed=200000;
+	
 	Body body;
 	BodyDef bodyDef;
 	FixtureDef fixtureDef;
@@ -50,9 +53,12 @@ public class CarBody {
 	public void render(Render r, int color){
 		double minX=Double.MAX_VALUE,minY=Double.MAX_VALUE,maxX=Double.MIN_VALUE,maxY=Double.MIN_VALUE;
 		PolygonShape box=new PolygonShape();
-		box.setAsBox(10f, 20f, body.getPosition(), body.getAngle());
+		Vec2 shift=new Vec2(Screen.centerX-Screen.width/2, Screen.centerY-Screen.height/2);
+		Vec2 pos=body.getPosition();
+		float angle= body.getAngle();
+		box.setAsBox(10f, 20f, pos,angle);
 		for(int b=0;b<dynamicBox.m_count;b++){
-			Vec2 v= box.m_vertices[b];
+			Vec2 v= box.m_vertices[b].sub(shift);
 			
 			if(minX>v.x)
 				minX=v.x;
@@ -71,7 +77,7 @@ public class CarBody {
 		
 		for(int x=(int) minX;x<maxX;x++){
 			for(int y=(int) minY;y<maxY;y++){
-				if(dynamicBox.testPoint(body.getTransform(), new Vec2(x,y)))
+				if(dynamicBox.testPoint(body.getTransform(), new Vec2(x,y).add(shift)))
 					r.pixels[x+y*Display.WIDTH]=color;
 			}
 		}
@@ -84,17 +90,17 @@ public class CarBody {
 		t3.accelerate(acceleration);
 		t4.accelerate(acceleration);
 		
-		t1.turn(acceleration);
-		t2.turn(acceleration);
-		t3.turn(acceleration);
-		t4.turn(acceleration);
+		t1.turn(turn);
+		t2.turn(turn);
+		t3.turn(turn);
+		t4.turn(turn);
 		
 		float lockAngle = (float) Math.toRadians(20);
 	      float turnSpeedPerSec = (float) Math.toRadians(160);//from lock to lock in 0.25 sec
 	      float turnPerTimeStep = turnSpeedPerSec / 60.0f;
 	      float desiredAngle = 0;
 	          
-	      	desiredAngle=50*turn;
+	      	desiredAngle=lockAngle*turn;
 	      
 	      float angleNow = t1.joint.getJointAngle();
 	      float angleToTurn = desiredAngle - angleNow;

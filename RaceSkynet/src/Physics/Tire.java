@@ -49,7 +49,7 @@ public class Tire {
 	}
 	public void updateMovement(){
 		float maxForwardSpeed=200000;
-		float maxBackwardSpeed=-5000;
+		float maxBackwardSpeed=8000;
 		float maxDriveForce=5000;
 		float desiredSpeed = 0;
 		float desiredTorque=0;

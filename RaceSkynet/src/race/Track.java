@@ -1,6 +1,7 @@
 package race;
 
 import graphics.Render;
+import graphics.Screen;
 import graphics.Visible;
 
 import java.awt.Polygon;
@@ -23,13 +24,13 @@ import game.Display;
 public class Track implements Visible{
 
 	public int width, height;
-	public static ArrayList<PolygonShape> walls=new ArrayList<PolygonShape>();
+	public static ArrayList<Body> walls=new ArrayList<Body>();
 	public static ArrayList<Area> wallAreas=new ArrayList<Area>();
 	public static ArrayList<Road> roads=new ArrayList<Road>();
 	public static Area wallArea=new Area();
 	ArrayList<Car> cars=new ArrayList<Car>();
 	ArrayList<Vec2> startPoints=new ArrayList<Vec2>();
-	Render distance,roadLines;
+	Render distance,roadLines,direction;
 	float length=0;
 	
 	public Track(int width,int height){
@@ -37,8 +38,10 @@ public class Track implements Visible{
 		this.height=height;
 		distance=new Render(width,height);
 		roadLines=new Render(width,height);
+		direction=new Render(width,height);
 		Arrays.fill(distance.pixels,-1);
 		Arrays.fill(roadLines.pixels,-1);
+		Arrays.fill(direction.pixels,-1);
 		walls.removeAll(walls);
 	}
 	
@@ -47,8 +50,10 @@ public class Track implements Visible{
 		this.height=height;
 		distance=new Render(width,height);
 		roadLines=new Render(width,height);
+		direction=new Render(width,height);
 		Arrays.fill(distance.pixels,-1);
 		Arrays.fill(roadLines.pixels,-1);
+		Arrays.fill(direction.pixels,-1);
 		walls.removeAll(walls);
 		formTrack(track);
 	}
@@ -70,6 +75,28 @@ public class Track implements Visible{
 		output[5]=new TrackPiece.normal(new Vec2(180,135),200f);
 		output[6]=new TrackPiece.end(new Vec2(120,350),200f);
 		return output;
+	}
+	
+	public static TrackPiece[] getSimpleTrack(){
+		ArrayList<TrackPiece> list=new ArrayList<TrackPiece>();
+		list.add(new TrackPiece.normal(new Vec2(200,1000),200f));
+		list.add(new TrackPiece.normal(new Vec2(200,1500),200f));
+		list.add(new TrackPiece.normal(new Vec2(500,1900),200f));
+		list.add(new TrackPiece.normal(new Vec2(600,1900),200f));
+		list.add(new TrackPiece.normal(new Vec2(900,1500),200f));
+		list.add(new TrackPiece.normal(new Vec2(900,1000),200f));
+		list.add(new TrackPiece.normal(new Vec2(1000,900),200f));
+		list.add(new TrackPiece.normal(new Vec2(1400,900),200f));
+		list.add(new TrackPiece.normal(new Vec2(1600,700),200f));
+		list.add(new TrackPiece.normal(new Vec2(1600,500),300f));
+		list.add(new TrackPiece.normal(new Vec2(1400,300),300f));
+		list.add(new TrackPiece.normal(new Vec2(1000,300),200f));
+		list.add(new TrackPiece.end(new Vec2(200,500),200f));
+		
+		TrackPiece[] array=new TrackPiece[list.size()];
+		for(int i=0;i<list.size();i++)
+			array[i]=list.get(i);
+		return array;
 	}
 	
 	public void formTrack(TrackPiece[] track){
@@ -122,6 +149,7 @@ public class Track implements Visible{
 			Road road=new Road(poly,length);
 			length=road.getDistanceEnd();
 			road.applyDistances(this.distance);
+			road.applyDirections(direction);
 			roads.add(road);
 		}
 	}
@@ -133,9 +161,8 @@ public class Track implements Visible{
 		Body body=Display.world.createBody(bodyDef);
 		PolygonShape polygonShape=new PolygonShape();
 		polygonShape.set(Vs, Vs.length);
-		System.out.println(Vs[0]+" "+Vs[1]+" "+Vs[2]+" "+Vs[3]);
 		body.createFixture(polygonShape, 1);
-		walls.add(polygonShape);
+		walls.add(body);
 		
 		Polygon poly=new Polygon();
 		for(Vec2 v:Vs){
@@ -147,15 +174,19 @@ public class Track implements Visible{
 	
 	@Override
 	public void render(Render r) {
-		r.draw(distance, 0, 0);
-		r.draw(roadLines, 0, 0);
+		//r.draw(distance, 0, 0);
+		r.draw(roadLines, Screen.centerX-Screen.width/2, Screen.centerY-Screen.centerY/2);
 		for(Car c:cars){
 			c.render(r);
 		}
 	}
 	
 	public int getDistance(Vec2 v){
-		return distance.pixels[(int) (v.x+distance.width*v.y)];
+		return distance.pixels[(int) (v.x)+distance.width*(int)(v.y)];
+	}
+	
+	public double getDirection(Vec2 v){
+		return distance.pixels[(int) (v.x+distance.width*v.y)]/10000;
 	}
 	
 	public ArrayList<Car> getCars(){
@@ -167,7 +198,18 @@ public class Track implements Visible{
 			return;
 		Vec2 v=startPoints.get(0);
 		startPoints.remove(0);
-		cars.add(new Car(v.x,v.y,Math.PI,ai,this));
+		cars.add(new Car(v.x,v.y,Math.PI,ai,this,cars.size()));
+	}
+	
+	public void restartCar(int id,AI ai){
+		for(Car c:cars){
+			if(c.id==id){
+				c.destroy();
+				Vec2 start=c.startPoint;
+				cars.add(new Car(start.x,start.y,Math.PI,ai,this,c.id));
+				return;
+			}
+		}
 	}
 	
 	public void addStartPoint(Vec2 v){
@@ -199,6 +241,15 @@ public class Track implements Visible{
 	}
 	
 	public int getSegment(int dis,int numberOfPieces){
-		return (int) (dis/(length/numberOfPieces))%numberOfPieces;
+		return (int) Math.abs(dis/(length/numberOfPieces))%numberOfPieces;
+	}
+	
+	public void destroy(){
+		for(Car c:cars){
+			c.destroy();
+		}
+		for(Body b:walls){
+			b.getWorld().destroyBody(b);
+		}
 	}
 }

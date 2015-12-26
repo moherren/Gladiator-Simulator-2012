@@ -20,36 +20,45 @@ import graphics.Visible;
 public class Car implements Visible, Comparable{
 	private CarBody body;
 	AI ai;
-	final static float feelerLength=100;
+	final static float feelerLength=150;
 	final static double turnPower=0.01,torqueFriction=0.02;
 	final static double accelerationPower=0.006,turnLowSpeed=5;
 	private float acceleration=0,turn=0;
 	int color=0xff000;
 	int lap=-1,distance;
 	Track track;
+	public double[] information=new double[2];
+	int id=0;
+	Vec2 startPoint;
 	
-	
-	public Car(float x,float y,double rot,AI ai,Track track){
-
+	public Car(float x,float y,double rot,AI ai,Track track,int id){
 		body=new CarBody(x,y);
 		Vector2D v=new Vector2D(0,4);
 		v=v.rotate(rot);
 		this.ai=ai;
 		this.track=track;
-		distance=track.getDistance(getPosition());
+		this.id=id;
+		distance=(int) (track.getDistance(body.getBody().getPosition())+lap*track.length);
+		startPoint=new Vec2(x,y);
+		if(ai.getFitness()==0)
+		ai.setFitness((int)(distance)/10);
 	}
 
 	public Vec2 getPosition() {
-		return this.body.getBody().getPosition();
+		return this.body.getBody().getWorldCenter();
 	}
 
 	public void update(){
 		ArrayList<Double> controls=ai.step(sense());
-		float acceleration=0;
-		if(controls.get(0)>0.5)
-			acceleration=1;
-		body.giveInformation(acceleration,controls.get(1).floatValue());
+		body.giveInformation(controls.get(0).floatValue()*2-1,controls.get(1).floatValue()*2-1);
+		information[0]=controls.get(0).floatValue();
+		information[1]=controls.get(1).floatValue();
 		body.updateBody();
+		
+		if(ai.getFitness()<distance/10){
+			ai.setFitness(distance/10);
+			Game.delayEnd();
+		}
 	}
 	
 	public void render(Render r) {
@@ -74,6 +83,7 @@ public class Car implements Visible, Comparable{
 	
 	public void destroy(){
 		track.getCars().remove(this);
+		getBody().getBody().getWorld().destroyBody(body.getBody());
 	}
 	
 	public ArrayList<Double> sense(){
@@ -111,6 +121,8 @@ public class Car implements Visible, Comparable{
 		for(Double d:output){
 			list.add(d);
 		}
+		list.add(track.getDirection(getBody().getBody().getPosition())-body.getBody().getAngle());
+		list.add(body.getSpeed()/CarBody.maxForwardSpeed);
 		return list;
 	}
 	
@@ -128,10 +140,13 @@ public class Car implements Visible, Comparable{
 	}
 
 	public void applyDistance(int dis){
-		if(track.getSegment(dis, 3)==0&&track.getSegment(distance, 3)==2)
+		int newSeg=track.getSegment(dis, 3),oldSeg=track.getSegment(this.distance, 3);
+		if(newSeg==0&&oldSeg==2){
 			lap++;
-		else if(track.getSegment(dis, 3)==2&&track.getSegment(distance, 3)==0)
+		}
+		else if(newSeg==2&&oldSeg==0){
 			lap--;
+		}
 		distance=(int) (dis+lap*track.length);
 	}
 	

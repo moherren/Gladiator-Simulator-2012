@@ -51,6 +51,33 @@ public class Road {
 		}
 	}
 	
+	public void applyDirections(Render render){
+		Transform t=new Transform();
+		t.set(new Vec2(0,0), (float)-dir);
+		PolygonShape body=(PolygonShape) this.body.clone();
+		body.centroid(t);
+		float minX=0,minY=0,maxX=Display.WIDTH,maxY=Display.HEIGHT;
+		for(Vec2 v:body.getVertices()){
+			minX=Math.min(minX, v.x);
+			maxX=Math.max(maxX, v.x);
+			minY=Math.min(minY, v.y);
+			maxY=Math.max(maxY, v.y);
+		}
+		
+		//minX=Math.max(minX, 0);
+		//maxX=Math.min(maxX, 0);
+		//minY=Math.max(minY, Display.WIDTH);
+		//maxY=Math.min(maxY, Display.HEIGHT);
+		
+		for(float x=minX;x<maxX;x++){
+			for(float y=minY;y<maxY;y++){
+				if(body.testPoint(new Transform(), new Vec2(x,y))&&render.pixels[(int) (x+render.width*y)]==-1){
+					render.pixels[(int) (x+render.width*y)]=(int) (dir+Math.PI*2)*10000;
+				}
+			}
+		}
+	}
+	
 	public float getDistanceEnd(){
 		return distanceEnd;
 	}
