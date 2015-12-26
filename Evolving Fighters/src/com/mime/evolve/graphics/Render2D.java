@@ -88,7 +88,7 @@ public class Render2D extends Render{
 			else pixels[i]=0xffffff;
 		}*/
 	}
-	public void displayNames(Game game){
+	public void displayFightInformation(Game game){
 		draw(game.species1.getNameArt(),20,700);
 		draw(game.species2.getNameArt(),1200-20-game.species2.getNameArt().width,700);
 	}

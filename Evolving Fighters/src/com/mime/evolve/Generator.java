@@ -18,11 +18,12 @@ public class Generator{
 			Player[] genedPlayers=null;
 			boolean loaded=false;
 			double loadAmount=0;
+			double change=0.125;
 			do{
 				genedPlayers=g.tick(Display.display.input.key);
-				if(loadAmount!=g.getLoad()){
-					addLoad(g.getLoad()-loadAmount);
-					loadAmount=g.getLoad();
+				if(g.getLoad()-loadAmount>change){
+					addLoad(change);
+					loadAmount+=change;
 				}
 				
 				if(genedPlayers[0]!=null)

@@ -15,7 +15,7 @@ public class Screen extends Render{
 	public void render(Game game){
 		Arrays.fill(render.depthMap, 0);
 		render.Arena();
-		render.displayNames(game);
+		render.displayFightInformation(game);
 		render.Player(game.player1);
 		render.Player(game.player2);
 		
