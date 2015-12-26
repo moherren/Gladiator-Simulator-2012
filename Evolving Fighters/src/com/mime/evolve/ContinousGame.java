@@ -15,8 +15,6 @@ public class ContinousGame extends Game{
 			double a=i/180.0000*Math.PI;
 			double x = 600 + 360 * Math.cos(a);
 			double y = 400 + 360 * Math.sin(a);
-			/*if(rand.nextInt(3)==0)
-			level.addWall(x, y, 10, 10);*/
 			level.addWall((int)x, (int)y, 5, 5);
 		}
 	}
