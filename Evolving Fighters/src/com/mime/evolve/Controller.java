@@ -19,13 +19,15 @@ public class Controller extends Game implements ActionListener{
 	Tournament tourny;
 	int loadCount=0;
 	String ankur="trash";
+	public static int intensity=2;
+	
 	public Player[] tick(boolean[] key){
 		if(handle.usersEmpty()){
 			handle.takeUsers();
 			gen=1;
 		}
 		else if(Competetors==null){
-			Generator gen=new Generator(16,2);
+			Generator gen=new Generator(16,intensity);
 			ArrayList<Player> players=gen.getPlayers();
 			Competetors=new Player[players.size()];
 			for(int i=0;i<players.size();i++)

@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.mime.evolve.Controller;
 import com.mime.evolve.Display;
 import com.mime.evolve.Game;
 
@@ -26,7 +27,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	JLabel Title=new JLabel("Gladiator Simulator 2012");
 	JLabel author=new JLabel("by Matthew \"The Hammer\" O'Herren");
 	JLabel intro=new JLabel("Number of Players:",JLabel.LEADING);
-	JSpinner userAmount;
+	JSpinner userAmount,inputIntensity;
 	JLabel[] names;
 	JTextField[] inputNames;
 	JTextField inputEvolution;
@@ -51,16 +52,20 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 		TitledBorder border = BorderFactory.createTitledBorder("OPTIONS");
 	    border.setTitleJustification(TitledBorder.CENTER);
 		options.setBorder(border);
-		options.setMinimumSize(new Dimension(250,45));
-		options.setMaximumSize(new Dimension(250,45));
+		options.setMinimumSize(new Dimension(250,60));
+		options.setMaximumSize(new Dimension(250,60));
 		
 		setVisible(true);
 		setLayout(layout);
 		
 		inputEvolution=new JTextField(Game.evolutionAmount+"");
+		inputIntensity=new JSpinner();
+		inputIntensity.setModel(new SpinnerNumberModel(Controller.intensity,2,8,1));
 		//inputEvolution.setPreferredSize(new Dimension(60,20));
 		options.add(new JLabel("Generation Amount: "));
 		options.add(inputEvolution);
+		options.add(new JLabel("Generation Intensity: "));
+		options.add(inputIntensity);
 		
 		
 		userAmount=new JSpinner();
@@ -205,6 +210,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	public void actionPerformed(ActionEvent e) {
 		if(optionsMakeSense()){
 			Game.evolutionAmount=Integer.parseInt(inputEvolution.getText());
+			Controller.intensity=(int) inputIntensity.getValue();
 			System.out.println("all done");
 			setVisible(false);
 			User[] users=new User[(Integer)userAmount.getValue()];
