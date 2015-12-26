@@ -222,6 +222,7 @@ public class Game {
 		for(Projectile p:projectiles){
 			destroyProjectile(p);
 		}
+		destroiedProjectiles.clear();
 		try{
 		if(player2.health>0){
 			player1=new Player(11,Math.PI,species1,breed(species1),this);
@@ -267,7 +268,8 @@ public class Game {
 				resetCountdown(500);
 			}
 			
-			for(Projectile p:destroiedProjectiles){
+			for(int i=0;i<destroiedProjectiles.size();i++){
+				Projectile p=destroiedProjectiles.get(i);
 				projectiles.remove(p);
 			}
 			destroiedProjectiles.clear();

@@ -52,8 +52,8 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 		TitledBorder border = BorderFactory.createTitledBorder("OPTIONS");
 	    border.setTitleJustification(TitledBorder.CENTER);
 		options.setBorder(border);
-		options.setMinimumSize(new Dimension(250,60));
-		options.setMaximumSize(new Dimension(250,60));
+		options.setMinimumSize(new Dimension(250,70));
+		options.setMaximumSize(new Dimension(250,70));
 		
 		setVisible(true);
 		setLayout(layout);

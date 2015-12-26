@@ -17,16 +17,14 @@ public class Generator{
 			Game g=new Game();
 			Player[] genedPlayers=null;
 			boolean loaded=false;
+			double loadAmount=0;
 			do{
 				genedPlayers=g.tick(Display.display.input.key);
-				if((int)(g.getLoad()*100)%25==0){
-					if(!loaded){
-						addLoad(0.25);
-						loaded=true;
-					}
+				if(loadAmount!=g.getLoad()){
+					addLoad(g.getLoad()-loadAmount);
+					loadAmount=g.getLoad();
 				}
-				else 
-					loaded=false;
+				
 				if(genedPlayers[0]!=null)
 					System.out.println(id+" yay!");
 			}

@@ -61,7 +61,7 @@ public class WepBowAndArrow extends Projectile{
 		Rectangle2D rec=poly.getBounds().createUnion(sPoly.getBounds());
 		for(int y=(int) rec.getMinY();y<rec.getMaxY();y++){
 			for(int x=(int) rec.getMinX();x<rec.getMaxX();x++){
-				int depth=(int) (y+owner.size*0.75);
+				int depth=(int) (Render2D.visualY(y)+owner.size*0.75);
 				if(x>=0&&x<r.width&&y>=0&&y<r.height){
 					if(poly.contains(x, y)&&r.depthMap[x+y*r.width]<depth){
 						r.pixels[x+y*r.width]=0x606060;
@@ -71,12 +71,12 @@ public class WepBowAndArrow extends Projectile{
 						r.depthMap[x+y*r.width]=(int)depth;
 						r.pixels[x+y*r.width]=0x1;
 					}
-					if(sPoly.contains(x, y)&&r.depthMap[x+y*r.width]<sDepth){
+					if(sPoly.contains(x, y)&&r.depthMap[x+y*r.width]<depth){
 						r.pixels[x+y*r.width]=0x964B00;
-						r.depthMap[x+y*r.width]=(int) sDepth;
+						r.depthMap[x+y*r.width]=(int) depth;
 					}
-					else if(sPoly.intersects(x-oThickness/3.00, y-oThickness/3.00,oThickness,oThickness)&&r.depthMap[x+y*r.width]<(int)sDepth){
-						r.depthMap[x+y*r.width]=(int)sDepth;
+					else if(sPoly.intersects(x-oThickness/3.00, y-oThickness/3.00,oThickness,oThickness)&&r.depthMap[x+y*r.width]<(int)depth){
+						r.depthMap[x+y*r.width]=(int)depth;
 						r.pixels[x+y*r.width]=0x1;
 					}
 				}
