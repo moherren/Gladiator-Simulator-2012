@@ -1,6 +1,5 @@
 package com.mime.evolve.projectiles;
 
-import java.awt.Polygon;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
