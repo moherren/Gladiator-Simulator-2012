@@ -3,11 +3,16 @@ package com.mime.evolve.species;
 import com.mime.evolve.Game;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
+import com.mime.evolve.projectiles.WepShortSword;
 
 public class WeaponReaderSpecies extends Species{
 
 	public WeaponReaderSpecies(int color) {
 		super(color);
+		descriptor="intelligent";
+	}
+	public WeaponReaderSpecies(int i, Projectile proj, String string) {
+		super(i,proj,string);
 		descriptor="intelligent";
 	}
 	public void tick(Game game,Player user){

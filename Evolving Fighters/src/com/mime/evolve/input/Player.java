@@ -335,7 +335,7 @@ public class Player implements Drawable{
 		species.tick(game, this);
 	}
 	public String toString(){
-		return ("name:"+species.name+", fitness-"+species.elite.fitness+", descriptor-"+species.descriptor+", weapon-"+species.projectile.name);
+		return ("name:"+species.name+", fitness-"+species.elite.fitness+", descriptor-"+species.descriptor+", weapon-"+species.projectile.name+", dna:"+dnaToString(DNA));
 	}
 	/**
 	 * turnLeft() used to turn the player object's direction counter-clockwise
