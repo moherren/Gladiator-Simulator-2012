@@ -11,7 +11,7 @@ import com.mime.evolve.input.Player;
 public class WepSpear extends StabProjectile{
 	public WepSpear(){
 		super();
-		reloadTime=60;
+		reloadTime=80;
 		bulletMax=0;
 		endTime=20;
 		size=4;

@@ -231,15 +231,24 @@ public class Player implements Drawable{
 	public void execute(int i,Player enemy) {
 		boolean[] gene=Arrays.copyOfRange(DNA, (i-1)*Player.reactions, i*Player.reactions);
 		walking=0;
-		if(gene[0]&&!gene[1])moveForward(1);
-		else if(gene[0]&&gene[1]){
+		boolean turning=false,walking=false;
+		if(gene[0]&&!gene[1]){
 			moveForward(1);
-			moveBackward();
+			walking=true;
 		}
-		else if(!gene[0]&&gene[1])moveBackward();
+		if(!gene[0]&&gene[1]){
+			moveBackward();
+			walking=true;
+		}
 		
-		if(gene[2]&&!gene[3])turnLeft();
-		else if(!gene[2]&&gene[3])turnRight();
+		if(gene[2]&&!gene[3]){
+			turnLeft();
+			turning=true;
+		}
+		else if(!gene[2]&&gene[3]){
+			turnRight();
+			turning=true;
+		}
 		
 		if(gene[4])shoot(enemy,gene);
 		

@@ -84,7 +84,7 @@ public class StabProjectile extends Projectile{
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
 			
 			target.damage(damage*owner.power);
-			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
+			owner.fitness+=(damage*owner.power*1.000)/(target.maxHealth*1.000)*45;
 			target.move(dir+Math.PI, damage*2);
 			for(Projectile proj:brothers){
 				proj.damage=0;

@@ -11,10 +11,10 @@ public class WepBowAndArrow extends Projectile{
 	final double shaftLength=20.5;
 	public WepBowAndArrow(){
 		size=1;
-		damage=4.3;
+		damage=3.4;
 		speed=3.5;
-		reloadTime=250;
-		bulletMax=12;
+		reloadTime=350;
+		bulletMax=10;
 		name="bow and arrow";
 	}
 	public WepBowAndArrow(double x,double y,double dir,Player target,Player owner,double speed){
@@ -60,7 +60,7 @@ public class WepBowAndArrow extends Projectile{
 		Rectangle2D rec=poly.getBounds().createUnion(sPoly.getBounds());
 		for(int y=(int) rec.getMinY();y<rec.getMaxY();y++){
 			for(int x=(int) rec.getMinX();x<rec.getMaxX();x++){
-				int depth=(int) (Render2D.visualY(y)+owner.size*0.75);
+				int depth=(int) (y+owner.size*0.75);
 				if(x>=0&&x<r.width&&y>=0&&y<r.height){
 					if(poly.contains(x, y)&&r.depthMap[x+y*r.width]<depth){
 						r.pixels[x+y*r.width]=0x606060;

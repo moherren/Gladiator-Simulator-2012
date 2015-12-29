@@ -12,7 +12,7 @@ public class WepShortSword extends SwingProjectile{
 		bulletMax=0;
 		endTime=35;
 		size=4;
-		damage=1.75;
+		damage=195;
 		meele=true;
 		speed=0;
 		name="sword";

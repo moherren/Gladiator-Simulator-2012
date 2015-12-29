@@ -15,6 +15,7 @@ public class HalfSorter extends Game {
 		oLength=competetors.length;
 		newCompetetors = new Player[p.length / 2];
 		battleNumber = 0;
+		newGame();
 	}
 
 	public void endGame() {
@@ -73,8 +74,7 @@ public class HalfSorter extends Game {
 		// boolean up=key[KeyEvent.VK_W];
 		// boolean down=key[KeyEvent.VK_S];
 		// boolean shoot=key[KeyEvent.VK_TAB];
-		
-		if(true){
+		if(false){
 			boolean change=true;
 			while(change){
 				change=false;
@@ -94,7 +94,7 @@ public class HalfSorter extends Game {
 		}
 		else if (competetors.length == oLength/2) {
 			for(Player p:competetors)
-			p.fitness=p.species.elite.fitness;
+			p.fitness=p.species.maxFit;
 			return  competetors;
 		} else {
 			player1.tick(this);
