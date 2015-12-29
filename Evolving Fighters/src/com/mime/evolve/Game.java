@@ -222,7 +222,7 @@ public class Game {
 		for(Projectile p:projectiles){
 			destroyProjectile(p);
 		}
-		destroiedProjectiles.clear();
+
 		try{
 		if(player2.health>0){
 			player1=new Player(11,Math.PI,species1,breed(species1),this);

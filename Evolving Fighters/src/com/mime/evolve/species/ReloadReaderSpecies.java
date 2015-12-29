@@ -16,7 +16,8 @@ public class ReloadReaderSpecies extends Species{
 		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
 			sitNum++;
 		}
-		loop:for(Projectile proj:game.projectiles){
+		loop:for(int i=0;i<game.projectiles.size();i++){
+			Projectile proj=game.projectiles.get(i);
 			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.broadCast,proj.size)&&proj.target.equals(this)){
 				sitNum+=2;
 				break loop;

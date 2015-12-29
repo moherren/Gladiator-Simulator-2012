@@ -164,7 +164,7 @@ class PlayerCreditName{
 }
 
 public class Victory {
-	static Render2D winnerName=new Render2D(1200,200);
+	Render2D winnerName=new Render2D(1200,200);
 	public static String position(int pos){
 		String string=""+pos;
 		switch(pos%10){
@@ -214,12 +214,13 @@ public class Victory {
 		for(int i=0;i<300;i++){
 			confetti.add(new Confetti(random.nextInt(1200),-random.nextInt(400),this));
 		}
-		winnerName.setFont(winnerName.font.deriveFont(0,30));
+		winnerName.setFont(winnerName.font.deriveFont(0,35));
 		FontRenderContext frc=new FontRenderContext(null,true,true);
-		winnerName.setFont(winnerName.getFont().deriveFont(0, 30));
+		winnerName.setFont(winnerName.getFont().deriveFont(0, 35));
 		GlyphVector gv=winnerName.getFont().createGlyphVector(frc, winner.species.name);
 		int length=(int) (gv.getVisualBounds().getWidth());
-		winnerName.drawWordArt(winner.species.name, 600-length/2, 0, 4);
+		int height=(int) (gv.getVisualBounds().getHeight());
+		winnerName.drawWordArt(winner.species.name, 600-length/2,height, 1);
 		
 		startTime=(int) System.currentTimeMillis();
 		//Game.player1=winner;
