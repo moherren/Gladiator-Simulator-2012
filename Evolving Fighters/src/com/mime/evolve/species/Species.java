@@ -53,7 +53,7 @@ public class Species {
 		switch(Game.rand.nextInt()%6){
 		case 0:projectile=new WepShortSword();
 		break;
-		case 1:projectile=new WepBowAndArrow();
+		case 1:projectile=new WepFlail();
 		break;
 		case 2:projectile=new WepKnife();
 		break;
@@ -74,13 +74,10 @@ public class Species {
 		if(p.fitness>maxFit){
 			maxFit=p.fitness;
 			elite=p;
-			
 		}
 		boolean[] temp=p.DNA;
 		int fitness=p.fitness;
 		genePool.put(temp, fitness);
-		elite=p;
-		genePool.put(temp, 1);
 		return;
 	}
 	private void checkForElite(){
@@ -103,16 +100,16 @@ public class Species {
 	}
 	public void generateFights(Game game){
 		ArrayList<Integer> botNum=new ArrayList<Integer>();
-		for(int i=0;i<6;i++){
+		for(int i=0;i<Game.bots.length-1;i++){
 			botNum.add(new Integer(i));
 		}
 		Collections.shuffle(botNum);
 		
 		fights[0]=new Situation();
 		game.baseOpponet(fights[0], 0);
-		for(int i=0;i<12;i++){
+		for(int i=0;i<(Game.bots.length-1)*2;i++){
 			fights[i+1]=new Situation();
-			game.baseOpponet(fights[i+1], botNum.get(i%6)+1);
+			game.baseOpponet(fights[i+1], botNum.get(i%(Game.bots.length-1))+1);
 		}
 		
 		for(Situation sit:fights){

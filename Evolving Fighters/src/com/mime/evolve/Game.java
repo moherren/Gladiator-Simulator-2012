@@ -21,7 +21,7 @@ public class Game {
 	public static int evolutionAmount=225;
 	final public static int minEvolution=10;
 	public static final Player[] noPlayers=new Player[]{null,null};
-	private static final Player[] bots=new Player[]{
+	public static final Player[] bots=new Player[]{
 			new Player(0, 0,new Species(0,new WepBowAndArrow(),"bot"), 
 			Player.stringToDna("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 			,new emptyGame()),
@@ -275,7 +275,12 @@ public class Game {
 			destroiedProjectiles.clear();
 			
 			for(int i=0;i<projectiles.size();i++){
+				try{
 				projectiles.get(i).tick();
+				}
+				catch(NullPointerException n){
+					
+				}
 			}
 			
 			if(Math.sqrt(Math.pow(player1.y-player2.y,2)+Math.pow(player1.x-player2.x, 2))<=player1.size+player2.size){
