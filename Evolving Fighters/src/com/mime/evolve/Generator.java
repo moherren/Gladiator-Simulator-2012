@@ -11,6 +11,7 @@ public class Generator{
 		
 		public GenerateThread(int id){
 			this.id=id;
+			addLoad(0);
 		}
 		
 		public void run() {

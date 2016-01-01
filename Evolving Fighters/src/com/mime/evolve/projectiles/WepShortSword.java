@@ -11,12 +11,12 @@ public class WepShortSword extends SwingProjectile{
 		reloadTime=70;
 		bulletMax=0;
 		endTime=35;
-		size=4;
+		size=5;
 		damage=1.95;
 		meele=true;
 		speed=0;
 		name="sword";
-		addedSpeed=-0.15;
+		addedSpeed=0.2;
 	}
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();

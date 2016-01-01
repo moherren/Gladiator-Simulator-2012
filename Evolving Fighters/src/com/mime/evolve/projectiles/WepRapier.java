@@ -20,12 +20,13 @@ public class WepRapier extends SwingProjectile{
 	public void newProjectile(Player p,boolean gene[]){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
+		double armLength=4;
 		if(gene[2]||gene[3]){
-			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,range,brothers)));
-			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*2,endTime,damage,range,brothers)));
-			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*4,endTime,damage,range,brothers)));
-			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*6,endTime,damage,range,brothers)));
-			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size/2,speed+size*8,endTime,damage,range,brothers)));
+			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+armLength,endTime,damage,range,brothers)));
+			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*2+armLength,endTime,damage,range,brothers)));
+			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*4+armLength,endTime,damage,range,brothers)));
+			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*6+armLength,endTime,damage,range,brothers)));
+			brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size/2,speed+size*8+armLength,endTime,damage,range,brothers)));
 		}
 		else{
 			brothers.add(game.createProjectile(new StabProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers)));

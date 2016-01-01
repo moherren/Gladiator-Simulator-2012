@@ -46,6 +46,12 @@ public class Render {
 		}
 		setFont("Constantine.ttf");
 	}
+	public void blur(int radius){
+		for(int x=0;x<width;x++)
+			blurColumn(radius,x);
+		for(int y=0;y<height;y++)
+			blurRow(radius,y);
+	}
 	public void blurColumn(int radius,int x){
 		int Ys[]=new int[height];
 		for(int y=0;y<height;y++){

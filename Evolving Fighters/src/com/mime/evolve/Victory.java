@@ -252,6 +252,7 @@ public class Victory {
 			if(time>=phase3){
 				r.convertToGray(Math.min((time-phase2)/500.000,1));
 				r.shade(Math.min((time-phase2)/1000.000,0.5), 1);
+				r.blur(2);
 				for(GamblerName gn:gamblers)
 					gn.draw(r);
 			}

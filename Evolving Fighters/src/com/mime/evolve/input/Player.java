@@ -27,7 +27,8 @@ public class Player implements Drawable{
 		boolean[] bool=new boolean[length];
 		Random rand=Game.rand;
 		for(int i=0;i<length;i++){
-			bool[i]=rand.nextBoolean();
+			Random newRand=new Random(rand.nextLong());
+			bool[i]=newRand.nextBoolean();
 		}
 		return bool;
 	}

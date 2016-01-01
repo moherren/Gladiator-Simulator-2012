@@ -4,8 +4,8 @@ import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
 
 public class HalfSorter extends Game {
-	static Player[] competetors;
-	static Player[] newCompetetors = new Player[999];
+	Player[] competetors;
+	Player[] newCompetetors = new Player[999];
 	int oLength;
 	private int redos=0;
 
@@ -74,7 +74,7 @@ public class HalfSorter extends Game {
 		// boolean up=key[KeyEvent.VK_W];
 		// boolean down=key[KeyEvent.VK_S];
 		// boolean shoot=key[KeyEvent.VK_TAB];
-		if(false){
+		if(true){
 			boolean change=true;
 			while(change){
 				change=false;
@@ -94,7 +94,7 @@ public class HalfSorter extends Game {
 		}
 		else if (competetors.length == oLength/2) {
 			for(Player p:competetors)
-			p.fitness=p.species.maxFit;
+				p.fitness=p.species.maxFit;
 			return  competetors;
 		} else {
 			player1.tick(this);

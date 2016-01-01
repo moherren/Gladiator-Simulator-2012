@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import com.mime.evolve.Game;
@@ -50,10 +51,11 @@ public class Species {
 			e.printStackTrace();
 		}
 		generateArmor();
-		switch(Game.rand.nextInt()%6){
+		Random rand=new Random(Game.rand.nextLong());
+		switch(rand.nextInt(6)){
 		case 0:projectile=new WepShortSword();
 		break;
-		case 1:projectile=new WepFlail();
+		case 1:projectile=new WepBowAndArrow();
 		break;
 		case 2:projectile=new WepKnife();
 		break;
@@ -61,7 +63,7 @@ public class Species {
 		break;
 		case 4:projectile=new WepFlail();
 		break;
-		case 5:projectile=new WepSpear();
+		default:projectile=new WepSpear();
 		break;
 		}
 	}
