@@ -62,6 +62,7 @@ public class Player implements Drawable{
 	public boolean right=true;
 	public int size=11,fitness=0,bullets;
 	public long lastShot=0;
+	public long deathTime=0;
 	
 	public Species species;
 	
@@ -150,6 +151,8 @@ public class Player implements Drawable{
 		game.resetCountdown();
 		if(health<=0){
 			game.endGame();
+			if(deathTime==0)
+				deathTime=game.getTime();
 		}
 	}
 	@Override

@@ -1,21 +1,15 @@
 package com.mime.evolve.graphics;
 
-import java.awt.Font;
-import java.awt.List;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Area;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.Iterator;
-
+import com.mime.evolve.Controller;
 import com.mime.evolve.Display;
-import com.mime.evolve.Game;
+import com.mime.evolve.Tournament;
 import com.mime.evolve.Victory;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
@@ -88,11 +82,25 @@ public class Render2D extends Render{
 			else pixels[i]=0xffffff;
 		}*/
 	}
-	public void displayFightInformation(Game game){
-		draw(game.species1.getNameArt(),20,700);
+	public void displayFightInformation(Controller game){
 		drawHealthBar(20,650,game.player1,true);
-		draw(game.species2.getNameArt(),1200-20-game.species2.getNameArt().width,700);
 		drawHealthBar(width-20,650,game.player2,false);
+		
+		double dist=1-(game.getDisplayTime()-Tournament.stageTimes[0])/(Tournament.stageTimes[1]*1.000);
+		
+		if(game.getDisplayStage()==0)
+			dist=0;
+		else{
+			dist=Math.max(dist, 0);
+			dist=Math.min(dist, 1);
+		}
+		if(game.getDisplayStage()<=1)
+			this.shade((1-dist)*0.85, 1);
+		else
+			dist=1;
+	
+		draw(game.species1.getNameArt(),(int)(400-380*dist),(int)(300*dist+400));
+		draw(game.species2.getNameArt(),(int)(800+380*dist-game.species2.getNameArt().width),(int)(500*dist+200));
 	}
 	
 	public void drawHealthBar(int x,int y,Player p,boolean leftToRight){

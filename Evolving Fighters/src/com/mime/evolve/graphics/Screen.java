@@ -2,6 +2,7 @@ package com.mime.evolve.graphics;
 
 import java.util.Arrays;
 
+import com.mime.evolve.Controller;
 import com.mime.evolve.Game;
 import com.mime.evolve.Victory;
 import com.mime.evolve.projectiles.Projectile;
@@ -12,16 +13,18 @@ public class Screen extends Render{
 		super(width,height);
 		render=new Render2D(width,height);
 	}
-	public void render(Game game){
+	public void render(Controller game){
 		Arrays.fill(render.depthMap, 0);
 		render.Arena();
-		render.displayFightInformation(game);
+		
 		render.Player(game.player1);
 		render.Player(game.player2);
 		
 		for(Projectile p:game.projectiles){
 			render.drawProjectile(p);
 		}
+		
+		render.displayFightInformation(game);
 		
 		draw(render,0,0);
 	}

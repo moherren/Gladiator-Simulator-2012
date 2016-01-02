@@ -9,6 +9,17 @@ public class Tournament extends Game {
 	static Player[] newCompetetors = new Player[999];
 	boolean started=false;
 	private int redos=0;
+	int displayStage=0;
+	int nextStage=0;
+	/** 1. Display fighter names with "vs." displayed between them
+	 *  2. Move fighter names to their respective positions on the screen and fade into the arena
+	 *  3. Display the word Fight!
+	 *  4. The fight occurs
+	 *  5. Death scene/display the words KO
+	 *  6. Distribute money*/
+	public final static long[] stageTimes=new long[]{
+			200, 100,50,upperTimeLength,150,300
+	};
 	public Tournament(Player[] p) {
 		super(true);		
 		competetors = p;
@@ -26,11 +37,18 @@ public class Tournament extends Game {
 		// boolean up=key[KeyEvent.VK_W];
 		// boolean down=key[KeyEvent.VK_S];
 		// boolean shoot=key[KeyEvent.VK_TAB];
+		if(time>=nextStage&&displayStage!=3){
+			System.out.println(displayStage+" stage is done");
+				displayStage++;
+			if(displayStage==stageTimes.length)
+				displayStage=0;
+			nextStage+=stageTimes[displayStage];	
+		}
 
 		if (competetors.length == 1) {
 			System.out.println("Fight done");
 			return  competetors;
-		} else {
+		} else if(displayStage==3){
 			player1.tick(this);
 			player2.tick(this);
 
@@ -73,8 +91,10 @@ public class Tournament extends Game {
 				else
 					player2.damage(9999);
 			}
-			return null;
 		}
+		else
+			resetCountdown();
+		return null;
 	}
 
 	public void endGame() {
@@ -110,6 +130,14 @@ public class Tournament extends Game {
 	}
 
 	protected void newGame() {
+		if(player1==null)
+			displayStage=0;
+		else if(player1.health<=0||player2.health<=0){
+			displayStage=0;
+		}
+		else 
+			displayStage=2;
+		nextStage=(int) (time+stageTimes[displayStage]);
 		
 		dBetweenPlayers=10000;
 		
@@ -124,5 +152,15 @@ public class Tournament extends Game {
 		player2 = new Player(11, Math.PI, species2,
 				competetors[battleNumber * 2 + 1].DNA, this);
 		}
+	}
+	public int getDisplayStage(){
+		return displayStage;
+	}
+	public int getDisplayTime(){
+		int g=0;
+		for(int i=0;i<displayStage;i++)
+			g+=stageTimes[i];
+		g+=nextStage-time;
+		return g;
 	}
 }

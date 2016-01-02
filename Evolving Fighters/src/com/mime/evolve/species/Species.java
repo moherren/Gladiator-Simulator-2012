@@ -108,10 +108,10 @@ public class Species {
 		Collections.shuffle(botNum);
 		
 		fights[0]=new Situation();
-		game.baseOpponet(fights[0], 0);
+		game.baseOpponet(fights[0], 0,this);
 		for(int i=0;i<(Game.bots.length-1)*2;i++){
 			fights[i+1]=new Situation();
-			game.baseOpponet(fights[i+1], botNum.get(i%(Game.bots.length-1))+1);
+			game.baseOpponet(fights[i+1], botNum.get(i%(Game.bots.length-1))+1,this);
 		}
 		
 		for(Situation sit:fights){

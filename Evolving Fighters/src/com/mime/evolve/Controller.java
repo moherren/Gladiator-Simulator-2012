@@ -61,5 +61,10 @@ public class Controller extends Game implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		
 	}
-	
+	public int getDisplayStage(){
+		return tourny.getDisplayStage();
+	}
+	public int getDisplayTime(){
+		return tourny.getDisplayTime();
+	}
 }

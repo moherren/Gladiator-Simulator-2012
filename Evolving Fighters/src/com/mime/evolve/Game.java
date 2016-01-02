@@ -157,7 +157,8 @@ public class Game {
 	}
 	public long time=0;
 	public long oldTime=time;
-	public long upperTime=time+5000;
+	public final static long upperTimeLength=2500;
+	public long upperTime=time+upperTimeLength;
 	public Level level;
 	public Species species1;
 	public Species species2;
@@ -197,9 +198,16 @@ public class Game {
 		
 	}
 	
-	public void baseOpponet(Situation sit,int botNum){
-		sit.setDNA(bots[botNum].DNA, false);
-		sit.setSpecies(bots[botNum].species, false);
+	public void baseOpponet(Situation sit,int botNum,Species s){
+		if(!s.projectile.meele){
+			sit.setDNA(bots[botNum].DNA, false);
+			sit.setSpecies(bots[botNum].species, false);
+		}
+		else
+		{
+			sit.setDNA(testBots[botNum].DNA, false);
+			sit.setSpecies(testBots[botNum].species, false);
+		}
 	}
 	
 	public Projectile createProjectile(Projectile proj){
@@ -278,7 +286,7 @@ public class Game {
 	}
 	public void resetCountdown(){
 		oldTime=time;
-		upperTime=time+2500;
+		upperTime=time+upperTimeLength;
 	}
 	public void resetCountdown(int delay){
 		oldTime=Math.max(time-delay,oldTime);
@@ -345,5 +353,8 @@ public class Game {
 			gen++;
 			return noPlayers;
 		}
+	}
+	public long getTime() {
+		return time;
 	}
 }
