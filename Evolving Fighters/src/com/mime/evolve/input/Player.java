@@ -156,14 +156,21 @@ public class Player implements Drawable{
 		}
 	}
 	@Override
-	public void draw(Render2D r) {
+	public void draw(Render2D r){
+		if(deathTime==0)
+			drawDead(r);
+		else
+			drawDead(r);
+	}
+	
+	public void drawAlive(Render2D r) {
 		
 		int newY=Render2D.visualY(y);
 		double walking=Math.abs(Math.sin((game.time%(Math.PI*64*Math.pow(speed, -1)))/32.000))*3.0000;
 		 if(this.walking==0)
 			 walking=0;
 		 Rectangle rec=new Rectangle();
-		rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
+		 rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
 		 int depth=(int) Render2D.visualY(y);
 		 double[] eyeDir=new double[]{direction+Math.PI*0.125,direction-Math.PI*0.125};
 		 int headX=(int) rec.getCenterX(),headY=rec.y;
@@ -232,6 +239,35 @@ public class Player implements Drawable{
 		 }
 		
 	}
+	
+	public void drawDead(Render2D r){
+		int newY=Render2D.visualY(y);
+		Rectangle rec=new Rectangle();
+		rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
+		int depth=(int) Render2D.visualY(y);
+		int dieingTime=40;
+		double deathChange=Math.min((game.getTime()-deathTime),1);
+		double displacement=Render2D.hDisplacement+deathChange*(Render2D.hDisplacement+Render2D.vDisplacement);
+		Render2D armor=species.getArmor();
+		double direction=this.direction-Math.PI/2;
+		double alias=deathChange*Math.PI/2.000;
+		
+		for(double X=0;X<=Math.PI*2;X+=(Math.PI*2)/(8.000*size)){
+			for(int Y=0;Y<1.5*size;Y++){
+				int x=(int) (Math.cos(X+direction)*size+this.x),y=(int) (Math.sin(direction+X)*displacement+newY+Y-1.5*size);
+				int aX=(int) (X/(2.000*Math.PI)*armor.width),aY=(int) (Y/(size*1.5)*armor.height);
+				int color=armor.pixels[aX%armor.width+aY*armor.width];
+				if(x==size+this.x||x==-size+this.x)
+					color=1;
+				depth=(int) (newY+Math.sin(direction+X));
+				if(r.depthMap[x+y*r.width]<depth){
+					r.pixels[x+y*r.width]=color;
+					r.depthMap[x+y*r.width]=depth;
+				}
+			}
+		}
+	}
+	
 	public void execute(int i,Player enemy) {
 		boolean[] gene=Arrays.copyOfRange(DNA, (i-1)*Player.reactions, i*Player.reactions);
 		walking=0;
