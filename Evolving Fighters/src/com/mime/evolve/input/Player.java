@@ -158,7 +158,7 @@ public class Player implements Drawable{
 	@Override
 	public void draw(Render2D r){
 		if(deathTime==0)
-			drawDead(r);
+			drawAlive(r);
 		else
 			drawDead(r);
 	}
@@ -245,20 +245,23 @@ public class Player implements Drawable{
 		Rectangle rec=new Rectangle();
 		rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
 		int depth=(int) Render2D.visualY(y);
-		int dieingTime=40;
-		double deathChange=Math.min((game.getTime()-deathTime),1);
-		double displacement=Render2D.hDisplacement+deathChange*(Render2D.hDisplacement+Render2D.vDisplacement);
+		double dieingTime=40.000;
+		double deathChange=Math.min(((game.getTime()-deathTime)/dieingTime),1);
 		Render2D armor=species.getArmor();
 		double direction=this.direction-Math.PI/2;
-		double alias=deathChange*Math.PI/2.000;
+		double alias=Math.sin(Math.toRadians(48.6+180*deathChange));
 		
-		for(double X=0;X<=Math.PI*2;X+=(Math.PI*2)/(8.000*size)){
+		double xInc=(Math.PI*2)/(8.000*size);
+		for(double X=0;X<Math.PI*2;X+=xInc){
 			for(int Y=0;Y<1.5*size;Y++){
-				int x=(int) (Math.cos(X+direction)*size+this.x),y=(int) (Math.sin(direction+X)*displacement+newY+Y-1.5*size);
+				int x=(int) (Math.cos(X+direction)*size+this.x),y=(int) (Math.sin(direction+X)*alias*size+newY+Y-1.5*size);
 				int aX=(int) (X/(2.000*Math.PI)*armor.width),aY=(int) (Y/(size*1.5)*armor.height);
 				int color=armor.pixels[aX%armor.width+aY*armor.width];
-				if(x==size+this.x||x==-size+this.x)
+				if(x>=size+this.x||x<=this.x-size||Y==0||Y+1>=size*1.5)
 					color=1;
+				else if(Math.sin(X+direction)<0){
+					color=species.color;
+				}
 				depth=(int) (newY+Math.sin(direction+X));
 				if(r.depthMap[x+y*r.width]<depth){
 					r.pixels[x+y*r.width]=color;
@@ -266,6 +269,52 @@ public class Player implements Drawable{
 				}
 			}
 		}
+		
+		
+		double[] eyeDir=new double[]{direction+Math.PI*0.125-Math.PI/2,direction-Math.PI*0.125-Math.PI/2};
+		int headX=(int) rec.getCenterX(),headY=(int) (alias*size+newY-1.5*size);
+		depth=headY;
+		if(Math.sin(eyeDir[0])>0){
+			 double x=headX+Math.cos(eyeDir[0])*size;
+			 double y=headY+Math.sin(eyeDir[0])*size*alias;
+			 for(int X=(int)x-1;X<(int)x+2;X++){
+				 for(int Y=(int)y-1;Y<(int)y+2;Y++){
+					 if(r.depthMap[X+Y*r.width]<depth){
+					 r.pixels[((int)X+(int)Y*r.width)]= 1;
+					 r.depthMap[X+Y*r.width]=(int) depth;
+					 }
+				 }
+			 }
+		 }
+		if(Math.sin(eyeDir[1])>0){
+			 double x=headX+Math.cos(eyeDir[1])*size;
+			 double y=headY+Math.sin(eyeDir[1])*size*alias;
+			 for(int X=(int)x-1;X<(int)x+2;X++){
+				 for(int Y=(int)y-1;Y<(int)y+2;Y++){
+					 if(r.depthMap[X+Y*r.width]<depth){
+						 r.pixels[((int)X+(int)Y*r.width)]= 1;
+						 r.depthMap[X+Y*r.width]=(int) depth;
+						 }
+				 }
+			 }
+		}
+		
+		for(double i=0;i<Math.PI*2;i+=Math.PI/90.000){
+			  int x=(int) (rec.getCenterX()+Math.cos(i)*size);
+			  int y=(int) ((alias*size+newY-1.5*size)+Math.sin(i)*size);
+			  if(r.depthMap[x+y*r.width]<=depth){
+					r.pixels[x+y*r.width]= 1;
+					r.depthMap[x+y*r.width]=(int) depth;
+				 }
+		  }
+		for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
+			for(int y=(int) (headY-size);y<headY+size;y++){
+				if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(headY-y, 2))<=size&&r.depthMap[x+y*r.width]<depth){
+					r.pixels[x+y*r.width]= 0xfdc14c;
+					r.depthMap[x+y*r.width]=(int) depth;
+				}
+		}
+	 }
 	}
 	
 	public void execute(int i,Player enemy) {

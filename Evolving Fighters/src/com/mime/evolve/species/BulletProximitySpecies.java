@@ -19,15 +19,16 @@ public class BulletProximitySpecies extends Species{
 		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
 			sitNum++;
 		}
-		for(Projectile proj:game.projectiles){
+		loop:for(int i=0;i<game.projectiles.size();i++){
+			Projectile proj=game.projectiles.get(i);
 			if(proj.target.equals(this)){
 				if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.broadCast,proj.size)){
 					viewProject=true;
 				}
-			double DIS=Point.distance(user.x, user.y, proj.x, proj.y);
-			if(DIS<=dis){
-				dis=DIS;
-			}
+				double DIS=Point.distance(user.x, user.y, proj.x, proj.y);
+				if(DIS<=dis){
+					dis=DIS;
+				}
 			}
 		}
 		if(viewProject)sitNum+=2;
