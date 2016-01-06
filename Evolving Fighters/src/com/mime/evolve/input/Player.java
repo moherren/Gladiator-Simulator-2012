@@ -145,14 +145,16 @@ public class Player implements Drawable{
 			broadCast=minCast;
 	}
 	public void damage(double d){
-		if(d==0)
-			return;
-		health-=d;
-		game.resetCountdown();
-		if(health<=0){
-			game.endGame();
-			if(deathTime==0)
-				deathTime=game.getTime();
+		if(game.getEnemy(this).health>0){
+			if(d==0)
+				return;
+			health-=d;
+			game.resetCountdown();
+			if(health<=0){
+				game.endGame();
+				if(deathTime==0)
+					deathTime=game.getTime();
+			}
 		}
 	}
 	@Override
@@ -213,7 +215,7 @@ public class Player implements Drawable{
 		 for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
 			 for(int y=(int) (rec.y-size);y<rec.y+size;y++){
 				 if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(rec.getMinY()-y, 2))<=size&&r.depthMap[x+y*r.width]<depth){
-					 r.pixels[x+y*r.width]= 0xfdc14c;
+					r.pixels[x+y*r.width]= 0xfdc14c;
 					r.depthMap[x+y*r.width]=(int) depth;
 				 }
 			 }
@@ -245,24 +247,28 @@ public class Player implements Drawable{
 		Rectangle rec=new Rectangle();
 		rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
 		int depth=(int) Render2D.visualY(y);
-		double dieingTime=40.000;
-		double deathChange=Math.min(((game.getTime()-deathTime)/dieingTime),1);
+		double dieingTime=100.000;
+		double deathChange=Math.min(1,(game.getTime()-deathTime)/dieingTime);
 		Render2D armor=species.getArmor();
 		double direction=this.direction-Math.PI/2;
-		double alias=Math.sin(Math.toRadians(48.6+180*deathChange));
+		double alias=Math.sin(Math.toRadians(48.6-90*deathChange));
+		double oAlias=Math.cos(Math.toRadians(48.6-90*deathChange));
+		double yMax=Math.abs(alias*size)+Math.abs(2*oAlias*size);
 		
 		double xInc=(Math.PI*2)/(8.000*size);
 		for(double X=0;X<Math.PI*2;X+=xInc){
-			for(int Y=0;Y<1.5*size;Y++){
-				int x=(int) (Math.cos(X+direction)*size+this.x),y=(int) (Math.sin(direction+X)*alias*size+newY+Y-1.5*size);
-				int aX=(int) (X/(2.000*Math.PI)*armor.width),aY=(int) (Y/(size*1.5)*armor.height);
-				int color=armor.pixels[aX%armor.width+aY*armor.width];
-				if(x>=size+this.x||x<=this.x-size||Y==0||Y+1>=size*1.5)
+			for(int Y=0;Y<yMax;Y++){
+				int x=(int) (Math.cos(X+direction)*size+this.x),y=(int) (Math.sin(direction+X)*alias*size+newY+Y-yMax);
+				int aX=(int) (X/(2.000*Math.PI)*armor.width),aY=(int) (Y/yMax*armor.height);
+				int color=armor.pixels[(aX)%armor.width+aY*armor.width];
+				depth=(int) (newY+Math.sin(direction+X)*size);
+				if(x>=size+this.x||x<=this.x-size||Y==0||Y+1>=yMax)
 					color=1;
 				else if(Math.sin(X+direction)<0){
 					color=species.color;
+					depth=(int) (newY-alias);
 				}
-				depth=(int) (newY+Math.sin(direction+X));
+				
 				if(r.depthMap[x+y*r.width]<depth){
 					r.pixels[x+y*r.width]=color;
 					r.depthMap[x+y*r.width]=depth;
@@ -271,17 +277,35 @@ public class Player implements Drawable{
 		}
 		
 		
-		double[] eyeDir=new double[]{direction+Math.PI*0.125-Math.PI/2,direction-Math.PI*0.125-Math.PI/2};
-		int headX=(int) rec.getCenterX(),headY=(int) (alias*size+newY-1.5*size);
-		depth=headY;
+		double[] eyeDir=new double[]{direction+Math.PI*0.125+Math.PI/2,direction-Math.PI*0.125+Math.PI/2};
+		int headX=(int) rec.getCenterX(),headY=(int) (newY-yMax);
+		depth=newY;
+
+		for(double i=0;i<Math.PI*2;i+=Math.PI/90.000){
+			  int x=(int) (rec.getCenterX()+Math.cos(i)*size);
+			  int y=(int) ((newY-yMax)+Math.sin(i)*size);
+			  if(r.depthMap[x+y*r.width]<=depth){
+					r.pixels[x+y*r.width]= 1;
+					r.depthMap[x+y*r.width]=(int) (depth+alias);
+				 }
+		  }
+		for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
+			for(int y=(int) (headY-size);y<headY+size;y++){
+				if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(headY-y, 2))<=size&&r.depthMap[x+y*r.width]<=depth){
+					r.pixels[x+y*r.width]= 0xfdc14c;
+					r.depthMap[x+y*r.width]=(int) (depth+alias);
+				}
+		}
+	 }
+		
 		if(Math.sin(eyeDir[0])>0){
 			 double x=headX+Math.cos(eyeDir[0])*size;
 			 double y=headY+Math.sin(eyeDir[0])*size*alias;
 			 for(int X=(int)x-1;X<(int)x+2;X++){
 				 for(int Y=(int)y-1;Y<(int)y+2;Y++){
-					 if(r.depthMap[X+Y*r.width]<depth){
+					 if(r.depthMap[X+Y*r.width]<=depth){
 					 r.pixels[((int)X+(int)Y*r.width)]= 1;
-					 r.depthMap[X+Y*r.width]=(int) depth;
+					 r.depthMap[X+Y*r.width]=(int) (depth+alias);
 					 }
 				 }
 			 }
@@ -291,33 +315,17 @@ public class Player implements Drawable{
 			 double y=headY+Math.sin(eyeDir[1])*size*alias;
 			 for(int X=(int)x-1;X<(int)x+2;X++){
 				 for(int Y=(int)y-1;Y<(int)y+2;Y++){
-					 if(r.depthMap[X+Y*r.width]<depth){
+					 if(r.depthMap[X+Y*r.width]<=depth){
 						 r.pixels[((int)X+(int)Y*r.width)]= 1;
-						 r.depthMap[X+Y*r.width]=(int) depth;
+						 r.depthMap[X+Y*r.width]=(int) (depth+alias);
 						 }
 				 }
 			 }
 		}
-		
-		for(double i=0;i<Math.PI*2;i+=Math.PI/90.000){
-			  int x=(int) (rec.getCenterX()+Math.cos(i)*size);
-			  int y=(int) ((alias*size+newY-1.5*size)+Math.sin(i)*size);
-			  if(r.depthMap[x+y*r.width]<=depth){
-					r.pixels[x+y*r.width]= 1;
-					r.depthMap[x+y*r.width]=(int) depth;
-				 }
-		  }
-		for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
-			for(int y=(int) (headY-size);y<headY+size;y++){
-				if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(headY-y, 2))<=size&&r.depthMap[x+y*r.width]<depth){
-					r.pixels[x+y*r.width]= 0xfdc14c;
-					r.depthMap[x+y*r.width]=(int) depth;
-				}
-		}
-	 }
 	}
 	
 	public void execute(int i,Player enemy) {
+		if(deathTime==0){
 		boolean[] gene=Arrays.copyOfRange(DNA, (i-1)*Player.reactions, i*Player.reactions);
 		walking=0;
 		boolean turning=false,walking=false;
@@ -344,6 +352,7 @@ public class Player implements Drawable{
 		if(gene[5]&&!gene[6])widenCast();
 		else if(gene[6]&&!gene[5])closeCast();
 		//else if(gene[5]&&gene[6])broadCast=maxCast;
+		}
 	}
 	public Game getGame() {
 		return game;
@@ -368,7 +377,7 @@ public class Player implements Drawable{
 		walking+=((speed+species.projectile.addedSpeed)*(5/8.00));
 		move(direction+Math.PI,((speed+species.projectile.addedSpeed)*(5/8.00)));
 	}
-	private void readTraits() {
+	public void readTraits() {
 		double healthBoost=2,speedBoost=0.2,powerBoost=0.1;
 		for(int x=0;x<traits;x++){
 			if(DNA[reactions*situations+x]){

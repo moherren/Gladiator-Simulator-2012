@@ -131,6 +131,7 @@ class PlayerCreditName{
 		player.y=100;
 		player.direction=Math.PI/2;
 		FontRenderContext frc=new FontRenderContext(null,true,true);
+		System.out.println(player.size);
 		
 		while(length>600){
 			fontSize--;
@@ -146,7 +147,7 @@ class PlayerCreditName{
 		if(y<550&&y>350){
 			Arrays.fill(r.depthMap, 0);
 			Arrays.fill(r.pixels, 0);
-			r.Player(player);
+			player.drawAlive(r);
 			if(y<400){
 				r.shade(((400-y)/50.000), 0);
 			}
@@ -240,7 +241,7 @@ public class Victory {
 		else {
 			Arrays.fill(r.depthMap, 0);
 			r.Arena();
-			r.Player(winner);
+			winner.drawAlive(r);
 			for(Confetti c:confetti){
 				c.draw(r);
 			}

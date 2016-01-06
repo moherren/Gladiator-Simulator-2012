@@ -1,5 +1,13 @@
 package com.mime.evolve;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.font.GlyphVector;
+import java.io.File;
+import java.io.IOException;
+
+import com.mime.evolve.graphics.Render;
+import com.mime.evolve.graphics.Render2D;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
 import com.mime.evolve.species.Species;
@@ -10,7 +18,7 @@ public class Tournament extends Game {
 	boolean started=false;
 	private int redos=0;
 	int displayStage=0;
-	int nextStage=0;
+	long nextStage=0;
 	/** 1. Display fighter names with "vs." displayed between them
 	 *  2. Move fighter names to their respective positions on the screen and fade into the arena
 	 *  3. Display the word Fight!
@@ -20,6 +28,7 @@ public class Tournament extends Game {
 	public final static long[] stageTimes=new long[]{
 			200, 100,50,upperTimeLength,150,300
 	};
+	
 	public Tournament(Player[] p) {
 		super(true);		
 		competetors = p;
@@ -40,15 +49,19 @@ public class Tournament extends Game {
 		if(time>=nextStage&&displayStage!=3){
 			System.out.println(displayStage+" stage is done");
 				displayStage++;
-			if(displayStage==stageTimes.length)
-				displayStage=0;
-			nextStage+=stageTimes[displayStage];	
+			if(displayStage==stageTimes.length){
+				newGame();
+			}
+			else{
+				
+				nextStage+=stageTimes[displayStage];	
+			}
 		}
 
 		if (competetors.length == 1) {
 			System.out.println("Fight done");
 			return  competetors;
-		} else if(displayStage==3){
+		} else if(displayStage==3||displayStage==4){
 			player1.tick(this);
 			player2.tick(this);
 
@@ -126,7 +139,8 @@ public class Tournament extends Game {
 				return;
 			}
 		}
-		newGame();
+		displayStage=4;
+		nextStage=time+stageTimes[4];
 	}
 
 	protected void newGame() {

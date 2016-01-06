@@ -94,8 +94,10 @@ public class Render2D extends Render{
 			dist=Math.max(dist, 0);
 			dist=Math.min(dist, 1);
 		}
-		if(game.getDisplayStage()<=1)
+		if(game.getDisplayStage()<=1){
 			this.shade((1-dist)*0.85, 1);
+			this.drawOblique(game.vsArt, 600-game.vsArt.width/2, 400-game.vsArt.height/2, 1-dist);
+		}
 		else
 			dist=1;
 	

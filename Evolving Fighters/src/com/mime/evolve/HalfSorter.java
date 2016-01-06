@@ -74,7 +74,7 @@ public class HalfSorter extends Game {
 		// boolean up=key[KeyEvent.VK_W];
 		// boolean down=key[KeyEvent.VK_S];
 		// boolean shoot=key[KeyEvent.VK_TAB];
-		if(true){
+		if(false){
 			boolean change=true;
 			while(change){
 				change=false;

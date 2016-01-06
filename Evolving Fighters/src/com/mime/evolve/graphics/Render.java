@@ -164,7 +164,21 @@ public class Render {
 				pixels[xPix+yPix*width]=alpha;
 			}
 		}
-		
+	}
+	
+	public void drawOblique(Render render,int xOffSet,int yOffSet,double obliquity){
+		for(int y=0; y<render.height;y++){
+			int yPix=y+yOffSet;
+			if (yPix<0||yPix>=height) continue;
+			for(int x=0; x<render.width;x++){
+				int xPix=x+xOffSet;
+				if (xPix<0||xPix>=width) continue;
+				int alpha=render.pixels[x+y*render.width];
+				alpha=mixColor(pixels[xPix+yPix*width],alpha,obliquity);
+				if(render.pixels[x+y*render.width]>0)
+				pixels[xPix+yPix*width]=alpha;
+			}
+		}
 	}
 	
 	public void drawString(String s,int x,int y,int color){
