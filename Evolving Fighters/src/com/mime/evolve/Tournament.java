@@ -26,7 +26,7 @@ public class Tournament extends Game {
 	 *  5. Death scene/display the words KO
 	 *  6. Distribute money*/
 	public final static long[] stageTimes=new long[]{
-			200, 100,50,upperTimeLength,250,300
+			200, 100,50,upperTimeLength,350,300
 	};
 	
 	public Tournament(Player[] p) {
@@ -50,6 +50,20 @@ public class Tournament extends Game {
 			System.out.println(displayStage+" stage is done");
 				displayStage++;
 			if(displayStage==stageTimes.length){
+				if (battleNumber >= newCompetetors.length) {
+					System.out.println(competetors.length);
+					battleNumber = 0;
+					if(newCompetetors.length!=1){
+						competetors = newCompetetors;
+						newCompetetors = new Player[competetors.length / 2];
+						newGame();
+						Display.display.game.handle.takeAllBets(competetors);
+					} 
+					else{
+						competetors = newCompetetors;
+					}
+				}
+			else
 				newGame();
 			}
 			else{
@@ -123,22 +137,7 @@ public class Tournament extends Game {
 		}
 		System.out.println("Winner " + newCompetetors[battleNumber].toString());
 			battleNumber++;
-
-		if (battleNumber >= newCompetetors.length) {
-			System.out.println(competetors.length);
-			battleNumber = 0;
-			if(newCompetetors.length!=1){
-				competetors = newCompetetors;
-				newCompetetors = new Player[competetors.length / 2];
-				newGame();
-				Display.display.game.handle.takeAllBets(competetors);
-				return;
-			} 
-			else{
-				competetors = newCompetetors;
-				return;
-			}
-		}
+			
 		displayStage=4;
 		nextStage=time+stageTimes[4];
 	}

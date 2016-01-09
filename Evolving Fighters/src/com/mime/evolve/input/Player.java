@@ -5,11 +5,14 @@ import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.Random;
 
+import com.mime.evolve.Display;
 import com.mime.evolve.Game;
+import com.mime.evolve.Tournament;
 import com.mime.evolve.graphics.Drawable;
 import com.mime.evolve.graphics.Render;
 import com.mime.evolve.graphics.Render2D;
 import com.mime.evolve.species.Species;
+import com.mime.evolve.tests.SoundHandler;
 
 public class Player implements Drawable{
 	public static int reactions=7,situations=16,traits=12;
@@ -148,6 +151,8 @@ public class Player implements Drawable{
 		if(game.getEnemy(this).health>0&&health>0){
 			if(d==0)
 				return;
+			if((int)(health/4)!=(int)((health-d)/4))
+				grunt();
 			health-=d;
 			game.resetCountdown();
 			if(health<=0){
@@ -457,4 +462,16 @@ public class Player implements Drawable{
 		if(broadCast>maxCast)
 			broadCast=maxCast;
 	}
+	
+	public void grunt(){
+		if(game instanceof Tournament)
+		switch(Display.display.game.rand.nextInt(2)){
+			case 0:
+				SoundHandler.play(SoundHandler.GRUNT_ONE);
+				break;
+			case 1:
+				SoundHandler.play(SoundHandler.GRUNT_TWO);
+				break;
+		}
+		}
 }

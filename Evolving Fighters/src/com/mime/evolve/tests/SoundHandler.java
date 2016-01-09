@@ -21,6 +21,10 @@ public class SoundHandler {
 	 * A booming voice saying "Colosseum Simulator 2012"
 	 */
 	public static String VOICE_ONE = "SoundSource/Voice_1.wav";
+	/**
+	 * A fast swinging noise from a rod
+	 */
+	public static String FAST_ONE = "SoundSource/Fast_1.wav";
 
 	public static void play(String ref) {
 		try {

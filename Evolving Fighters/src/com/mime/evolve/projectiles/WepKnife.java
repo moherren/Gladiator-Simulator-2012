@@ -17,7 +17,7 @@ public class WepKnife extends StabProjectile{
 		speed=1;
 		damage=1.65;
 		name="knife";
-		addedSpeed=2;
+		addedSpeed=1.5;
 	}
 	public WepKnife(double x, double y, double dir, Player target,Player owner,int size,double speed,long endTime,double damage,ArrayList<Projectile> brothers) {
 		super(x,y,dir,target,owner,size,speed,endTime,damage,brothers);
