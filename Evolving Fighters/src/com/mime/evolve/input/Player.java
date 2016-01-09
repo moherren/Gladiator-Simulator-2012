@@ -145,7 +145,7 @@ public class Player implements Drawable{
 			broadCast=minCast;
 	}
 	public void damage(double d){
-		if(game.getEnemy(this).health>0){
+		if(game.getEnemy(this).health>0&&health>0){
 			if(d==0)
 				return;
 			health-=d;

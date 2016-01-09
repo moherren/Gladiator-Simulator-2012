@@ -105,14 +105,12 @@ public class Game {
 	public static boolean[] breed(Species s){
 		Random rand=new Random();
 		ArrayList<boolean[]> ogp= (ArrayList<boolean[]>) s.oldGenePool.clone();
-		boolean Mom=true,Dad=true;
 		boolean[] mom;
 		if(!ogp.isEmpty()){
 			mom=ogp.get(rand.nextInt(ogp.size()));
 		}
 		else{
 			mom=Player.generateSequences(Player.reactions*Player.situations+Player.traits);
-			Mom=false;
 		}
 		for(boolean[] a:s.oldGenePool){
 			if(a.equals(mom))
@@ -124,7 +122,6 @@ public class Game {
 		}
 		else{
 			dad=Player.generateSequences(Player.reactions*Player.situations+Player.traits);
-			Dad=false;
 		}
 		return breed(mom,dad);
 	}
