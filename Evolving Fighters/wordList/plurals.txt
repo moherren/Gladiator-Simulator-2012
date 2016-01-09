@@ -609,7 +609,6 @@ artisans
 artists
 artistes
 arums
-asses
 ascendancies
 ascendants
 ascensions
@@ -8384,7 +8383,6 @@ pendulums
 penguins
 penholders
 peninsulas
-penises
 penitents
 penitentiaries
 penknives
@@ -9381,7 +9379,6 @@ ranis
 ranks
 rankings
 rants
-rapes
 rapids
 rapiers
 rapprochements
@@ -12118,7 +12115,6 @@ vacuities
 vacuums
 vagabonds
 vagaries
-vaginas
 vagrants
 vagroms
 vagues

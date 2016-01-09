@@ -5947,7 +5947,6 @@ penguin
 penholder
 penicillin
 peninsula
-penis
 penitentiary
 penknife
 penman
@@ -9346,7 +9345,6 @@ vaccine
 vacuity
 vacuum
 vagary
-vagina
 vagrancy
 vagrant
 vainglory
@@ -9534,7 +9532,6 @@ violoncello
 viper
 virago
 vireo
-virgin
 virginity
 virgule
 virtu
