@@ -26,7 +26,7 @@ public class Tournament extends Game {
 	 *  5. Death scene/display the words KO
 	 *  6. Distribute money*/
 	public final static long[] stageTimes=new long[]{
-			200, 100,50,upperTimeLength,150,300
+			200, 100,50,upperTimeLength,250,300
 	};
 	
 	public Tournament(Player[] p) {

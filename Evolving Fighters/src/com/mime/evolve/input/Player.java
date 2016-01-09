@@ -303,9 +303,9 @@ public class Player implements Drawable{
 			 double y=headY+Math.sin(eyeDir[0])*size*alias;
 			 for(int X=(int)x-1;X<(int)x+2;X++){
 				 for(int Y=(int)y-1;Y<(int)y+2;Y++){
-					 if(r.depthMap[X+Y*r.width]<=depth){
-					 r.pixels[((int)X+(int)Y*r.width)]= 1;
-					 r.depthMap[X+Y*r.width]=(int) (depth+alias);
+					 if(r.depthMap[X+Y*r.width]<=depth&&((X==Y)||(X==-Y))){
+						 r.pixels[((int)X+(int)Y*r.width)]= 1;
+						 r.depthMap[X+Y*r.width]=(int) (depth+alias);
 					 }
 				 }
 			 }

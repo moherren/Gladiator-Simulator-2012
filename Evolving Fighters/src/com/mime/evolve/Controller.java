@@ -29,6 +29,7 @@ public class Controller extends Game implements ActionListener{
 	String ankur="trash";
 	public static int intensity=2;
 	public Render2D vsArt;
+	public Render2D koArt;
 	
 	public Player[] tick(boolean[] key){
 		if(handle.usersEmpty()){
@@ -50,6 +51,7 @@ public class Controller extends Game implements ActionListener{
 		else if(tourny==null){
 			try {
 				vsArt=generateVs();
+				koArt=generateKo();
 			} catch (FontFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -94,6 +96,17 @@ public class Controller extends Game implements ActionListener{
 		Arrays.fill(vsArt.pixels,0);
 		vsArt.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,25));
 		vsArt.drawOutlinedWordArt("vs",10,(int) (gv.getVisualBounds().getHeight()+25), 4);
+		return vsArt;
+	}
+	public static Render2D generateKo() throws FontFormatException, IOException{
+		Render2D vsArt;
+		GlyphVector gv=Render.getGlyohVector("KO", Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		int width=(int) (gv.getVisualBounds().getWidth())+20;
+		int height=(int) (gv.getVisualBounds().getHeight())+50;
+		vsArt=new Render2D(width,height);
+		Arrays.fill(vsArt.pixels,0);
+		vsArt.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		vsArt.drawOutlinedWordArt("KO",10,(int) (gv.getVisualBounds().getHeight()+30), 4);
 		return vsArt;
 	}
 }

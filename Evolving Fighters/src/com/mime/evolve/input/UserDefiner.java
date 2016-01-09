@@ -21,10 +21,11 @@ import javax.swing.event.ChangeListener;
 import com.mime.evolve.Controller;
 import com.mime.evolve.Display;
 import com.mime.evolve.Game;
+import com.mime.evolve.tests.SoundHandler;
 
 public class UserDefiner extends JPanel implements ActionListener,ChangeListener{
 
-	JLabel Title=new JLabel("Gladiator Simulator 2012");
+	JLabel Title=new JLabel("Coliseum Simulator 2012");
 	JLabel author=new JLabel("by Matthew \"The Hammer\" O'Herren");
 	JLabel intro=new JLabel("Number of Players:",JLabel.LEADING);
 	JSpinner userAmount,inputIntensity;
@@ -41,6 +42,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	public UserDefiner(GambleHandler handle){
 		this.handle=handle;		
 		System.out.println("users to be defined");
+		SoundHandler.play(SoundHandler.VOICE_ONE);
 		
 		Title.setFont(Title.getFont().deriveFont(32.0f));
 		Title.setFont(Title.getFont().deriveFont(Font.BOLD));
