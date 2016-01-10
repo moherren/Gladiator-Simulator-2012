@@ -151,8 +151,8 @@ public class Player implements Drawable{
 		if(game.getEnemy(this).health>0&&health>0){
 			if(d==0)
 				return;
-			if((int)(health/4)!=(int)((health-d)/4))
-				grunt();
+//			if((int)(health/4)!=(int)((health-d)/4))
+//				grunt();
 			health-=d;
 			game.resetCountdown();
 			if(health<=0){

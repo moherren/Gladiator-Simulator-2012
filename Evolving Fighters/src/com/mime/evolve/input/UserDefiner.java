@@ -1,10 +1,14 @@
 package com.mime.evolve.input;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -32,7 +36,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	JLabel[] names;
 	JTextField[] inputNames;
 	JTextField inputEvolution;
-	JButton done;
+	JButton done,howToPlay;
 	GambleHandler handle;
 	int gap=60;
 	GroupLayout layout=new GroupLayout(this);
@@ -94,7 +98,12 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 			}
 		}
 		done=new JButton("Continue");
+		done.setActionCommand("done");
 		done.addActionListener(this);
+		
+		howToPlay=new JButton("Tutorial");
+		howToPlay.setActionCommand("how");
+		howToPlay.addActionListener(this);
 		
 		
 		layout.setAutoCreateGaps(true);
@@ -138,6 +147,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 						)
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 								.addComponent(done)
+								.addComponent(howToPlay)
 								)
 						)
 				);
@@ -200,6 +210,10 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 							layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 							.addComponent(done)
 							)
+							.addGroup(
+							layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addComponent(howToPlay)
+							)
 						)
 					)
 				);
@@ -210,7 +224,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(optionsMakeSense()){
+		if(optionsMakeSense()&&e.getActionCommand().equals("done")){
 			Game.evolutionAmount=Integer.parseInt(inputEvolution.getText());
 			Controller.intensity=(int) Math.pow(2,(Integer) inputIntensity.getValue());
 			System.out.println("all done");
@@ -225,6 +239,15 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 			handle.finishMakingUsers(users);
 			Display.returnCanvas();
 		}
+		else if(e.getActionCommand().equals("how"))
+			if(Desktop.isDesktopSupported())
+			{
+			  try {
+				Desktop.getDesktop().browse(new URI("https://docs.google.com/document/d/1TeKpu230W6BVk0kPC8KSmcyJmkKLmRUcBxsMpxj96bM/edit?usp=sharing"));
+			} catch (IOException | URISyntaxException e1) {
+				e1.printStackTrace();
+				}
+			}
 	}
 
 	private boolean optionsMakeSense() {

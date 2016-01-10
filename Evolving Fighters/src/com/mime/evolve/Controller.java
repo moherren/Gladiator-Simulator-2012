@@ -21,7 +21,7 @@ import com.mime.evolve.input.Player;
 public class Controller extends Game implements ActionListener{
 	
 	int gen=0;
-	Player[] Competetors;
+	Player[] Competetors=null;
 	ArrayList<Player> allCompetetors;
 	GambleHandler handle=new GambleHandler(this);
 	Tournament tourny;

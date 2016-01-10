@@ -29,7 +29,7 @@ class Confetti{
 		this.color=randomColor();
 		angle=Math.random()*2*Math.PI;
 		torque=Math.random()*2-1;
-		vx=Math.random()*6-3;
+		vx=Math.random()*1.5-0.75;
 		this.vic=vic;
 		startTime=vic.time;
 	}
@@ -191,7 +191,7 @@ public class Victory {
 	Render2D deathWindow=new Render2D(200,200);
 	Player winner;
 	int time=0,startTime;
-	final float phase1=45000,phase2=phase1+10000,phase3=phase2+500;
+	final float phase1=45000,phase2=phase1+10000,phase3=phase2+700;
 	
 	int addedTime=0;
 

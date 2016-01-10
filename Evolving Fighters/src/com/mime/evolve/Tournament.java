@@ -13,8 +13,8 @@ import com.mime.evolve.projectiles.Projectile;
 import com.mime.evolve.species.Species;
 
 public class Tournament extends Game {
-	static Player[] competetors;
-	static Player[] newCompetetors = new Player[999];
+	Player[] competetors;
+	Player[] newCompetetors = new Player[999];
 	boolean started=false;
 	private int redos=0;
 	int displayStage=0;
@@ -48,29 +48,13 @@ public class Tournament extends Game {
 		// boolean shoot=key[KeyEvent.VK_TAB];
 		if(time>=nextStage&&displayStage!=3){
 			System.out.println(displayStage+" stage is done");
-				displayStage++;
-			if(displayStage==stageTimes.length){
-				if (battleNumber >= newCompetetors.length) {
-					System.out.println(competetors.length);
-					battleNumber = 0;
-					if(newCompetetors.length!=1){
-						competetors = newCompetetors;
-						newCompetetors = new Player[competetors.length / 2];
-						newGame();
-						Display.display.game.handle.takeAllBets(competetors);
-					} 
-					else{
-						competetors = newCompetetors;
-					}
-				}
-			else
+			displayStage++;
+			if(displayStage==stageTimes.length)	
 				newGame();
-			}
 			else{
-				
-				nextStage+=stageTimes[displayStage];	
+				nextStage+=stageTimes[displayStage];
+				}
 			}
-		}
 
 		if (competetors.length == 1) {
 			System.out.println("Fight done");
@@ -127,7 +111,7 @@ public class Tournament extends Game {
 	public void endGame() {
 		oldTime = time;
 		redos=1;
-
+		
 		if (player1.health <= 0) {
 			newCompetetors[battleNumber] = player2;
 			Display.display.game.handle.giveWinnings(player2,player1);
@@ -136,7 +120,22 @@ public class Tournament extends Game {
 			Display.display.game.handle.giveWinnings(player1,player2);
 		}
 		System.out.println("Winner " + newCompetetors[battleNumber].toString());
-			battleNumber++;
+		battleNumber++;
+			
+				if (battleNumber >= newCompetetors.length) {
+					System.out.println(competetors.length);
+					battleNumber = 0;
+					if(newCompetetors.length!=1){
+						competetors = newCompetetors;
+						newCompetetors = new Player[competetors.length / 2];
+						newGame();
+						Display.display.game.handle.takeAllBets(competetors);
+					} 	
+					else{
+						competetors = newCompetetors;
+					}
+				}
+				
 			
 		displayStage=4;
 		nextStage=time+stageTimes[4];
@@ -157,6 +156,9 @@ public class Tournament extends Game {
 		for (Projectile p : projectiles) {
 			destroyProjectile(p);
 		}
+		
+		
+		
 		if (competetors.length > 1){
 		species1 = competetors[battleNumber * 2].species;
 		player1 = new Player(11, Math.PI, species1,

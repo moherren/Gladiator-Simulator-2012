@@ -173,7 +173,16 @@ public class Species {
 	}
 	
 	public void generateArmor(){
-		Render a=Texture.loadBitmap("Textures/armor1.png");
+		String file;
+		switch(Game.rand.nextInt(3)){
+		case 0:file="Textures/armor1.png";
+		break;
+		case 1:file="Textures/armor2.png";
+		break;
+		default:file="Textures/armor3.png";
+		break;
+		}
+		Render a=Texture.loadBitmap(file);
 		armor=new Render2D(a.width,a.height);
 		Arrays.fill(armor.pixels,color);
 		armor.draw(a, 0, 0);
