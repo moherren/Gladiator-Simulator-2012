@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import com.mime.evolve.Display;
+import com.mime.evolve.sound.SoundHandler;
 
 public class GambleHandler {
 	private ArrayList<User> gamblers=new ArrayList<User>();
@@ -45,6 +46,7 @@ public class GambleHandler {
 		}
 		else{
 			al.actionPerformed(new ActionEvent(this,0,"bets done"));
+			//SoundHandler.playMusic(SoundHandler.SONG_ONE, 4);
 			Display.returnCanvas();
 		}
 	}

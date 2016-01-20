@@ -25,7 +25,7 @@ import javax.swing.event.ChangeListener;
 import com.mime.evolve.Controller;
 import com.mime.evolve.Display;
 import com.mime.evolve.Game;
-import com.mime.evolve.tests.SoundHandler;
+import com.mime.evolve.sound.SoundHandler;
 
 public class UserDefiner extends JPanel implements ActionListener,ChangeListener{
 

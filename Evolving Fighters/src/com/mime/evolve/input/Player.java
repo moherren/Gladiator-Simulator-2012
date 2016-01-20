@@ -11,8 +11,8 @@ import com.mime.evolve.Tournament;
 import com.mime.evolve.graphics.Drawable;
 import com.mime.evolve.graphics.Render;
 import com.mime.evolve.graphics.Render2D;
+import com.mime.evolve.sound.SoundHandler;
 import com.mime.evolve.species.Species;
-import com.mime.evolve.tests.SoundHandler;
 
 public class Player implements Drawable{
 	public static int reactions=7,situations=16,traits=12;
@@ -151,8 +151,8 @@ public class Player implements Drawable{
 		if(game.getEnemy(this).health>0&&health>0){
 			if(d==0)
 				return;
-//			if((int)(health/4)!=(int)((health-d)/4))
-//				grunt();
+			if((int)(health/4)!=(int)((health-d)/4))
+				grunt();
 			health-=d;
 			game.resetCountdown();
 			if(health<=0){

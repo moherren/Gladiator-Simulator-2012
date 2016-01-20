@@ -1,13 +1,31 @@
 package com.mime.evolve.input;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.util.Arrays;
 import java.util.Hashtable;
+
+import com.mime.evolve.graphics.Render2D;
 
 public class User {
 	public String name="";
 	public int money=10,moneyWon=0;
 	public Hashtable<String,Integer> bets=new Hashtable<String,Integer>();
+	Render2D r;
 	public User(String name) {
 		this.name=name;
+		
+		r=new Render2D(0,0);
+		FontRenderContext frc=new FontRenderContext(null,true,true);
+		r.setFont(r.getFont().deriveFont(Font.BOLD, 30));
+		GlyphVector gv=r.getFont().createGlyphVector(frc,this.name);
+		int length=(int) (gv.getVisualBounds().getWidth()+10);
+		r=new Render2D(length+20,150);
+		Arrays.fill(r.pixels, -1);
+		r.setFont(r.getFont().deriveFont(Font.BOLD, 30));
+
+		r.drawWordArt(this.name, 10, 750,4);
 	}
 	public Integer getBet(Player player){
 		if(bets.containsKey(player.species.name))
