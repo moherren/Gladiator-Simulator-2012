@@ -30,7 +30,8 @@ public class ConstantVisionSpecies extends Species{
 		}
 		
 		if(viewProj)
-		loop:for(Projectile proj:game.projectiles){
+			loop:for(int i=0;i<game.projectiles.size();i++){
+				Projectile proj=game.projectiles.get(i);
 			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.maxCast,proj.size)&&proj.target.equals(enemy)){
 				sitNum+=8;
 				break loop;

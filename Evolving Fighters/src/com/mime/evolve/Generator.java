@@ -27,8 +27,8 @@ public class Generator{
 					loadAmount+=change;
 				}
 				
-				if(genedPlayers[0]!=null)
-					System.out.println(id+" yay!");
+				if(genedPlayers[0]!=null&&id%25==0)
+					System.out.print("#");
 			}
 			while(genedPlayers[0]==null);
 			for(Player p:genedPlayers){
@@ -58,7 +58,12 @@ public class Generator{
 	
 	public synchronized void addLoad(double add) {
 		loadAmount+=add*2/numOfPlayers;
+		try{
 		Display.display.lRender(Display.display.game,loadAmount);
+		}
+		catch(Exception e){
+			
+		}
 	}
 		
 	public synchronized void addPlayer(Player p){

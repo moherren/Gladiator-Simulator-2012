@@ -51,21 +51,8 @@ public class Species {
 			e.printStackTrace();
 		}
 		generateArmor();
-		Random rand=new Random(Game.rand.nextLong());
-		switch(rand.nextInt(6)){
-		case 0:projectile=new WepShortSword();
-		break;
-		case 1:projectile=new WepBowAndArrow();
-		break;
-		case 2:projectile=new WepKnife();
-		break;
-		case 3:projectile=new WepRapier();
-		break;
-		case 4:projectile=new WepFlail();
-		break;
-		default:projectile=new WepSpear();
-		break;
-		}
+		projectile=createRandomProjectile();
+		
 	}
 	public Species(int color,Projectile proj,String name){
 		this.color=color;
@@ -190,5 +177,26 @@ public class Species {
 	
 	public Render2D getArmor(){
 		return armor;
+	}
+	
+	public static Projectile createRandomProjectile(){
+		Random rand=new Random(Game.rand.nextLong());
+		Projectile projectile;
+		switch(rand.nextInt(6)){
+		case 0:projectile=new WepShortSword();
+		break;
+		case 1:projectile=new WepBowAndArrow();
+		break;
+		case 2:projectile=new WepKnife();
+		break;
+		case 3:projectile=new WepRapier();
+		break;
+		case 4:projectile=new WepFlail();
+		break;
+		case 5:projectile=new WepSpear();
+		break;
+		default: projectile=createRandomProjectile();
+		}
+		return projectile;
 	}
 }

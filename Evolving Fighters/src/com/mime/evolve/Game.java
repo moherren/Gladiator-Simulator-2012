@@ -21,6 +21,7 @@ public class Game {
 	public static int evolutionAmount=225;
 	final public static int minEvolution=10;
 	public static final Player[] noPlayers=new Player[]{null,null};
+	public static int rSpecies=-1;
 	
 	
 	public static final Player[] bots=new Player[]{
@@ -55,7 +56,7 @@ public class Game {
 	
 	
 	public static final Player[] testBots=new Player[]{
-		new Player(0, 0,new Species(0,new WepBowAndArrow(),"bot"), 
+		new Player(0, 0,new Species(0,new WepKnife(),"bot"), 
 		Player.stringToDna("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		,new emptyGame()),
 		
@@ -63,11 +64,11 @@ public class Game {
 		Player.stringToDna("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		,new emptyGame()),
 		
-		new Player(0, 0,new Species(0,new WepBowAndArrow(),"bot"), 
-		Player.stringToDna("0110010000010110010110101011011001000001010101011100101101100100000101010101110010110110010000010101010111001011000011110000")
+		new Player(0, 0,new Species(0,new WepKnife(),"bot"), 
+		Player.stringToDna("0001011011011111111010100001100011001010001100000101010101010101001101001011111110110011011101010000001100100101000011010110")
 		,new emptyGame()),
 					
-		new Player(0, 0,new Species(0,new WepBowAndArrow(),"bot"), 
+		new Player(0, 0,new Species(0,new WepKnife(),"bot"), 
 		Player.stringToDna("0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
 		,new emptyGame()),
 				
@@ -84,9 +85,11 @@ public class Game {
 		,new emptyGame()),
 };
 	
-	
-	public static boolean[] breed(boolean[] mom,boolean[] dad){
-		Random rand=new Random();
+	/*
+	 * Uniform Breed breeds two dnas together by going through each dna and picking one at random
+	 */
+	public static boolean[] uniformBreed(boolean[] mom,boolean[] dad){
+		Random rand=new Random(Game.rand.nextLong());
 		boolean chromosome;
 		boolean[] dna=new boolean[Player.situations*Player.reactions+Player.traits];
 		for(int x=0;x<Player.reactions*Player.situations+Player.traits;x++){
@@ -94,16 +97,48 @@ public class Game {
 			chromosome=mom[x];
 			else chromosome=dad[x];
 			
-			if(rand.nextInt((Player.reactions*Player.situations+Player.traits)*15)==0){
-				chromosome=!chromosome;
-			}
 			dna[x]=chromosome;
 		}
 			
-		return dna;
+		return mutate(dna);
 	}
+	
+	public static boolean[] crossoverBreed(boolean[] mom,boolean[] dad){
+		Random rand=new Random(Game.rand.nextLong());
+		int size=Player.situations*Player.reactions+Player.traits;
+		int cross=rand.nextInt((size)-1)+1;
+		boolean[] dna=new boolean[size];
+				
+		for(int i=0;i<cross;i++){
+			dna[i]=mom[i];
+		}
+		for(int i=cross;i<size;i++){
+			dna[i]=dad[i];
+		}
+		
+		return mutate(dna);
+	}
+	public static boolean[] dCrossoverBreed(boolean[] mom,boolean[] dad){
+		Random rand=new Random(Game.rand.nextLong());
+		int size=Player.situations*Player.reactions+Player.traits;
+		int cross1=rand.nextInt((size)-3)+1,cross2=rand.nextInt(size-cross1)+cross1+1;
+		boolean[] dna=new boolean[size];
+				
+		for(int i=0;i<cross1;i++){
+			dna[i]=mom[i];
+		}
+		for(int i=cross1;i<cross2;i++){
+			dna[i]=dad[i];
+		}
+		for(int i=cross2;i<size;i++){
+			dna[i]=mom[i];
+		}
+		
+		return mutate(dna);
+	}
+	
 	public static boolean[] breed(Species s){
-		Random rand=new Random();
+		Random rand=new Random(Game.rand.nextLong());
 		ArrayList<boolean[]> ogp= (ArrayList<boolean[]>) s.oldGenePool.clone();
 		boolean[] mom;
 		if(!ogp.isEmpty()){
@@ -123,7 +158,14 @@ public class Game {
 		else{
 			dad=Player.generateSequences(Player.reactions*Player.situations+Player.traits);
 		}
-		return breed(mom,dad);
+		
+		if(rand.nextBoolean()){
+			boolean[] h=dad;
+			dad=mom;
+			mom=h;
+		}
+		
+		return uniformBreed(mom,dad);
 	}
 	public static boolean[] mutate(boolean[] dNA2){;
 		for(int x=0;x<Player.reactions*Player.situations+Player.traits;x++){
@@ -136,6 +178,8 @@ public class Game {
 	public static Species newSpecies(int c){
 		//return new Species(c);
 		int seed=rand.nextInt(20);
+		if(rSpecies>0)
+			seed=rSpecies;
 		switch(seed){
 		case 0: return new BulletProximitySpecies(c);
 		case 1: return new ProximitySpecies(c);
@@ -224,7 +268,7 @@ public class Game {
 			species1.addToGenePool(player1);
 			fNum=0;
 			battleNumber++;
-			species1=species[battleNumber%4];
+			species1=species[battleNumber%2];
 		}
 		
 		
@@ -339,7 +383,7 @@ public class Game {
 		}
 		else if(gen>evolutionAmount){
 			//System.out.println("Tick Game");
-			return tourny.tick(key);
+			return new Player[]{species[0].elite,species[1].elite};
 		}
 		else{
 			Player[] p=new Player[4];
