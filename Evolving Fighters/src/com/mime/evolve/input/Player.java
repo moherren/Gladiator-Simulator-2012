@@ -435,7 +435,12 @@ public class Player implements Drawable{
 		}
 	}
 	public void tick(Game game){
+		try{
 		species.tick(game, this);
+		}
+		catch(Exception n){
+			
+		}
 	}
 	public String toString(){
 		return ("name:"+species.name+", fitness-"+species.elite.fitness+", descriptor-"+species.descriptor+", weapon-"+species.projectile.name+", dna:"+dnaToString(DNA));

@@ -178,7 +178,7 @@ public class Game {
 	public static Species newSpecies(int c){
 		//return new Species(c);
 		int seed=rand.nextInt(20);
-		if(rSpecies>0)
+		if(rSpecies>=0)
 			seed=rSpecies;
 		switch(seed){
 		case 0: return new BulletProximitySpecies(c);
@@ -189,7 +189,7 @@ public class Game {
 		case 5: return new BroaderVisionSpecies(c);
 		case 6: return new EnemyVisionSpecies(c);
 		case 7: return new ReloadReaderSpecies(c);
-		case 8:return newSpecies(c);
+		case 8:return new RandomSpecies(c);
 		case 9: return new ConstantVisionSpecies(c);
 		case 10: return new VisionSizeSpecies(c);
 		case 11: return new WeaponReaderSpecies(c);
@@ -246,8 +246,8 @@ public class Game {
 		}
 		else
 		{
-			sit.setDNA(testBots[botNum].DNA, false);
-			sit.setSpecies(testBots[botNum].species, false);
+			sit.setDNA(bots[botNum].DNA, false);
+			sit.setSpecies(bots[botNum].species, false);
 		}
 	}
 	
@@ -304,7 +304,9 @@ public class Game {
 		dBetweenPlayers=10000;
 		boolean win=false;
 		for(Projectile p:projectiles){
-			destroyProjectile(p);
+			p.endTime=0;
+			p.startTime=time;
+			p.damage=0;
 		}
 
 		try{

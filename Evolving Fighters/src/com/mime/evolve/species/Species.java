@@ -36,6 +36,7 @@ public class Species {
 	public Situation[] fights=new Situation[13];
 	public int maxFit=0;
 	Render2D nameArt,armor; 
+	public static int rWeapon=-1;
 	public Species(int color){
 		this.color=color;
 		
@@ -182,7 +183,10 @@ public class Species {
 	public static Projectile createRandomProjectile(){
 		Random rand=new Random(Game.rand.nextLong());
 		Projectile projectile;
-		switch(rand.nextInt(6)){
+		int seed=rand.nextInt(6);
+		if(rWeapon>=0)
+			seed=rWeapon;
+		switch(seed){
 		case 0:projectile=new WepShortSword();
 		break;
 		case 1:projectile=new WepBowAndArrow();

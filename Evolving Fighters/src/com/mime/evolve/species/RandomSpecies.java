@@ -1,5 +1,7 @@
 package com.mime.evolve.species;
 
+import java.util.Random;
+
 import com.mime.evolve.Game;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
@@ -11,7 +13,8 @@ public class RandomSpecies extends Species{
 		descriptor="erratic";
 	}
 	public void tick(Game game,Player user){
-		int r=(int)((1-Math.sqrt(1-Game.rand.nextDouble()))*4);
+		Random rand=new Random(7);
+		int r=(int)((1-Math.sqrt(1-rand.nextDouble()))*4);
 		Player enemy=game.getEnemy(user);
 		int sitNum=1;
 		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
