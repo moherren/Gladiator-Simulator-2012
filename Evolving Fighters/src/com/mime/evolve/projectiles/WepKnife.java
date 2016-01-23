@@ -68,7 +68,7 @@ public class WepKnife extends StabProjectile{
 	}
 	public void tick(){
 		updatePosition();
-		if(!meele)
+		if(!owner.species.projectile.meele)
 			game.resetCountdown();
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
 			Player enemy=game.getEnemy(owner);

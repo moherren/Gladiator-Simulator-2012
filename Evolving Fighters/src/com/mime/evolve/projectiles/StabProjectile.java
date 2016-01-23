@@ -79,8 +79,7 @@ public class StabProjectile extends Projectile{
 	}
 	public void tick(){
 		updatePosition();
-		if(!meele)
-			game.resetCountdown();
+		
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
 			
 			target.damage(damage*owner.power);
