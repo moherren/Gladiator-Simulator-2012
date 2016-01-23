@@ -35,6 +35,8 @@ public class Projectile implements Drawable{
 		game=owner.getGame();
 		startTime=game.time;
 		willHit();
+		if(!owner.species.projectile.meele)
+			game.resetCountdown();
 	}
 	@Override
 	public void draw(Render2D r) {
@@ -56,8 +58,6 @@ public class Projectile implements Drawable{
 	}
 	public void tick(){
 		updatePosition();
-		if(!meele)
-			game.resetCountdown();
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size){
 			target.damage(damage*owner.power);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;

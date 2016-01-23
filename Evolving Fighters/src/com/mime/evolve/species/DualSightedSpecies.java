@@ -18,6 +18,7 @@ public class DualSightedSpecies extends Species{
 		}
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
+			if(proj!=null)
 			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction-user.broadCast/2, user.broadCast/2,proj.size)&&proj.target.equals(this)){
 				sitNum+=2;
 				break loop;
@@ -28,6 +29,7 @@ public class DualSightedSpecies extends Species{
 		}
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
+			if(proj!=null)
 			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction+user.broadCast/2, user.broadCast/2,proj.size)&&proj.target.equals(this)){
 				sitNum+=8;
 				break loop;

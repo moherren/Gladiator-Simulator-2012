@@ -8,6 +8,7 @@ import com.mime.evolve.input.Player;
 import com.mime.evolve.level.Level;
 import com.mime.evolve.level.Situation;
 import com.mime.evolve.projectiles.Projectile;
+import com.mime.evolve.projectiles.SwingProjectile;
 import com.mime.evolve.projectiles.WepBowAndArrow;
 import com.mime.evolve.projectiles.WepFlail;
 import com.mime.evolve.projectiles.WepKnife;
@@ -260,12 +261,13 @@ public class Game {
 			projectiles.add(proj);
 			break;
 		case 2:{
-			projectiles.remove(destroiedProjectiles);
+			projectiles.removeAll(destroiedProjectiles);
 			destroiedProjectiles.clear();
 			break;
 			}
 		case 3:
 			projectiles.clear();
+			break;
 		}
 		return proj;
 	}
@@ -273,7 +275,7 @@ public class Game {
 	
 	
 	public void endGame(){
-		oldTime=time;
+		resetCountdown();
 		
 		if(player2.health<=0&&fNum<=11){
 			fNum++;
@@ -366,7 +368,9 @@ public class Game {
 			}
 			
 			for(int i=0;i<projectiles.size();i++){
-				projectiles.get(i).tick();
+				Projectile proj=projectiles.get(i);
+				if(proj!=null)
+					proj.tick();
 			}
 			
 			alterProjectiles(null,2);
