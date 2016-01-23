@@ -90,9 +90,9 @@ public class SwingProjectile extends Projectile{
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,range,brothers)));
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*2,endTime,damage,range,brothers)));
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*4,endTime,damage,range,brothers)));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,range,brothers),1));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*2,endTime,damage,range,brothers),1));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*4,endTime,damage,range,brothers),1));
 	}
 	public void tick(){
 		updatePosition();
@@ -106,7 +106,7 @@ public class SwingProjectile extends Projectile{
 			}
 			target.move(dir+Math.PI, damage*2);
 		}
-		if(startTime+endTime==game.time&&endTime!=0)game.destroyProjectile(this);
+		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 	public void updatePosition(){
 		calcDirection=owner.direction+(startTime-game.time)*range/endTime+range/2;

@@ -52,7 +52,7 @@ public class Projectile implements Drawable{
 		}
 	}
 	public void newProjectile(Player p,boolean[] gene){
-		game.createProjectile(new Projectile(p.x,p.y,p.direction,game.getEnemy(p),p,speed));
+		game.alterProjectiles(new Projectile(p.x,p.y,p.direction,game.getEnemy(p),p,speed),1);
 	}
 	public void tick(){
 		updatePosition();
@@ -62,12 +62,12 @@ public class Projectile implements Drawable{
 			target.damage(damage*owner.power);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			target.move(dir+Math.PI, damage*2);
-			game.destroyProjectile(this);
+			game.alterProjectiles(this,1);
 		}
 		if(Math.sqrt(Math.pow(x-600, 2)+Math.pow(y-400,2))>360){
-			game.destroyProjectile(this);
+			game.alterProjectiles(this,0);
 		}
-		if(startTime+endTime==game.time&&endTime!=0)game.destroyProjectile(this);
+		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 	public void updatePosition(){
 		x+=hSpeed;

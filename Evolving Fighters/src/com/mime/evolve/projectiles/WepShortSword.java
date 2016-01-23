@@ -21,8 +21,8 @@ public class WepShortSword extends SwingProjectile{
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size,endTime,damage,range,brothers)));
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*3,endTime,damage,range,brothers)));
-		brothers.add(game.createProjectile(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size+2,speed+size*5,endTime,damage,range,brothers)));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size,endTime,damage,range,brothers),1));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed+size*3,endTime,damage,range,brothers),1));
+		brothers.add(game.alterProjectiles(new SwingProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size+2,speed+size*5,endTime,damage,range,brothers),1));
 	}
 }

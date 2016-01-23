@@ -154,7 +154,7 @@ public class Tournament extends Game {
 		dBetweenPlayers=10000;
 		
 		for (Projectile p : projectiles) {
-			destroyProjectile(p);
+			alterProjectiles(p,0);
 		}
 		
 		

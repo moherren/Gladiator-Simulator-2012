@@ -54,7 +54,7 @@ public class HalfSorter extends Game {
 		dBetweenPlayers=10000;
 		
 		for (Projectile p : projectiles) {
-			destroyProjectile(p);
+			alterProjectiles(p,0);
 		}
 		if (competetors.length > 1){
 		species1 = competetors[battleNumber * 2].species;

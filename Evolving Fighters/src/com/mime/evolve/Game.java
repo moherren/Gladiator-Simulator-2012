@@ -251,13 +251,27 @@ public class Game {
 		}
 	}
 	
-	public Projectile createProjectile(Projectile proj){
-		projectiles.add(proj);
+	public Projectile alterProjectiles(Projectile proj,int command){
+		switch(command){
+		case 0:
+			destroiedProjectiles.add(proj);
+			break;
+			case 1:
+			projectiles.add(proj);
+			break;
+		case 2:{
+			projectiles.remove(destroiedProjectiles);
+			destroiedProjectiles.clear();
+			break;
+			}
+		case 3:
+			projectiles.clear();
+		}
 		return proj;
 	}
-	public void destroyProjectile(Projectile proj){
-		destroiedProjectiles.add(proj);
-	}
+	
+	
+	
 	public void endGame(){
 		oldTime=time;
 		
@@ -303,11 +317,8 @@ public class Game {
 	protected void newGame() {
 		dBetweenPlayers=10000;
 		boolean win=false;
-		for(Projectile p:projectiles){
-			p.endTime=0;
-			p.startTime=time;
-			p.damage=0;
-		}
+		
+		alterProjectiles(null,3);
 
 		try{
 		if(player2.health>0){
@@ -354,20 +365,11 @@ public class Game {
 				resetCountdown(500);
 			}
 			
-			for(int i=0;i<destroiedProjectiles.size();i++){
-				Projectile p=destroiedProjectiles.get(i);
-				projectiles.remove(p);
-			}
-			destroiedProjectiles.clear();
-			
 			for(int i=0;i<projectiles.size();i++){
-				try{
 				projectiles.get(i).tick();
-				}
-				catch(NullPointerException n){
-					
-				}
 			}
+			
+			alterProjectiles(null,2);
 			
 			if(Math.sqrt(Math.pow(player1.y-player2.y,2)+Math.pow(player1.x-player2.x, 2))<=player1.size+player2.size){
 				double dir=Math.atan2(player1.y-player2.y, player1.x-player2.x);

@@ -84,6 +84,6 @@ public class WepBowAndArrow extends Projectile{
 	}
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
-		game.createProjectile(new WepBowAndArrow(p.x,p.y,p.direction+Math.tan((game.time%(Math.PI/2))-(Math.PI/4))*(Math.PI/26.000),game.getEnemy(p),p,speed));
+		game.alterProjectiles(new WepBowAndArrow(p.x,p.y,p.direction+Math.tan((game.time%(Math.PI/2))-(Math.PI/4))*(Math.PI/26.000),game.getEnemy(p),p,speed),1);
 	}
 }

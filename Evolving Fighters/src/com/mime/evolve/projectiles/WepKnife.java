@@ -63,8 +63,8 @@ public class WepKnife extends StabProjectile{
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
-		brothers.add(game.createProjectile(new WepKnife(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers)));
-		brothers.add(game.createProjectile(new WepKnife(p.x+size*3,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers)));
+		brothers.add(game.alterProjectiles(new WepKnife(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers),1));
+		brothers.add(game.alterProjectiles(new WepKnife(p.x+size*3,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers),1));
 	}
 	public void tick(){
 		updatePosition();
@@ -85,6 +85,6 @@ public class WepKnife extends StabProjectile{
 				proj.damage=0;
 			}
 		}
-		if(startTime+endTime==game.time&&endTime!=0)game.destroyProjectile(this);
+		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 }

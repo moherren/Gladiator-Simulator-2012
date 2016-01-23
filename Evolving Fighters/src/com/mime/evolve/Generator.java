@@ -25,10 +25,11 @@ public class Generator{
 				if(g.getLoad()-loadAmount>change){
 					addLoad(change);
 					loadAmount+=change;
+					System.out.print("#");
 				}
 				
-				if(genedPlayers[0]!=null&&id%25==0)
-					System.out.print("#");
+				//if(genedPlayers[0]!=null&&id%25==0)
+					
 			}
 			while(genedPlayers[0]==null);
 			for(Player p:genedPlayers){

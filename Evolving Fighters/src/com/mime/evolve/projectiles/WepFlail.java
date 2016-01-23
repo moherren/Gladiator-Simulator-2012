@@ -130,7 +130,7 @@ public class WepFlail extends Projectile{
 	}
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
-		game.createProjectile(new WepFlail(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,range));
+		game.alterProjectiles(new WepFlail(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,range),1);
 	}
 	public void tick(){
 		updatePosition();
@@ -142,7 +142,7 @@ public class WepFlail extends Projectile{
 			target.move(dir+Math.PI, damage*3.5);
 			damage=0;
 		}
-		if(startTime+endTime==game.time)game.destroyProjectile(this);
+		if(startTime+endTime==game.time)game.alterProjectiles(this,0);
 	}
 	public void updatePosition(){
 		calcDirection=owner.direction+(startTime-game.time)*range/endTime+range/2;

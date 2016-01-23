@@ -95,7 +95,7 @@ public class WepSpear extends StabProjectile{
 	public void newProjectile(Player p,boolean gene[]){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
-		brothers.add(game.createProjectile(new WepSpear(p.x+dis,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,brothers)));
-		brothers.add(game.createProjectile(new WepSpear(p.x+dis+size+size/2,p.y,p.direction,game.getEnemy(p),p,size-2,speed,endTime,damage,brothers)));
+		brothers.add(game.alterProjectiles(new WepSpear(p.x+dis,p.y,p.direction,game.getEnemy(p),p,size,speed,endTime,damage,brothers),1));
+		brothers.add(game.alterProjectiles(new WepSpear(p.x+dis+size+size/2,p.y,p.direction,game.getEnemy(p),p,size-2,speed,endTime,damage,brothers),1));
 	}
 }

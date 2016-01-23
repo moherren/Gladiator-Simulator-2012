@@ -75,7 +75,7 @@ public class StabProjectile extends Projectile{
 	public void newProjectile(Player p,boolean[] gene){
 		game=p.getGame();
 		ArrayList<Projectile> brothers=new ArrayList<Projectile>();
-		brothers.add(game.createProjectile(new StabProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers)));
+		brothers.add(game.alterProjectiles(new StabProjectile(p.x,p.y,p.direction,game.getEnemy(p),p,size,speed/10.000,endTime,damage,brothers),1));
 	}
 	public void tick(){
 		updatePosition();
@@ -90,7 +90,7 @@ public class StabProjectile extends Projectile{
 				proj.damage=0;
 			}
 		}
-		if(startTime+endTime==game.time&&endTime!=0)game.destroyProjectile(this);
+		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 	public void updatePosition(){
 		//double nx=owner.x-Math.cos(owner.direction)*size,ny;

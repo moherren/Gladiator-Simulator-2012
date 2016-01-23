@@ -54,7 +54,7 @@ public class ContinousGame extends Game{
 		dBetweenPlayers=10000;
 		
 		for(Projectile p:projectiles){
-			destroyProjectile(p);
+			alterProjectiles(p,0);
 		}
 		if(species1.oldGenePool.isEmpty()){
 			player1=new Player(11,Math.PI,species1,this);
