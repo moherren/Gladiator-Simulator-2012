@@ -83,8 +83,10 @@ public class Tournament extends Game {
 			}
 			
 			destroiedProjectiles.clear();
-			for (Projectile p : projectiles) {
-				p.tick();
+			for(int i=0;i<projectiles.size();i++){
+				Projectile proj=projectiles.get(i);
+				if(proj!=null)
+					proj.tick();
 			}
 			
 			

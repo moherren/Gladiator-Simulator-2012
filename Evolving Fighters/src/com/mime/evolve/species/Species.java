@@ -146,7 +146,7 @@ public class Species {
 		setStuff.addAll(set);
 		
 		if(!genePool.contains(elite))
-			genePool.put(elite.DNA,elite.fitness);
+			genePool.put(elite.DNA,maxFit);
 
 		for(boolean[] p:setStuff){
 			for(int i=0;i<genePool.get(p);i++){

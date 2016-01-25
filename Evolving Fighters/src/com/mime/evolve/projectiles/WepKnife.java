@@ -81,7 +81,9 @@ public class WepKnife extends StabProjectile{
 				owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			}
 			target.move(dir+Math.PI, damage*2);
-			for(Projectile proj:brothers){
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
 				proj.damage=0;
 			}
 		}

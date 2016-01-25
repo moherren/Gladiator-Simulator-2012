@@ -37,7 +37,7 @@ public class Controller extends Game implements ActionListener{
 			gen=1;
 		}
 		else if(Competetors==null){
-			Generator gen=new Generator(16,intensity);
+			Generator gen=new Generator(16,intensity,true);
 			ArrayList<Player> players=gen.getPlayers();
 			Competetors=new Player[players.size()];
 			allCompetetors=new ArrayList<Player>();	

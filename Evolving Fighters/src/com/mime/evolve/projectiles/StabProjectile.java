@@ -85,7 +85,9 @@ public class StabProjectile extends Projectile{
 			target.damage(damage*owner.power);
 			owner.fitness+=(damage*owner.power*1.000)/(target.maxHealth*1.000)*45;
 			target.move(dir+Math.PI, damage*2);
-			for(Projectile proj:brothers){
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
 				proj.damage=0;
 			}
 		}
@@ -99,7 +101,6 @@ public class StabProjectile extends Projectile{
 	}
 	public void willHit(){
 		if(Player.rangeOfDirection(x, target.x, y, target.y, dir, 0, target.size+size)&&Point.distance(x, y, target.x, target.y)-size-target.size<=speed*endTime){
-			//owner.fitness+=1;
 			miss=false;
 		}
 	}

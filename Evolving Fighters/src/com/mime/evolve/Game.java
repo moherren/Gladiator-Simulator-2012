@@ -1,6 +1,7 @@
 package com.mime.evolve;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import com.mime.evolve.graphics.Render;
@@ -148,10 +149,7 @@ public class Game {
 		else{
 			mom=Player.generateSequences(Player.reactions*Player.situations+Player.traits);
 		}
-		for(boolean[] a:s.oldGenePool){
-			if(a.equals(mom))
-			ogp.remove(mom);
-		}
+		ogp.removeAll(Collections.singleton(mom));
 		boolean[] dad;
 		if(!ogp.isEmpty()){
 			dad=ogp.get(rand.nextInt(ogp.size()));
@@ -321,9 +319,10 @@ public class Game {
 		boolean win=false;
 		
 		alterProjectiles(null,3);
-
+		
+		Player temp=player1;
 		try{
-		if(player2.health>0){
+		if(player2.health>0||fNum>11){
 			player1=new Player(11,Math.PI,species1,breed(species1),this);
 		}
 		else
@@ -333,12 +332,11 @@ public class Game {
 			player1=new Player(11,Math.PI,species1,this);
 		}
 		
-		Player temp=player1;
 		species1.fights[fNum].setDNA(player1.DNA, true);
 		species1.fights[fNum].applySituation(this);
 		
 		if(win)
-			player1.fitness+=temp.fitness;
+		player1.fitness+=temp.fitness;
 	}
 	public void resetCountdown(){
 		oldTime=time;

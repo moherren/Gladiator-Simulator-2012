@@ -99,7 +99,9 @@ public class SwingProjectile extends Projectile{
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
 			target.damage(damage*owner.power);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
-			for(Projectile proj:brothers){
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
 				proj.damage=0;
 			}
 			target.move(dir+Math.PI, damage*2);
