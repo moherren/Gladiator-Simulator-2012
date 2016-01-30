@@ -14,7 +14,7 @@ public class Projectile implements Drawable{
 	public int size=8;
 	protected Player owner;
 	public boolean miss=true,meele=false;
-	Game game;
+	protected Game game;
 	public long startTime=0,endTime=0;
 	public int reloadTime=200,bulletMax=15;
 	public String name="";

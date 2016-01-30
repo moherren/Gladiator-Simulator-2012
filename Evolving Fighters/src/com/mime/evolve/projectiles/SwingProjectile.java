@@ -13,7 +13,7 @@ import com.mime.evolve.input.Player;
 
 public class SwingProjectile extends Projectile{
 
-	double range=Math.PI/2;
+	protected double range=Math.PI/2;
 	ArrayList<Projectile> brothers;
 	double calcDirection=0;
 	

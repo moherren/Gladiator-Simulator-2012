@@ -1,16 +1,7 @@
 package com.mime.evolve;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.font.GlyphVector;
-import java.io.File;
-import java.io.IOException;
-
-import com.mime.evolve.graphics.Render;
-import com.mime.evolve.graphics.Render2D;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
-import com.mime.evolve.species.Species;
 
 public class Tournament extends Game {
 	Player[] competetors;
@@ -76,6 +67,27 @@ public class Tournament extends Game {
 						- player2.x);
 				player1.move(dir + Math.PI, 0.05 * player2.size);
 				player2.move(dir, 0.05 * player1.size);
+			}
+			
+			if(executor==null){
+				executor.tick(this);
+				
+				if (Math.sqrt(Math.pow(player1.y - executor.y, 2)
+						+ Math.pow(player1.x - executor.x, 2)) <= player1.size
+						+ executor.size) {
+					double dir = Math.atan2(player1.y - executor.y, player1.x
+							- executor.x);
+					player1.move(dir + Math.PI, 0.05 * executor.size);
+					executor.move(dir, 0.05 * player1.size);
+				}
+				if (Math.sqrt(Math.pow(executor.y - player2.y, 2)
+						+ Math.pow(executor.x - player2.x, 2)) <= executor.size
+						+ player2.size) {
+					double dir = Math.atan2(executor.y - player2.y, executor.x
+							- player2.x);
+					executor.move(dir + Math.PI, 0.05 * player2.size);
+					player2.move(dir, 0.05 * executor.size);
+				}
 			}
 			
 			for (Projectile p : destroiedProjectiles) {
