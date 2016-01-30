@@ -13,7 +13,7 @@ public class RandomSpecies extends Species{
 		descriptor="erratic";
 	}
 	public void tick(Game game,Player user){
-		Random rand=new Random(7);
+		Random rand=new Random(game.time-game.oldTime);
 		int r=(int)((1-Math.sqrt(1-rand.nextDouble()))*4);
 		Player enemy=game.getEnemy(user);
 		int sitNum=1;
@@ -30,7 +30,7 @@ public class RandomSpecies extends Species{
 		}
 		if(r%2==1){
 			sitNum+=4;
-		}	
+		}
 		if(r>1){
 			sitNum+=8;
 		}

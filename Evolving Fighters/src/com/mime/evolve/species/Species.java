@@ -31,13 +31,14 @@ public class Species {
 	public ArrayList<boolean[]> oldGenePool=new ArrayList<boolean[]>();
 	private Hashtable<boolean[],Integer> genePool=new Hashtable<boolean[],Integer>();
 	public Player elite=new Player(0,0,this,new emptyGame());
-	public int color, viewC=0x000000;
+	public int color, skin=0xfdc14c, viewC=0x000000;
 	public String descriptor="normal",name="No Name";
 	public Situation[] fights=new Situation[13];
 	public int maxFit=0;
 	Render2D nameArt,armor; 
 	public static int rWeapon=-1;
 	public Species(int color){
+		//this.skin=newSkin();
 		this.color=color;
 		
 		do{
@@ -203,5 +204,40 @@ public class Species {
 		default: projectile=createRandomProjectile();
 		}
 		return projectile;
+	}
+	
+	private static int newSkin() {
+		int skin=0xFFDFC4;
+		switch(Game.rand.nextInt()%5){
+		case 0:skin=0xffcd94;
+			break;
+		case 1:skin=0xffad60;
+			break;
+		case 2:skin=0xffe39f;
+			break;
+		case 3:skin=0x58422d;
+			break;
+		case 4:skin=0x3b2f27;
+			break;
+		case 5:skin=0xCE967C;
+			break;
+		case 6:skin=0xBA6C49;
+			break;
+		case 7:skin=0xF0C8C9;
+			break;
+		case 8:skin=0xB97C6D;
+			break;
+		case 9:skin=0xAD6452;
+			break;
+		case 10:skin=0xCB8442;
+			break;
+		case 11:skin=0x704139;
+			break;
+		case 12:skin=0x870400;
+			break;
+		case 13:skin=0x430000;
+			break;
+		}
+		return skin;
 	}
 }

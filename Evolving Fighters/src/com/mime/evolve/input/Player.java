@@ -220,7 +220,7 @@ public class Player implements Drawable{
 		 for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
 			 for(int y=(int) (rec.y-size);y<rec.y+size;y++){
 				 if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(rec.getMinY()-y, 2))<=size&&r.depthMap[x+y*r.width]<depth){
-					r.pixels[x+y*r.width]= 0xfdc14c;
+					r.pixels[x+y*r.width]= species.skin;
 					r.depthMap[x+y*r.width]=(int) depth;
 				 }
 			 }
@@ -297,7 +297,7 @@ public class Player implements Drawable{
 		for(int x=(int) (rec.x);x<(int)rec.getCenterX()+size;x++){
 			for(int y=(int) (headY-size);y<headY+size;y++){
 				if(Math.sqrt(Math.pow(rec.getCenterX()-x, 2)+Math.pow(headY-y, 2))<=size&&r.depthMap[x+y*r.width]<=depth){
-					r.pixels[x+y*r.width]= 0xfdc14c;
+					r.pixels[x+y*r.width]= species.skin;
 					r.depthMap[x+y*r.width]=(int) (depth+alias);
 				}
 		}
