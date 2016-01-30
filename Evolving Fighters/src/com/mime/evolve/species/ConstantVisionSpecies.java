@@ -14,7 +14,7 @@ public class ConstantVisionSpecies extends Species{
 		Player enemy=game.getEnemy(user);
 		boolean viewProj=false;
 		int sitNum=1;
-		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
+		if(user.canSee(enemy)||user.canSee(game.executor)){
 			sitNum++;
 		}
 		else if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.maxCast,enemy.size)){
@@ -23,21 +23,21 @@ public class ConstantVisionSpecies extends Species{
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.broadCast,proj.size)&&proj.target.equals(this)){
+			if(user.canSee(proj)&&proj.target.equals(user)){
 				sitNum+=2;
-				viewProj=true;
 				break loop;
 			}
 		}
 		
-		if(viewProj)
+		
+		if(!viewProj)
 			loop:for(int i=0;i<game.projectiles.size();i++){
 				Projectile proj=game.projectiles.get(i);
 				if(proj!=null)
-			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.maxCast,proj.size)&&proj.target.equals(enemy)){
-				sitNum+=8;
-				break loop;
-			}
+					if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.maxCast,proj.size)&&!proj.target.equals(enemy)){
+						sitNum+=8;
+						break loop;
+					}
 		}
 		
 		user.execute(sitNum, enemy);

@@ -16,14 +16,14 @@ public class BulletProximitySpecies extends Species{
 		boolean viewProject=false;
 		double dis=720;
 		int sitNum=1;
-		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
+		if(user.canSee(enemy)||user.canSee(game.executor)){
 			sitNum++;
 		}
 		for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
 			if(proj.target.equals(this)){
-				if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.broadCast,proj.size)){
+				if(user.canSee(proj)){
 					viewProject=true;
 				}
 				double DIS=Point.distance(user.x, user.y, proj.x, proj.y);

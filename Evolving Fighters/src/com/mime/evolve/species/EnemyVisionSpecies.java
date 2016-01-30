@@ -13,13 +13,13 @@ public class EnemyVisionSpecies extends Species{
 	public void tick(Game game,Player user){
 		Player enemy=game.getEnemy(user);
 		int sitNum=1;
-		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.broadCast,enemy.size)){
+		if(user.canSee(enemy)||user.canSee(game.executor)){
 			sitNum++;
 		}
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.broadCast,proj.size)&&proj.target.equals(this)){
+			if(user.canSee(proj)&&proj.target.equals(user)){
 				sitNum+=2;
 				break loop;
 			}

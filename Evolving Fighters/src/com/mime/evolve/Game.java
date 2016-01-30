@@ -211,6 +211,7 @@ public class Game {
 	Game tourny=null;
 	public Player player1;
 	public Player player2;
+	public Player executor=null;
 	double dBetweenPlayers=10000;
 	public Game(){
 		Random rand=new Random();

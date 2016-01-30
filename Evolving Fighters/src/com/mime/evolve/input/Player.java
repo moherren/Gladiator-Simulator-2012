@@ -11,6 +11,7 @@ import com.mime.evolve.Tournament;
 import com.mime.evolve.graphics.Drawable;
 import com.mime.evolve.graphics.Render;
 import com.mime.evolve.graphics.Render2D;
+import com.mime.evolve.projectiles.Projectile;
 import com.mime.evolve.sound.SoundHandler;
 import com.mime.evolve.species.Species;
 
@@ -473,5 +474,21 @@ public class Player implements Drawable{
 				SoundHandler.play(SoundHandler.GRUNT_TWO);
 				break;
 		}
-		}
+	}
+	
+	public boolean canSee(double x,double y,double size){
+		return Player.rangeOfDirection(this.x, x, this.y, y,direction, broadCast,size);
+	}
+	
+	public boolean canSee(Player p){
+		if(p==null)
+			return false;
+		return Player.rangeOfDirection(this.x, p.x, this.y, p.y,direction, broadCast,p.size);
+	}
+	
+	public boolean canSee(Projectile p){
+		if(p==null)
+			return false;
+		return Player.rangeOfDirection(this.x, p.x, this.y, p.y,direction, broadCast,p.size);
+	}
 }
