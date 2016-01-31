@@ -10,14 +10,13 @@ import com.mime.evolve.projectiles.SwingProjectile;
 public class Executor extends Player{
 	boolean inRing=false;
 	public Executor(Species species, boolean[] DNA,	Game game) {
-		super(600, 0, -Math.PI/2.000, species, DNA, game);
+		super(600, 0, -Math.PI/2.000, new ExecutorSpecies(), DNA, game);
 		species.projectile=new WarAxe();
 		size=16;
 		power=1;
 		speed=0.8;
 		maxHealth=20;
 		health=maxHealth;
-		species.color=1;
 	}
 	
 	public void tick(Game game){
@@ -64,4 +63,18 @@ class ExecutorSpecies extends Species{
 		super(1);
 	}
 	
+	public void tick(Game game,Player user){
+		int sitNum=1;
+		if(user.canSee(game.player1)||user.canSee(game.player2)){
+			sitNum++;
+		}
+		loop:for(int i=0;i<game.projectiles.size();i++){
+			Projectile proj=game.projectiles.get(i);
+			if(proj!=null)
+			if(user.canSee(proj)&&!proj.owner.equals(user)){
+				sitNum+=2;
+				break loop;
+			}
+		}
+	}
 }

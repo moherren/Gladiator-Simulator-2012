@@ -12,7 +12,7 @@ public class Projectile implements Drawable{
 	public double damage=4, addedSpeed=0;
 	public Player target;
 	public int size=8;
-	protected Player owner;
+	public Player owner;
 	public boolean miss=true,meele=false;
 	protected Game game;
 	public long startTime=0,endTime=0;

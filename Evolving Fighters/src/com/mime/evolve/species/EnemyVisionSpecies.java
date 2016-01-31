@@ -19,7 +19,7 @@ public class EnemyVisionSpecies extends Species{
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(user.canSee(proj)&&proj.target.equals(user)){
+			if(user.canSee(proj)&&!proj.owner.equals(user)){
 				sitNum+=2;
 				break loop;
 			}

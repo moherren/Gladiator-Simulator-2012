@@ -16,10 +16,14 @@ public class DualSightedSpecies extends Species{
 		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction-user.broadCast/2, user.broadCast/2,enemy.size)){
 			sitNum++;
 		}
+		else if(game.executor!=null)
+		if(Player.rangeOfDirection(user.x, game.executor.x, user.y, game.executor.y, user.direction-user.broadCast/2, user.broadCast/2,game.executor.size)){
+			sitNum++;
+		}
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction-user.broadCast/2, user.broadCast/2,proj.size)&&proj.target.equals(this)){
+			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction-user.broadCast/2, user.broadCast/2,proj.size)&&!proj.owner.equals(enemy)){
 				sitNum+=2;
 				break loop;
 			}
@@ -27,10 +31,14 @@ public class DualSightedSpecies extends Species{
 		if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction+user.broadCast/2, user.broadCast/2,enemy.size)){
 			sitNum+=4;
 		}
+		else if(game.executor!=null)
+			if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction+user.broadCast/2, user.broadCast/2,enemy.size)){
+				sitNum+=4;
+			}
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction+user.broadCast/2, user.broadCast/2,proj.size)&&proj.target.equals(this)){
+			if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction+user.broadCast/2, user.broadCast/2,proj.size)&&!proj.owner.equals(user)){
 				sitNum+=8;
 				break loop;
 			}

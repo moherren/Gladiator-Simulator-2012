@@ -23,7 +23,7 @@ public class ConstantVisionSpecies extends Species{
 		loop:for(int i=0;i<game.projectiles.size();i++){
 			Projectile proj=game.projectiles.get(i);
 			if(proj!=null)
-			if(user.canSee(proj)&&proj.target.equals(user)){
+			if(user.canSee(proj)&&!proj.owner.equals(user)){
 				sitNum+=2;
 				break loop;
 			}
@@ -34,7 +34,7 @@ public class ConstantVisionSpecies extends Species{
 			loop:for(int i=0;i<game.projectiles.size();i++){
 				Projectile proj=game.projectiles.get(i);
 				if(proj!=null)
-					if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.maxCast,proj.size)&&!proj.target.equals(enemy)){
+					if(Player.rangeOfDirection(user.x, proj.x, user.y, proj.y, user.direction, user.maxCast,proj.size)&&!proj.owner.equals(user)){
 						sitNum+=8;
 						break loop;
 					}
