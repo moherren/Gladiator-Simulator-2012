@@ -27,17 +27,17 @@ public class BulletProximitySpecies extends Species{
 					viewProject=true;
 				}
 				double DIS=Point.distance(user.x, user.y, proj.x, proj.y);
-				if(DIS<=dis){
+				if(DIS<dis){
 					dis=DIS;
 				}
 			}
 		}
 		if(viewProject)sitNum+=2;
 		
-		if(dis<144)sitNum+=4;
-		else if(dis<288)sitNum+=8;
-		else if(dis<432)sitNum+=12;
-		else if(dis<576)sitNum+=16;
+		if(dis<144)sitNum+=0;
+		else if(dis<288)sitNum+=4;
+		else if(dis<432)sitNum+=8;
+		else if(dis<576)sitNum+=12;
 		user.execute(sitNum, enemy);
 		if(user.direction<0)user.direction+=(Math.PI*2);
 		 

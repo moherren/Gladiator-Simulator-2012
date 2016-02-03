@@ -69,6 +69,7 @@ public class Controller extends Game implements ActionListener{
 			player2=tourny.player2;
 			species1=tourny.species1;
 			species2=tourny.species2;
+			executor=tourny.executor;
 			Player[] result=tourny.tick(key);
 			if(result!=null)
 				if(result.length==1)

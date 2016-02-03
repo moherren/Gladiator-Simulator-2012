@@ -106,6 +106,17 @@ public class SwingProjectile extends Projectile{
 			}
 			target.move(dir+Math.PI, damage*2);
 		}
+		if(game.executor!=null)
+		if(Math.sqrt(Math.pow(x-game.executor.x, 2)+Math.pow(y-game.executor.y, 2))<=game.executor.size+size&&damage!=0){
+			game.executor.damage(damage*owner.power);
+			//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
+				proj.damage=0;
+			}
+			game.executor.move(dir+Math.PI, damage*2);
+		}
 		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 	public void updatePosition(){

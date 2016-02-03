@@ -25,10 +25,9 @@ public class VisionSizeSpecies extends Species{
 			}
 		}
 		
-		if(user.broadCast<user.minCast)sitNum+=4;
-		else if(user.broadCast+user.maxCast/4.000*3<user.maxCast)sitNum+=8;
-		else if(user.broadCast+user.maxCast/2.000<user.maxCast)sitNum+=12;
-		else if(user.broadCast+user.maxCast/4.000<user.maxCast)sitNum+=16;
+		if(user.broadCast+user.maxCast/4.000*3<user.maxCast)sitNum+=4;
+		else if(user.broadCast+user.maxCast/2.000<user.maxCast)sitNum+=8;
+		else if(user.broadCast+user.maxCast/4.000<user.maxCast)sitNum+=12;
 		
 		user.execute(sitNum, enemy);
 		if(user.direction<0)user.direction+=(Math.PI*2);

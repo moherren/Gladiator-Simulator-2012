@@ -9,18 +9,18 @@ import com.mime.evolve.projectiles.SwingProjectile;
 
 public class Executor extends Player{
 	boolean inRing=false;
-	public Executor(Species species, boolean[] DNA,	Game game) {
-		super(600, 0, -Math.PI/2.000, new ExecutorSpecies(), DNA, game);
+	public Executor(boolean[] DNA, Game game) {
+		super(600, 20, -Math.PI/2.000, new ExecutorSpecies(), DNA, game);
 		species.projectile=new WarAxe();
 		size=16;
 		power=1;
-		speed=0.8;
+		speed=1;
 		maxHealth=20;
 		health=maxHealth;
 	}
 	
 	public void tick(Game game){
-		if(x<56)
+		if(y<100)
 			moveForward(1);
 		else{
 			species.tick(game, this);
@@ -76,5 +76,6 @@ class ExecutorSpecies extends Species{
 				break loop;
 			}
 		}
+		user.execute(sitNum, game.player1);
 	}
 }

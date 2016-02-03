@@ -81,10 +81,20 @@ public class StabProjectile extends Projectile{
 		updatePosition();
 		
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
-			
 			target.damage(damage*owner.power);
 			owner.fitness+=(damage*owner.power*1.000)/(target.maxHealth*1.000)*45;
 			target.move(dir+Math.PI, damage*2);
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
+				proj.damage=0;
+			}
+		}
+		if(game.executor!=null)
+		if(Math.sqrt(Math.pow(x-game.executor.x, 2)+Math.pow(y-game.executor.y, 2))<=game.executor.size+size&&damage!=0){
+			game.executor.damage(damage*owner.power);
+			//owner.fitness+=(damage*owner.power*1.000)/(target.maxHealth*1.000)*45;
+			game.executor.move(dir+Math.PI, damage*2);
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);
 				if(proj!=null)

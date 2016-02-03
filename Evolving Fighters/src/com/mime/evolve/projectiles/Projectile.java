@@ -65,6 +65,14 @@ public class Projectile implements Drawable{
 			game.alterProjectiles(this,0);
 			damage=0;
 		}
+		if(game.executor!=null)
+		if(Math.sqrt(Math.pow(x-game.executor.x, 2)+Math.pow(y-game.executor.y, 2))<=game.executor.size+size){
+			game.executor.damage(damage*owner.power);
+			//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
+			game.executor.move(dir+Math.PI, damage*2);
+			game.alterProjectiles(this,0);
+			damage=0;
+		}
 		if(Math.sqrt(Math.pow(x-600, 2)+Math.pow(y-400,2))>360){
 			game.alterProjectiles(this,0);
 		}

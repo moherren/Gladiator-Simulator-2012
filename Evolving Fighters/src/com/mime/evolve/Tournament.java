@@ -1,5 +1,6 @@
 package com.mime.evolve;
 
+import com.mime.evolve.input.Executor;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
 
@@ -69,7 +70,7 @@ public class Tournament extends Game {
 				player2.move(dir, 0.05 * player1.size);
 			}
 			
-			if(executor==null){
+			if(executor!=null){
 				executor.tick(this);
 				
 				if (Math.sqrt(Math.pow(player1.y - executor.y, 2)
@@ -109,12 +110,10 @@ public class Tournament extends Game {
 				redos++;
 				newGame();
 			}
-			else if (time - oldTime >= 1000&&redos==2){
+			else if (time - oldTime == 1000&&redos==2){
 				System.out.println("Time up!");
-				if(player2.fitness>player1.fitness)
-					player1.damage(9999);
-				else
-					player2.damage(9999);
+				executor=new Executor(Player.stringToDna("0010010100010100100101000101001001010001010010010100010100100101000101001001010001010010010100010100100101000101000000000000")
+						,this);
 			}
 		}
 		else
@@ -171,7 +170,7 @@ public class Tournament extends Game {
 			alterProjectiles(p,0);
 		}
 		
-		
+		executor=null;
 		
 		if (competetors.length > 1){
 		species1 = competetors[battleNumber * 2].species;

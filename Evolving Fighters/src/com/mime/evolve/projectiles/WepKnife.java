@@ -87,6 +87,24 @@ public class WepKnife extends StabProjectile{
 				proj.damage=0;
 			}
 		}
+		if(game.executor!=null)
+		if(Math.sqrt(Math.pow(x-game.executor.x, 2)+Math.pow(y-game.executor.y, 2))<=game.executor.size+size&&damage!=0){
+			Player enemy=game.getEnemy(owner);
+			if(Player.rangeOfDirection(game.executor.x, x, game.executor.y, y, game.executor.direction+Math.PI,game.executor.maxCast, size)&&damage!=0){
+				game.executor.damage(damage*owner.power*3);
+				//owner.fitness+=(damage*owner.power*3.000)/target.maxHealth*45;
+			}
+			else{
+				game.executor.damage(damage*owner.power);
+				//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
+			}
+			game.executor.move(dir+Math.PI, damage*2);
+			for(int i=0;i<brothers.size();i++){
+				Projectile proj=brothers.get(i);
+				if(proj!=null)
+				proj.damage=0;
+			}
+		}
 		if(startTime+endTime==game.time&&endTime!=0)game.alterProjectiles(this,0);
 	}
 }
