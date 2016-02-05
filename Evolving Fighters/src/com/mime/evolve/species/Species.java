@@ -178,6 +178,13 @@ public class Species {
 		armor.draw(a, 0, 0);
 	}
 	
+	public void generateArmor(String file){
+		Render a=Texture.loadBitmap(file);
+		armor=new Render2D(a.width,a.height);
+		Arrays.fill(armor.pixels,color);
+		armor.draw(a, 0, 0);
+	}
+	
 	public Render2D getArmor(){
 		return armor;
 	}

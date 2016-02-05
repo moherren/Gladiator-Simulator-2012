@@ -14,7 +14,7 @@ import com.mime.evolve.input.Player;
 public class SwingProjectile extends Projectile{
 
 	protected double range=Math.PI/2;
-	ArrayList<Projectile> brothers;
+	protected ArrayList<Projectile> brothers;
 	double calcDirection=0;
 	
 	public SwingProjectile(){

@@ -1,6 +1,6 @@
 package com.mime.evolve;
 
-import com.mime.evolve.input.Executor;
+import com.mime.evolve.input.Execusioner;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
 
@@ -8,7 +8,7 @@ public class Tournament extends Game {
 	Player[] competetors;
 	Player[] newCompetetors = new Player[999];
 	boolean started=false;
-	private int redos=0;
+	private int redos=1;
 	int displayStage=0;
 	long nextStage=0;
 	/** 1. Display fighter names with "vs." displayed between them
@@ -18,7 +18,7 @@ public class Tournament extends Game {
 	 *  5. Death scene/display the words KO
 	 *  6. Distribute money*/
 	public final static long[] stageTimes=new long[]{
-			200, 100,50,upperTimeLength,350,300
+			200, 100,150,upperTimeLength*2,350,300
 	};
 	
 	public Tournament(Player[] p) {
@@ -110,9 +110,9 @@ public class Tournament extends Game {
 				redos++;
 				newGame();
 			}
-			else if (time - oldTime == 1000&&redos==2){
+			else if (time - oldTime == 1000&&redos==2&&executor==null){
 				System.out.println("Time up!");
-				executor=new Executor(Player.stringToDna("0010010100010100100101000101001001010001010010010100010100100101000101001001010001010010010100010100100101000101000000000000")
+				executor=new Execusioner(Player.stringToDna("0010010100010100100101000101001001010001010010010100010100100101000101001001010001010010010100010100100101000101000000000000")
 						,this);
 			}
 		}
@@ -190,5 +190,8 @@ public class Tournament extends Game {
 			g+=stageTimes[i];
 		g+=nextStage-time;
 		return g;
+	}
+	public int getRedos(){
+		return redos;
 	}
 }

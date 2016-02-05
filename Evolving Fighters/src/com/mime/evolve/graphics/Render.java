@@ -230,6 +230,7 @@ public class Render {
 		for(int x=0;x<width;x++){
 			for(int y=0;y<height;y++){
 				int hex=pixels[x+y*width];
+				int min=Math.min(1,hex);
 				int r = (hex & 0xFF0000) >> 16;
 		    	int g = (hex & 0xFF00) >> 8;
 		    	int b = (hex & 0xFF);
@@ -240,7 +241,7 @@ public class Render {
 		    	int rgb = r;
 				rgb = (rgb << 8) + g;
 				rgb = (rgb << 8) + b;
-				pixels[x+y*width]=rgb;
+				pixels[x+y*width]=Math.max(rgb,min);
 			}
 		}
 	}

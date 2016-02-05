@@ -101,9 +101,14 @@ public class Render2D extends Render{
 		else
 			dist=1;
 		
-		if(game.getDisplayStage()==4){
+		if(game.getDisplayStage()==2)
+			draw(game.roundArt[game.getRedos()-1],600-game.roundArt[game.getRedos()-1].width/2,400-game.roundArt[game.getRedos()-1].height/2);
+		else if(game.getDisplayStage()==4){
 			draw(game.koArt,600-game.koArt.width/2,400-game.koArt.height/2);
 		}
+		
+		
+			
 	
 		draw(game.species1.getNameArt(),(int)(400-380*dist),(int)(300*dist+400));
 		draw(game.species2.getNameArt(),(int)(800+380*dist-game.species2.getNameArt().width),(int)(500*dist+200));

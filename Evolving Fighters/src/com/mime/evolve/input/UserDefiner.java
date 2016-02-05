@@ -66,7 +66,7 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 		
 		inputEvolution=new JTextField(Game.evolutionAmount+"");
 		inputIntensity=new JSpinner();
-		inputIntensity.setModel(new SpinnerNumberModel(Controller.intensity,1,4,1));
+		inputIntensity.setModel(new SpinnerNumberModel(Controller.intensity,1,5,1));
 		//inputEvolution.setPreferredSize(new Dimension(60,20));
 		options.add(new JLabel("Generation Amount: "));
 		options.add(inputEvolution);
@@ -225,8 +225,8 @@ public class UserDefiner extends JPanel implements ActionListener,ChangeListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(optionsMakeSense()&&e.getActionCommand().equals("done")){
-			Game.evolutionAmount=Integer.parseInt(inputEvolution.getText());
-			Controller.intensity=(int) Math.pow(2,(Integer) inputIntensity.getValue());
+			Game.evolutionAmount=Math.max(Integer.parseInt(inputEvolution.getText()),0);
+			Controller.intensity=(int) Math.pow(2,(Integer) inputIntensity.getValue()-1);
 			System.out.println("all done");
 			setVisible(false);
 			User[] users=new User[(Integer)userAmount.getValue()];

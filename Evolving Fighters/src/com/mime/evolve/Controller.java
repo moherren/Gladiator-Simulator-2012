@@ -30,6 +30,8 @@ public class Controller extends Game implements ActionListener{
 	public static int intensity=2;
 	public Render2D vsArt;
 	public Render2D koArt;
+	public Render2D execusionArt;
+	public Render2D[] roundArt;
 	
 	public Player[] tick(boolean[] key){
 		if(handle.usersEmpty()){
@@ -52,6 +54,10 @@ public class Controller extends Game implements ActionListener{
 			try {
 				vsArt=generateVs();
 				koArt=generateKo();
+				execusionArt=generateExecusion();
+				roundArt=new Render2D[2];
+				roundArt[0]=generateRound(1);
+				roundArt[1]=generateRound(2);
 			} catch (FontFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -88,6 +94,9 @@ public class Controller extends Game implements ActionListener{
 	public int getDisplayTime(){
 		return tourny.getDisplayTime();
 	}
+	public int getRedos(){
+		return tourny.getRedos();
+	}
 	public static Render2D generateVs() throws FontFormatException, IOException{
 		Render2D vsArt;
 		GlyphVector gv=Render.getGlyohVector("vs", Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,25));
@@ -110,4 +119,27 @@ public class Controller extends Game implements ActionListener{
 		vsArt.drawOutlinedWordArt("KO",10,(int) (gv.getVisualBounds().getHeight()+30), 4);
 		return vsArt;
 	}
+	public static Render2D generateExecusion() throws FontFormatException, IOException{
+		Render2D vsArt;
+		GlyphVector gv=Render.getGlyohVector("Execusion", Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		int width=(int) (gv.getVisualBounds().getWidth())+20;
+		int height=(int) (gv.getVisualBounds().getHeight())+50;
+		vsArt=new Render2D(width,height);
+		Arrays.fill(vsArt.pixels,0);
+		vsArt.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		vsArt.drawOutlinedWordArt("Execusion",10,(int) (gv.getVisualBounds().getHeight()+30), 4);
+		return vsArt;
+	}
+	public static Render2D generateRound(int num) throws FontFormatException, IOException{
+		Render2D vsArt;
+		GlyphVector gv=Render.getGlyohVector("Round "+num, Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		int width=(int) (gv.getVisualBounds().getWidth())+20;
+		int height=(int) (gv.getVisualBounds().getHeight())+50;
+		vsArt=new Render2D(width,height);
+		Arrays.fill(vsArt.pixels,0);
+		vsArt.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("Constantine.ttf")).deriveFont(0,30));
+		vsArt.drawOutlinedWordArt("Round "+num,10,(int) (gv.getVisualBounds().getHeight()+30), 4);
+		return vsArt;
+	}
+	
 }
