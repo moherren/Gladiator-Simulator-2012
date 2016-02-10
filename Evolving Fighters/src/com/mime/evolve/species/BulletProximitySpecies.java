@@ -16,7 +16,7 @@ public class BulletProximitySpecies extends Species{
 		boolean viewProject=false;
 		double dis=720;
 		int sitNum=1;
-		if(user.canSee(enemy)||user.canSee(game.executor)){
+		if(user.canSee(enemy)||user.canSee(game.execusioner)){
 			sitNum++;
 		}
 		for(int i=0;i<game.projectiles.size();i++){

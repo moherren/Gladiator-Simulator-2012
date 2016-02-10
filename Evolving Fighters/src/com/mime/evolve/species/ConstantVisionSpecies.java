@@ -14,7 +14,7 @@ public class ConstantVisionSpecies extends Species{
 		Player enemy=game.getEnemy(user);
 		boolean viewProj=false;
 		int sitNum=1;
-		if(user.canSee(enemy)||user.canSee(game.executor)){
+		if(user.canSee(enemy)||user.canSee(game.execusioner)){
 			sitNum++;
 		}
 		else if(Player.rangeOfDirection(user.x, enemy.x, user.y, enemy.y, user.direction, user.maxCast,enemy.size)){

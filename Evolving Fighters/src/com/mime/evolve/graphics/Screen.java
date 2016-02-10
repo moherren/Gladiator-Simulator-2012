@@ -19,8 +19,8 @@ public class Screen extends Render{
 		
 		render.Player(game.player1);
 		render.Player(game.player2);
-		if(game.executor!=null)
-			render.Player(game.executor);
+		if(game.execusioner!=null)
+			render.Player(game.execusioner);
 		
 		for(Projectile p:game.projectiles){
 			render.drawProjectile(p);

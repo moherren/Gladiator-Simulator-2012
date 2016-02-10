@@ -70,7 +70,7 @@ public class Player implements Drawable{
 	
 	public Species species;
 	
-	private double walking=0;
+	protected double walking=0;
 	public boolean[] DNA=new boolean[reactions*situations+traits];
 	Game game;
 	Random rand=Game.rand;

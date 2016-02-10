@@ -90,11 +90,11 @@ public class StabProjectile extends Projectile{
 				proj.damage=0;
 			}
 		}
-		if(game.executor!=null)
-		if(Math.sqrt(Math.pow(x-game.executor.x, 2)+Math.pow(y-game.executor.y, 2))<=game.executor.size+size&&damage!=0){
-			game.executor.damage(damage*owner.power);
+		if(game.execusioner!=null)
+		if(Math.sqrt(Math.pow(x-game.execusioner.x, 2)+Math.pow(y-game.execusioner.y, 2))<=game.execusioner.size+size&&damage!=0){
+			game.execusioner.damage(damage*owner.power);
 			//owner.fitness+=(damage*owner.power*1.000)/(target.maxHealth*1.000)*45;
-			game.executor.move(dir+Math.PI, damage*2);
+			game.execusioner.move(dir+Math.PI, damage*2);
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);
 				if(proj!=null)

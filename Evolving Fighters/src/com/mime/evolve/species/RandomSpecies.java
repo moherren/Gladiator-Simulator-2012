@@ -17,7 +17,7 @@ public class RandomSpecies extends Species{
 		int r=(int)((1-Math.sqrt(1-rand.nextDouble()))*4);
 		Player enemy=game.getEnemy(user);
 		int sitNum=1;
-		if(user.canSee(enemy)||user.canSee(game.executor)){
+		if(user.canSee(enemy)||user.canSee(game.execusioner)){
 			sitNum++;
 		}
 		loop:for(int i=0;i<game.projectiles.size();i++){

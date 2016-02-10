@@ -70,24 +70,24 @@ public class Tournament extends Game {
 				player2.move(dir, 0.05 * player1.size);
 			}
 			
-			if(executor!=null){
-				executor.tick(this);
+			if(execusioner!=null){
+				execusioner.tick(this);
 				
-				if (Math.sqrt(Math.pow(player1.y - executor.y, 2)
-						+ Math.pow(player1.x - executor.x, 2)) <= player1.size
-						+ executor.size) {
-					double dir = Math.atan2(player1.y - executor.y, player1.x
-							- executor.x);
-					player1.move(dir + Math.PI, 0.05 * executor.size);
-					executor.move(dir, 0.05 * player1.size);
+				if (Math.sqrt(Math.pow(player1.y - execusioner.y, 2)
+						+ Math.pow(player1.x - execusioner.x, 2)) <= player1.size
+						+ execusioner.size) {
+					double dir = Math.atan2(player1.y - execusioner.y, player1.x
+							- execusioner.x);
+					player1.move(dir + Math.PI, 0.05 * execusioner.size);
+					execusioner.move(dir, 0.05 * player1.size);
 				}
-				if (Math.sqrt(Math.pow(executor.y - player2.y, 2)
-						+ Math.pow(executor.x - player2.x, 2)) <= executor.size
+				if (Math.sqrt(Math.pow(execusioner.y - player2.y, 2)
+						+ Math.pow(execusioner.x - player2.x, 2)) <= execusioner.size
 						+ player2.size) {
-					double dir = Math.atan2(executor.y - player2.y, executor.x
+					double dir = Math.atan2(execusioner.y - player2.y, execusioner.x
 							- player2.x);
-					executor.move(dir + Math.PI, 0.05 * player2.size);
-					player2.move(dir, 0.05 * executor.size);
+					execusioner.move(dir + Math.PI, 0.05 * player2.size);
+					player2.move(dir, 0.05 * execusioner.size);
 				}
 			}
 			
@@ -110,9 +110,9 @@ public class Tournament extends Game {
 				redos++;
 				newGame();
 			}
-			else if (time - oldTime == 1000&&redos==2&&executor==null){
+			else if (time - oldTime == 1000&&redos==2&&execusioner==null){
 				System.out.println("Time up!");
-				executor=new Execusioner(Player.stringToDna("0010010100010100100101000101001001010001010010010100010100100101000101001001010001010010010100010100100101000101000000000000")
+				execusioner=new Execusioner(Player.stringToDna("0010010100010100100101000101001001010001010010010100010100100101000101001001010001010010010100010100100101000101000000000000")
 						,this);
 			}
 		}
@@ -170,7 +170,7 @@ public class Tournament extends Game {
 			alterProjectiles(p,0);
 		}
 		
-		executor=null;
+		execusioner=null;
 		
 		if (competetors.length > 1){
 		species1 = competetors[battleNumber * 2].species;

@@ -18,7 +18,7 @@ public class WeaponReaderSpecies extends Species{
 	public void tick(Game game,Player user){
 		Player enemy=game.getEnemy(user);
 		int sitNum=1;
-		if(user.canSee(enemy)||user.canSee(game.executor)){
+		if(user.canSee(enemy)||user.canSee(game.execusioner)){
 			sitNum++;
 		}
 		loop:for(int i=0;i<game.projectiles.size();i++){
