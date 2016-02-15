@@ -73,11 +73,11 @@ public class WepKnife extends StabProjectile{
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
 			Player enemy=game.getEnemy(owner);
 			if(Player.rangeOfDirection(enemy.x, x, enemy.y, y, enemy.direction+Math.PI,enemy.maxCast, size)&&damage!=0){
-				target.damage(damage*owner.power*3);
+				target.damage(damage*owner.power*3,this);
 				owner.fitness+=(damage*owner.power*3.000)/target.maxHealth*45;
 			}
 			else{
-				target.damage(damage*owner.power);
+				target.damage(damage*owner.power,this);
 				owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			}
 			target.move(dir+Math.PI, damage*2);
@@ -91,11 +91,11 @@ public class WepKnife extends StabProjectile{
 		if(Math.sqrt(Math.pow(x-game.execusioner.x, 2)+Math.pow(y-game.execusioner.y, 2))<=game.execusioner.size+size&&damage!=0){
 			Player enemy=game.getEnemy(owner);
 			if(Player.rangeOfDirection(game.execusioner.x, x, game.execusioner.y, y, game.execusioner.direction+Math.PI,game.execusioner.maxCast, size)&&damage!=0){
-				game.execusioner.damage(damage*owner.power*3);
+				game.execusioner.damage(damage*owner.power*3,this);
 				//owner.fitness+=(damage*owner.power*3.000)/target.maxHealth*45;
 			}
 			else{
-				game.execusioner.damage(damage*owner.power);
+				game.execusioner.damage(damage*owner.power,this);
 				//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			}
 			game.execusioner.move(dir+Math.PI, damage*2);

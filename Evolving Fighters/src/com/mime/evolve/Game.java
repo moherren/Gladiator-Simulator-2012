@@ -212,6 +212,7 @@ public class Game {
 	public Player player1;
 	public Player player2;
 	public Player execusioner=null;
+	public String endGame="KO";
 	double dBetweenPlayers=10000;
 	public Game(){
 		Random rand=new Random();

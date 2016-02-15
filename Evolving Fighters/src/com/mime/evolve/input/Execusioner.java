@@ -5,6 +5,7 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
 import com.mime.evolve.Game;
+import com.mime.evolve.sound.SoundHandler;
 import com.mime.evolve.species.Species;
 import com.mime.evolve.graphics.Render;
 import com.mime.evolve.graphics.Render2D;
@@ -14,6 +15,7 @@ import com.mime.evolve.projectiles.SwingProjectile;
 public class Execusioner extends Player{
 	boolean inRing=false;
 	final static double height=1.5;
+	double walkingOld=0;
 	public Execusioner(boolean[] DNA, Game game) {
 		super(600, 0, -Math.PI/2.000, new ExecutorSpecies(), DNA, game);
 		species.projectile=new WarAxe();
@@ -22,6 +24,7 @@ public class Execusioner extends Player{
 		speed=1;
 		maxHealth=20;
 		health=maxHealth;
+		
 	}
 	
 	public void tick(Game game){
@@ -29,7 +32,10 @@ public class Execusioner extends Player{
 			moveForward(1);
 		else{
 			species.tick(game, this);
-			inRing=true;
+			if(!inRing){
+				inRing=true;
+				SoundHandler.play(SoundHandler.EX2);
+			}
 		}
 	}
 	public void move(double direction,double distance){
@@ -42,10 +48,11 @@ public void drawAlive(Render2D r) {
 		
 		int newY=Render2D.visualY(y);
 		double walking=(1+Math.cos(game.time/24.000))*3.0000;
+			
 		 if(this.walking==0)
 			 walking=0;
 		 Rectangle rec=new Rectangle();
-		 rec.setBounds((int) x-size,(int)(newY-size*height-walking),(int)size*2,(int)(size*height));
+		 rec.setBounds((int) x-size,(int)(newY-size*height-this.walking),(int)size*2,(int)(size*height));
 		 int depth=(int) Render2D.visualY(y);
 		 double[] eyeDir=new double[]{direction+Math.PI*0.125,direction-Math.PI*0.125};
 		 int headX=(int) rec.getCenterX(),headY=rec.y;
@@ -198,10 +205,17 @@ public void drawDead(Render2D r){
 	}
 
 	public void moveForward(int i) {
-		walking+=((speed+species.projectile.addedSpeed)*(5/8.00));
+		walking=(Math.cos(game.time/24.0)+1)*((speed+species.projectile.addedSpeed)*(5/8.00));
 		move(direction+Math.PI,(Math.cos(game.time/24.0)+1)*((speed+species.projectile.addedSpeed)*(5/8.00)));
+		if(walkingOld>0&&Math.sin(game.time/24.0)<0)
+			SoundHandler.play(SoundHandler.STOMP,-11);
+		walkingOld=Math.sin(game.time/24.0);
 	}
-}
+	
+	public void grunt(){
+		SoundHandler.play(SoundHandler.EX1);
+	}
+
 class WarAxe extends SwingProjectile{
 	public WarAxe(){
 	super();
@@ -232,8 +246,13 @@ class WarAxe extends SwingProjectile{
 	}
 	public void tick(){
 		updatePosition();
+		
+		double swingFrac=1.0/3.0;
+		if(game.time-startTime<this.endTime*swingFrac&&game.time-startTime+1>this.endTime*swingFrac)
+			SoundHandler.play(SoundHandler.SWING,-10);
+			
 		if(Math.sqrt(Math.pow(x-game.player1.x, 2)+Math.pow(y-game.player1.y, 2))<=target.size+size&&damage!=0){
-			game.player1.damage(damage*owner.power);
+			game.player1.damage(damage*owner.power,this);
 			owner.fitness+=(damage*owner.power*1.000)/game.player1.maxHealth*45;
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);
@@ -243,7 +262,7 @@ class WarAxe extends SwingProjectile{
 			game.player1.move(dir+Math.PI, damage*2);
 		}
 		if(Math.sqrt(Math.pow(x-game.player2.x, 2)+Math.pow(y-game.player2.y, 2))<=game.player2.size+size&&damage!=0){
-			game.player2.damage(damage*owner.power);
+			game.player2.damage(damage*owner.power,this);
 			//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);
@@ -339,6 +358,7 @@ class WarAxe extends SwingProjectile{
 			}
 		}
 	}
+}
 }
 class ExecutorSpecies extends Species{
 

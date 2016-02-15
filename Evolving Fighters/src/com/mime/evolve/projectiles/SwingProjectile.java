@@ -97,7 +97,7 @@ public class SwingProjectile extends Projectile{
 	public void tick(){
 		updatePosition();
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
-			target.damage(damage*owner.power);
+			target.damage(damage*owner.power,this);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);
@@ -108,7 +108,7 @@ public class SwingProjectile extends Projectile{
 		}
 		if(game.execusioner!=null)
 		if(Math.sqrt(Math.pow(x-game.execusioner.x, 2)+Math.pow(y-game.execusioner.y, 2))<=game.execusioner.size+size&&damage!=0){
-			game.execusioner.damage(damage*owner.power);
+			game.execusioner.damage(damage*owner.power,this);
 			//owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			for(int i=0;i<brothers.size();i++){
 				Projectile proj=brothers.get(i);

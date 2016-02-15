@@ -148,7 +148,7 @@ public class Player implements Drawable{
 		if(broadCast<minCast)
 			broadCast=minCast;
 	}
-	public void damage(double d){
+	public void damage(double d,Projectile p){
 		if(game.getEnemy(this).health>0&&health>0){
 			if(d==0)
 				return;
@@ -157,13 +157,17 @@ public class Player implements Drawable{
 			health-=d;
 			game.resetCountdown();
 			if(health<=0){
+				if(p instanceof Execusioner.WarAxe)
+					game.endGame="Execusion";
+				else
+					game.endGame="KO";
 				game.endGame();
 				if(deathTime==0)
 					deathTime=game.getTime();
 			}
 		}
 	}
-	@Override
+
 	public void draw(Render2D r){
 		if(deathTime==0)
 			drawAlive(r);
@@ -175,10 +179,10 @@ public class Player implements Drawable{
 		
 		int newY=Render2D.visualY(y);
 		double walking=Math.abs(Math.sin((game.time%(Math.PI*64*Math.pow(speed, -1)))/32.000))*3.0000;
-		 if(this.walking==0)
+		 if(this.walking==0||Tournament.displayStage==4)
 			 walking=0;
 		 Rectangle rec=new Rectangle();
-		 rec.setBounds((int) x-size,(int)(newY-size*1.5-walking),(int)size*2,(int)(size*1.5));
+		 rec.setBounds((int) x-size,(int)(newY-size*1.5-this.walking),(int)size*2,(int)(size*1.5));
 		 int depth=(int) Render2D.visualY(y);
 		 double[] eyeDir=new double[]{direction+Math.PI*0.125,direction-Math.PI*0.125};
 		 int headX=(int) rec.getCenterX(),headY=rec.y;

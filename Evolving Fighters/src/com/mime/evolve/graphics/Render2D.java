@@ -103,8 +103,11 @@ public class Render2D extends Render{
 		
 		if(game.getDisplayStage()==2)
 			draw(game.roundArt[game.getRedos()-1],600-game.roundArt[game.getRedos()-1].width/2,400-game.roundArt[game.getRedos()-1].height/2);
-		else if(game.getDisplayStage()==4){
-			draw(game.koArt,600-game.koArt.width/2,400-game.koArt.height/2);
+		else if(game.getDisplayStage()==5){
+			if(game.endGame.equals("KO"))
+				draw(game.koArt,600-game.koArt.width/2,400-game.koArt.height/2);
+			else
+				draw(game.execusionArt,600-game.execusionArt.width/2,400-game.execusionArt.height/2);
 		}
 		
 		

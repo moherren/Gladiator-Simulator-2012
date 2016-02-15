@@ -13,80 +13,71 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class SoundTest extends JFrame{
+public class SoundTest extends JFrame {
 	int volume;
 	float volFloat;
 	JLabel volText;
+	
+	String[] sounds;
+
 	public SoundTest() {
-		
+
 		volText = new JLabel("Gain: " + Integer.toString(volume));
-		
-		JPanel sliderPanel=new JPanel();
+
+		JPanel sliderPanel = new JPanel();
 		Container cp = this.getContentPane();
-		
+
 		cp.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-		
-		
-		
-		
+
 		int volMin = -6;
 		int volMax = 6;
-		
-		JSlider volSlider = new JSlider(volMin,volMax);
+
+		JSlider volSlider = new JSlider(volMin, volMax);
 		volSlider.setPaintTicks(true);
 		volSlider.setMajorTickSpacing(1);
-		volSlider.addChangeListener(new ChangeListener(){
+		volSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				volume = ((JSlider)e.getSource()).getValue();
-				//volText = new JLabel(Integer.toString(volume));
+				volume = ((JSlider) e.getSource()).getValue();
+				// volText = new JLabel(Integer.toString(volume));
 				volText.setText("Gain: " + Integer.toString(volume));
-				volFloat = (float)volume;
+				volFloat = (float) volume;
 			}
 		});
 		sliderPanel.add(volText);
 		sliderPanel.add(volSlider);
 		cp.add(sliderPanel);
+
+		sounds = new String[] { "DECAP_ONE", "EX1", "EX2", "EX3", "EXECUTION", "GRUNT_ONE",
+				"GRUNT_TWO", "KO", "ROUND1", "ROUND2", "STOMP", "SWING1", "MENUSHOUT" };
 		
+		JButton[] buttons = new JButton[sounds.length];
 		
+		for (int i = 0; i < sounds.length; i++) {
+			buttons[i] = new JButton(sounds[i]);
+			
+			addListener(buttons[i],sounds[i]);
+			cp.add(buttons[i]);
+		}
 		
-		JButton btnSound1 = new JButton("GRUNT_ONE");
-
-		btnSound1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SoundHandler.play(SoundHandler.GRUNT_ONE,volFloat);
-			}
-		});
-		cp.add(btnSound1);
-
-		JButton btnSound2 = new JButton("GRUNT_TWO");
-
-		btnSound2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SoundHandler.play(SoundHandler.GRUNT_TWO,volFloat);
-			}
-		});
-		cp.add(btnSound2);
-
-		JButton btnSound3 = new JButton("VOICE_ONE");
-
-		btnSound3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SoundHandler.play(SoundHandler.VOICE_ONE,volFloat);
-			}
-		});
-		cp.add(btnSound3);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Test SoundEffct");
-		this.pack();
+		this.setTitle("Test SoundEffect");
+		this.setSize(500, 500);
 		this.setVisible(true);
+	}
+	private void addListener(JButton b, final String s){
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String ref = "SoundSource/"+s+".wav";
+				SoundHandler.play(ref, volFloat);
+			}
+		});
 	}
 
 	public static void main(String[] args) {
 		new SoundTest();
+
 	}
 }

@@ -137,14 +137,14 @@ public class WepFlail extends Projectile{
 		if(!owner.species.projectile.meele)
 			game.resetCountdown();
 		if(Math.sqrt(Math.pow(x-target.x, 2)+Math.pow(y-target.y, 2))<=target.size+size&&damage!=0){
-			target.damage(damage*owner.power);
+			target.damage(damage*owner.power,this);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			target.move(dir+Math.PI, damage*3.5);
 			damage=0;
 		}
 		if(game.execusioner!=null)
 		if(Math.sqrt(Math.pow(x-game.execusioner.x, 2)+Math.pow(y-game.execusioner.y, 2))<=game.execusioner.size+size&&damage!=0){
-			game.execusioner.damage(damage*owner.power);
+			game.execusioner.damage(damage*owner.power,this);
 			owner.fitness+=(damage*owner.power*1.000)/target.maxHealth*45;
 			game.execusioner.move(dir+Math.PI, damage*3.5);
 			damage=0;

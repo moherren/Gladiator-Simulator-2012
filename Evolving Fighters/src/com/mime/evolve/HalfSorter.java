@@ -130,7 +130,7 @@ public class HalfSorter extends Game {
 				newGame();
 			}
 			else if (time - oldTime >= 1000&&redos==3){
-				player1.damage(9999);
+				player1.damage(9999,new Projectile());
 			}
 			return new Player[]{null,null};
 		}

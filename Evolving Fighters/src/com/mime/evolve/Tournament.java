@@ -3,13 +3,14 @@ package com.mime.evolve;
 import com.mime.evolve.input.Execusioner;
 import com.mime.evolve.input.Player;
 import com.mime.evolve.projectiles.Projectile;
+import com.mime.evolve.sound.SoundHandler;
 
 public class Tournament extends Game {
 	Player[] competetors;
 	Player[] newCompetetors = new Player[999];
 	boolean started=false;
 	private int redos=1;
-	int displayStage=0;
+	public static int displayStage=0;
 	long nextStage=0;
 	/** 1. Display fighter names with "vs." displayed between them
 	 *  2. Move fighter names to their respective positions on the screen and fade into the arena
@@ -18,7 +19,7 @@ public class Tournament extends Game {
 	 *  5. Death scene/display the words KO
 	 *  6. Distribute money*/
 	public final static long[] stageTimes=new long[]{
-			200, 100,150,upperTimeLength*2,350,300
+			200, 100,200,upperTimeLength*2,350,300
 	};
 	
 	public Tournament(Player[] p) {
@@ -46,8 +47,17 @@ public class Tournament extends Game {
 			else{
 				nextStage+=stageTimes[displayStage];
 				}
+			if(displayStage==2)
+				SoundHandler.play(SoundHandler.ROUND_ONE);
+			
+			if(displayStage==5&&endGame=="KO")
+				SoundHandler.play(SoundHandler.KO);
+			else if(displayStage==5)
+				SoundHandler.play(SoundHandler.EXECUTION);
 			}
-
+		
+		
+		
 		if (competetors.length == 1) {
 			System.out.println("Fight done");
 			return  competetors;
@@ -148,8 +158,6 @@ public class Tournament extends Game {
 						competetors = newCompetetors;
 					}
 				}
-				
-			
 		displayStage=4;
 		nextStage=time+stageTimes[4];
 	}
@@ -160,8 +168,10 @@ public class Tournament extends Game {
 		else if(player1.health<=0||player2.health<=0){
 			displayStage=0;
 		}
-		else 
+		else {
 			displayStage=2;
+			SoundHandler.play(SoundHandler.ROUND_TWO);
+		}
 		nextStage=(int) (time+stageTimes[displayStage]);
 		
 		dBetweenPlayers=10000;
