@@ -74,6 +74,24 @@ public class Render2D extends Render{
 			}
 		}
 	}
+	public void background(int X,int Y,int width, int height){
+		for(int x=X;x<width+X;x++){
+			for(int y=Y;y<height+Y;y++){
+				int dRight=width-x,dBottom=height-y-30;
+				int color=Texture.stone.pixels[(x%Texture.stone.width)+(y%Texture.stone.height)*Texture.stone.width];
+				if(x<20&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
+					pixels[x+y*width]=Render.mixColor(color, 0, 0.20);
+				else if(dRight<20&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)||(y==height/2)))
+					pixels[x+y*width]=Render.mixColor(color, 0, 0.50);
+				else if(y<20)
+					pixels[x+y*width]=Render.mixColor(color, 0, 0.30);
+				else if(dBottom<20)
+					pixels[x+y*width]=Render.mixColor(color, 0, 0.40);
+				else
+					pixels[x+y*width]=color;
+			}
+		}
+	}
 	public void Blocks(){
 		/*for(int i=0;i<blankGame.level.width*blankGame.level.height;i++){
 			if(blankGame.level.wall[i]==true){

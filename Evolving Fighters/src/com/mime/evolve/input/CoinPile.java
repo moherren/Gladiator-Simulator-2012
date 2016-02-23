@@ -50,6 +50,12 @@ public class CoinPile {
 		}
 	}
 	
+	public void render(Render2D r,int x,int y) {
+		for(Coin c:coins){
+			c.render(r,x-this.x,y-this.y);
+		}
+	}
+	
 	public Coin createCoin(int num,int full){
 		double circle=Math.PI;
 		double length=(Math.log1p(num+1)*(Math.sinh(num%1.0)-1)/1.25);
@@ -82,7 +88,7 @@ class Coin{
 		int x,y,z;
 		long startTime;
 		public static final double size=6;
-		public static final Render sprite=Texture.loadBitmap("Coin.png");
+		public static final Render sprite=Texture.loadBitmap("Textures/Coin.png");
 		static final int tHeight=200,tLength=700,tTime=2000;
 		
 		public Coin(double x,double y,int z,long time) {
@@ -111,6 +117,26 @@ class Coin{
 				cha=1-cha;
 				
 				r.draw(Texture.getSpriteSheet(sprite,12,12,Math.abs(num),flip), (int)(x+tLength*cha), (int)(y-z*3-tHeight*Math.sin(cha*Math.PI)),y+z*4);
+			}
+		}
+		public void render(Render2D r,int x,int y) {
+			
+			if(System.currentTimeMillis()-startTime>tTime)
+				r.draw(Texture.getSpriteSheet(sprite, 12, 12, 0), x, y-z*3,y+z*4);
+			else{
+				float time=System.currentTimeMillis();
+				int num=(int) (System.currentTimeMillis()/150%8);
+				boolean flip=false;
+				num%=4;
+				if(num==3){
+					num=1;
+					flip=true;
+				}
+				
+				double cha=(System.currentTimeMillis()-startTime)/(tTime*1.00);
+				cha=1-cha;
+				
+				r.draw(Texture.getSpriteSheet(sprite,12,12,Math.abs(num),flip), (int)(this.x+tLength*cha)+x, (int)(this.y-z*3-tHeight*Math.sin(cha*Math.PI))+y,this.y+z*4);
 			}
 		}
 	}
