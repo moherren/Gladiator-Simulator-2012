@@ -279,4 +279,20 @@ public class Render2D extends Render{
 	public void winScreen(Victory vic){
 		vic.render(this);
 	}
+	public void draw(Render render,int xOffSet,int yOffSet,int depth){
+		for(int y=0; y<render.height;y++){
+			int yPix=y+yOffSet;
+			if (yPix<0||yPix>=height) continue;
+			for(int x=0; x<render.width;x++){
+				int xPix=x+xOffSet;
+				if (xPix<0||xPix>=width) continue;
+				int alpha=render.pixels[x+y*render.width];
+				if(alpha>0&&depthMap[xPix+yPix*width]<=depth){
+					pixels[xPix+yPix*width]=alpha;
+					depthMap[xPix+yPix*width]=depth;
+				}
+			}
+		}
+		
+	}
 }
