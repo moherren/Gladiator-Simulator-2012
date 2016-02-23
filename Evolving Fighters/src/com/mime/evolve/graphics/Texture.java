@@ -153,5 +153,44 @@ public class Texture {
 				throw new RuntimeException(e);
 				
 			}
+		}
+
+		public static Render2D getSpriteSheet(Render r,int width,int height,int num){
+			int columns=r.width/width,rows=r.height/height;
+			if(num>=rows*columns)
+				return null;
+			Render2D sprite=new Render2D(width,height);
+			
+			for(int x=0;x<width;x++){
+				int xPix=x+((num%columns)*width);
+				for(int y=0;y<height;y++){
+					int yPix=y+(num/columns);
+					int alpha=r.pixels[xPix+yPix*r.width];
+					sprite.pixels[x+y*sprite.width]=alpha;
+				}
+			}
+			
+			return sprite;
+		}
+
+		public static Render2D getSpriteSheet(Render r,int width,int height,int num,boolean flipped){
+			int columns=r.width/width,rows=r.height/height;
+			if(num>=rows*columns)
+				return null;
+			Render2D sprite=new Render2D(width,height);
+			
+			for(int x=0;x<width;x++){
+				int xPix=x+((num%columns)*width);
+				for(int y=0;y<height;y++){
+					int yPix=y+(num/columns);
+					int alpha=r.pixels[xPix+yPix*r.width];
+					if(!flipped)
+						sprite.pixels[x+y*sprite.width]=alpha;
+					else
+						sprite.pixels[sprite.width-1-x+y*sprite.width]=alpha;
+				}
+			}
+			
+			return sprite;
 		} 
 }
