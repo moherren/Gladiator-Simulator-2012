@@ -19,7 +19,7 @@ public class RandomNameGenerator{
 	private static ArrayList<String> adjectives=loadList("wordList/adjectives.txt");
 	private static ArrayList<String> names=loadList("names/names.txt");
 	private static Random rand=new Random();
-	private static String[] titleForms={"the /nameArt","the /nameArt of /p","the /n","the /a /n","the /nameArt of the /a /n","the /nameArt of /w"};
+	private static String[] titleForms={"the /r","the /r of /p","the /n","the /a /n","the /r of the /a /n","the /r of /w"};
 	private static String[] nameForms={"/m /m","/m \"/t\" /m",
 		"/m","/m \"/t\"","/m /m of /w","/m of /w","/m of the /a /p","/t"
 	};

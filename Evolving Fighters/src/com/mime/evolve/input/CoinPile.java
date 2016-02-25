@@ -56,6 +56,10 @@ public class CoinPile {
 		}
 	}
 	
+	public Coin createCoin(){
+		return createCoin(size+1,size+1);
+	}
+	
 	public Coin createCoin(int num,int full){
 		double circle=Math.PI;
 		double length=(Math.log1p(num+1)*(Math.sinh(num%1.0)-1)/1.25);
@@ -64,7 +68,7 @@ public class CoinPile {
 		
 		
 		x*=Coin.size*2;
-		x-=(Coin.size*2)*Math.log1p(full);
+		x-=(Coin.size*2);
 		x+=this.x;
 		
 		double y=(int)Math.abs((Math.sin(num*4.9)*length));
@@ -82,6 +86,10 @@ public class CoinPile {
 	
 	public Coin createCoin(double x,double y,int height){
 		return new Coin(x,y,height,System.currentTimeMillis());
+	}
+
+	public void removeCoin() {
+		coins.remove(coins.size()-1);
 	}
 }
 class Coin{
@@ -122,7 +130,7 @@ class Coin{
 		public void render(Render2D r,int x,int y) {
 			
 			if(System.currentTimeMillis()-startTime>tTime)
-				r.draw(Texture.getSpriteSheet(sprite, 12, 12, 0), x, y-z*3,y+z*4);
+				r.draw(Texture.getSpriteSheet(sprite, 12, 12, 0), this.x+x, this.y-z*3+y,this.y+z*4+y);
 			else{
 				float time=System.currentTimeMillis();
 				int num=(int) (System.currentTimeMillis()/150%8);
@@ -136,7 +144,7 @@ class Coin{
 				double cha=(System.currentTimeMillis()-startTime)/(tTime*1.00);
 				cha=1-cha;
 				
-				r.draw(Texture.getSpriteSheet(sprite,12,12,Math.abs(num),flip), (int)(this.x+tLength*cha)+x, (int)(this.y-z*3-tHeight*Math.sin(cha*Math.PI))+y,this.y+z*4);
+				r.draw(Texture.getSpriteSheet(sprite,12,12,Math.abs(num),flip), (int)(this.x+tLength*cha)+x, (int)(this.y-z*3-tHeight*Math.sin(cha*Math.PI))+y,this.y+z*4+y);
 			}
 		}
 	}

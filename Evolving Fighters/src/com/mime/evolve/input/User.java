@@ -13,7 +13,7 @@ public class User {
 	public int money=10,moneyWon=0;
 	public Hashtable<String,Integer> bets=new Hashtable<String,Integer>();
 	Render2D nameArt,namePlate;
-	CoinPile cp=new CoinPile(money,0,0);
+	CoinPile cp=new CoinPile(10,00,00);
 	
 	public User(String name) {
 		this.name=name;
@@ -27,14 +27,14 @@ public class User {
 		Arrays.fill(nameArt.pixels, -1);
 		nameArt.setFont(nameArt.getFont().deriveFont(Font.BOLD, 30));
 
-		nameArt.drawWordArt(this.name, 10, 750,4);
+		nameArt.drawWordArt(this.name, length, 100,5);
 	}
 	
 	public Integer getBet(Player player){
 		if(bets.containsKey(player.species.name))
 			return bets.get(player.species.name);
 		else
-			return 0;
+			return new Integer(0);
 	}
 	
 	public int getBet(Player player, Player player2) {
@@ -52,12 +52,17 @@ public class User {
 	}
 	
 	public void removeBet(Player p){
+		int m=getBet(p);
+		
 		bets.remove(p.species.name);
 	}
 	
-	public void winMoney(int m){
+	public void winMoney(int m,Player p){
 		moneyWon+=m;
 		money+=m;
+		for(int i=0;i<m;i++)
+			cp.createCoin();
+		bets.remove(p.species.name);
 	}
 	
 	public void renderName(Render2D r,int x,int y){
@@ -66,7 +71,7 @@ public class User {
 	
 	public void renderNamePlate(Render2D r,int x,int y){
 		r.background(x, y, r.width, r.height/8);
-		r.draw(nameArt, x+50, y+50);
-		cp.render(r, x+r.width-100, y+50);
+		r.draw(nameArt, x+r.width/2, y+50);
+		cp.render(r, x+r.width-400, y+75);
 	}
 }

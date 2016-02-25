@@ -6,12 +6,15 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+
 import com.mime.evolve.Controller;
 import com.mime.evolve.Display;
 import com.mime.evolve.Tournament;
 import com.mime.evolve.Victory;
 import com.mime.evolve.input.Player;
+import com.mime.evolve.input.User;
 import com.mime.evolve.projectiles.Projectile;
 
 public class Render2D extends Render{
@@ -77,15 +80,15 @@ public class Render2D extends Render{
 	public void background(int X,int Y,int width, int height){
 		for(int x=X;x<width+X;x++){
 			for(int y=Y;y<height+Y;y++){
-				int dRight=width-x,dBottom=height-y-30;
+				int dRight=width-x,dBottom=height-y;
 				int color=Texture.stone.pixels[(x%Texture.stone.width)+(y%Texture.stone.height)*Texture.stone.width];
-				if(x<20&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
+				if(x<10&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.20);
-				else if(dRight<20&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)||(y==height/2)))
+				else if(dRight<10&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)||(y==height/2)))
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.50);
-				else if(y<20)
+				else if(y<10)
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.30);
-				else if(dBottom<20)
+				else if(dBottom<10)
 					pixels[x+y*width]=Render.mixColor(color, 0, 0.40);
 				else
 					pixels[x+y*width]=color;
@@ -128,7 +131,14 @@ public class Render2D extends Render{
 				draw(game.execusionArt,600-game.execusionArt.width/2,400-game.execusionArt.height/2);
 		}
 		
-		
+		if(game.getDisplayStage()==6){
+			
+			ArrayList<User> users=game.getHandle().getOrderedList();
+			for(int i=0;i<users.size();i++){
+				User u=users.get(i);
+				u.renderNamePlate(this, 0, i*100);
+			}
+		}
 			
 	
 		draw(game.species1.getNameArt(),(int)(400-380*dist),(int)(300*dist+400));

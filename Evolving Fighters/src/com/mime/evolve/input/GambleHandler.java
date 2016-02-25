@@ -40,9 +40,10 @@ public class GambleHandler {
 	 * finishedPlacingBets is used to tell the handler that a specific player has finished taking bets
 	 */
 	public void finishPlacingBet(User user){
-		
+		user.cp=new CoinPile(user.money,0,0);
 		if(gamblers.size()>++currentGambler){
 			takeBet(gamblers.get(currentGambler));
+			
 		}
 		else{
 			al.actionPerformed(new ActionEvent(this,0,"bets done"));
@@ -60,8 +61,7 @@ public class GambleHandler {
 	}
 	public void giveWinnings(Player winner,Player loser) {
 		for(User u:gamblers){
-			u.winMoney(u.getBet(winner)*2);
-			u.removeBet(winner);
+			u.winMoney(u.getBet(winner)*2,winner);
 			u.removeBet(loser);
 		}
 	}

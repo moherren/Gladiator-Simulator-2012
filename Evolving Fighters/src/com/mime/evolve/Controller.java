@@ -142,5 +142,7 @@ public class Controller extends Game implements ActionListener{
 		vsArt.drawOutlinedWordArt("Round "+num,10,(int) (gv.getVisualBounds().getHeight()+30), 4);
 		return vsArt;
 	}
-	
+	public GambleHandler getHandle(){
+		return handle;
+	}
 }

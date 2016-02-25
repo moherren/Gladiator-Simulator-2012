@@ -42,8 +42,36 @@ public class Tournament extends Game {
 		if(time>=nextStage&&displayStage!=3){
 			System.out.println(displayStage+" stage is done");
 			displayStage++;
-			if(displayStage==stageTimes.length)	
+			
+			
+			if(displayStage==6){
+				
+				if (player1.health <= 0) {
+					Display.display.game.handle.giveWinnings(player2,player1);
+					} else {
+					Display.display.game.handle.giveWinnings(player1,player2);
+					}
+
+				}
+			
+			
+			if(displayStage==stageTimes.length){	
+				if (battleNumber >= newCompetetors.length) {
+					System.out.println(competetors.length);
+					battleNumber = 0;
+					if(newCompetetors.length!=1){
+						competetors = newCompetetors;
+						newCompetetors = new Player[competetors.length / 2];
+						newGame();
+						Display.display.game.handle.takeAllBets(competetors);
+					} 	
+					else{
+						competetors = newCompetetors;
+					}
+				}
+			
 				newGame();
+			}
 			else{
 				nextStage+=stageTimes[displayStage];
 				}
@@ -54,6 +82,8 @@ public class Tournament extends Game {
 				SoundHandler.play(SoundHandler.KO);
 			else if(displayStage==5)
 				SoundHandler.play(SoundHandler.EXECUTION);
+			
+			
 			}
 		
 		
@@ -132,32 +162,16 @@ public class Tournament extends Game {
 	}
 
 	public void endGame() {
-		oldTime = time;
-		redos=1;
-		
 		if (player1.health <= 0) {
 			newCompetetors[battleNumber] = player2;
-			Display.display.game.handle.giveWinnings(player2,player1);
-		} else {
+			} else {
 			newCompetetors[battleNumber] = player1;
-			Display.display.game.handle.giveWinnings(player1,player2);
-		}
+			}
 		System.out.println("Winner " + newCompetetors[battleNumber].toString());
+		
+		oldTime = time;
+		redos=1;
 		battleNumber++;
-			
-				if (battleNumber >= newCompetetors.length) {
-					System.out.println(competetors.length);
-					battleNumber = 0;
-					if(newCompetetors.length!=1){
-						competetors = newCompetetors;
-						newCompetetors = new Player[competetors.length / 2];
-						newGame();
-						Display.display.game.handle.takeAllBets(competetors);
-					} 	
-					else{
-						competetors = newCompetetors;
-					}
-				}
 		displayStage=4;
 		nextStage=time+stageTimes[4];
 	}
