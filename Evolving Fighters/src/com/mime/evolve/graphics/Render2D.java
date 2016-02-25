@@ -78,20 +78,22 @@ public class Render2D extends Render{
 		}
 	}
 	public void background(int X,int Y,int width, int height){
-		for(int x=X;x<width+X;x++){
-			for(int y=Y;y<height+Y;y++){
-				int dRight=width-x,dBottom=height-y;
+		for(int x=X;x-X<(width);x++){
+			if(x>width+X)
+				System.out.println("dog");
+			for(int y=Y;y-Y<(height);y++){
+				int dRight=width+X-(x),dBottom=height+Y-(y);
 				int color=Texture.stone.pixels[(x%Texture.stone.width)+(y%Texture.stone.height)*Texture.stone.width];
-				if(x<10&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
-					pixels[x+y*width]=Render.mixColor(color, 0, 0.20);
+				if(x-X<10&&((y>height/2&&x<dBottom)||(y<height/2&&x<y)||(y==height/2)))
+					pixels[x+y*this.width]=Render.mixColor(color, 0, 0.20);
 				else if(dRight<10&&((y>height/2&&dRight<dBottom)||(y<height/2&&dRight<y)||(y==height/2)))
-					pixels[x+y*width]=Render.mixColor(color, 0, 0.50);
-				else if(y<10)
-					pixels[x+y*width]=Render.mixColor(color, 0, 0.30);
+					pixels[x+y*this.width]=Render.mixColor(color, 0, 0.50);
+				else if(y-Y<10)
+					pixels[x+y*this.width]=Render.mixColor(color, 0, 0.30);
 				else if(dBottom<10)
-					pixels[x+y*width]=Render.mixColor(color, 0, 0.40);
+					pixels[x+y*this.width]=Render.mixColor(color, 0, 0.40);
 				else
-					pixels[x+y*width]=color;
+					pixels[x+y*this.width]=color;
 			}
 		}
 	}
@@ -136,7 +138,7 @@ public class Render2D extends Render{
 			ArrayList<User> users=game.getHandle().getOrderedList();
 			for(int i=0;i<users.size();i++){
 				User u=users.get(i);
-				u.renderNamePlate(this, 0, i*100);
+				u.renderNamePlate(this, 0, i*200);
 			}
 		}
 			

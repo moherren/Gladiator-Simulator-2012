@@ -23,11 +23,11 @@ public class User {
 		nameArt.setFont(nameArt.getFont().deriveFont(Font.BOLD, 30));
 		GlyphVector gv=nameArt.getFont().createGlyphVector(frc,this.name);
 		int length=(int) (gv.getVisualBounds().getWidth()+10);
-		nameArt=new Render2D(length+20,150);
+		nameArt=new Render2D(length+20,100);
 		Arrays.fill(nameArt.pixels, -1);
 		nameArt.setFont(nameArt.getFont().deriveFont(Font.BOLD, 30));
 
-		nameArt.drawWordArt(this.name, length, 100,5);
+		nameArt.drawString(this.name, 10, 50,5);
 	}
 	
 	public Integer getBet(Player player){
@@ -61,7 +61,7 @@ public class User {
 		moneyWon+=m;
 		money+=m;
 		for(int i=0;i<m;i++)
-			cp.createCoin();
+			cp.addCoin(i*30);
 		bets.remove(p.species.name);
 	}
 	
@@ -70,8 +70,8 @@ public class User {
 	}
 	
 	public void renderNamePlate(Render2D r,int x,int y){
-		r.background(x, y, r.width, r.height/8);
-		r.draw(nameArt, x+r.width/2, y+50);
-		cp.render(r, x+r.width-400, y+75);
+		r.background(x, y, r.width/2, r.height/4);
+		r.draw(nameArt, x, y+50);
+		cp.render(r, x+r.width/8*3, y+100);
 	}
 }
