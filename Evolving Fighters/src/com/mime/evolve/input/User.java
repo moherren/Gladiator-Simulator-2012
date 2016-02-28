@@ -10,7 +10,7 @@ import com.mime.evolve.graphics.Render2D;
 
 public class User {
 	public String name="";
-	public int money=10,moneyWon=0;
+	public int money=10,moneyWon=0,moneyBefore=money;
 	public Hashtable<String,Integer> bets=new Hashtable<String,Integer>();
 	Render2D nameArt,namePlate;
 	CoinPile cp=new CoinPile(10,00,00);
@@ -54,14 +54,28 @@ public class User {
 	public void removeBet(Player p){
 		int m=getBet(p);
 		
+		if(m!=0){
+			int maxTime=2000;
+			int multiplier=Math.min(maxTime/m, 50);
+			for(int i=0;i<m;i++){
+				cp.removeCoin(i*multiplier);
+			}
+		}
 		bets.remove(p.species.name);
 	}
 	
 	public void winMoney(int m,Player p){
 		moneyWon+=m;
 		money+=m;
-		for(int i=0;i<m;i++)
-			cp.addCoin(i*30);
+		
+		if(m!=0){
+			m/=2;
+			int maxTime=2000;
+			int multiplier=Math.min(maxTime/m, 50);
+			for(int i=0;i<m;i++){
+				cp.addCoin(i*multiplier);
+			}
+		}
 		bets.remove(p.species.name);
 	}
 	
@@ -72,6 +86,10 @@ public class User {
 	public void renderNamePlate(Render2D r,int x,int y){
 		r.background(x, y, r.width/2, r.height/4);
 		r.draw(nameArt, x, y+50);
-		cp.render(r, x+r.width/8*3, y+100);
+		cp.render(r, x+r.width/8*3, y+120);
+	}
+	
+	public void updateCoins(){
+		cp=new CoinPile(moneyBefore,0,0);
 	}
 }

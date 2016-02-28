@@ -105,6 +105,24 @@ public class Render2D extends Render{
 			else pixels[i]=0xffffff;
 		}*/
 	}
+	
+	public void renderFight(Controller game){
+		Arrays.fill(depthMap, 0);
+		Arena();
+		
+		if(game.getDisplayStage()!=6){
+			Player(game.player1);
+			Player(game.player2);
+			if(game.execusioner!=null)
+				Player(game.execusioner);
+		
+			for(Projectile p:game.projectiles){
+				drawProjectile(p);
+			}
+		}
+		displayFightInformation(game);
+	}
+	
 	public void displayFightInformation(Controller game){
 		drawHealthBar(20,650,game.player1,true);
 		drawHealthBar(width-20,650,game.player2,false);
@@ -136,9 +154,12 @@ public class Render2D extends Render{
 		if(game.getDisplayStage()==6){
 			
 			ArrayList<User> users=game.getHandle().getOrderedList();
+			int x=width/4;
 			for(int i=0;i<users.size();i++){
 				User u=users.get(i);
-				u.renderNamePlate(this, 0, i*200);
+				if(users.size()>4)
+					x=i/4*(width/2);
+				u.renderNamePlate(this, x, i*200);
 			}
 		}
 			

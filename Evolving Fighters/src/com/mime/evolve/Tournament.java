@@ -42,20 +42,22 @@ public class Tournament extends Game {
 		if(time>=nextStage&&displayStage!=3){
 			System.out.println(displayStage+" stage is done");
 			displayStage++;
-			
+			boolean moneyWon=false;
 			
 			if(displayStage==6){
 				
 				if (player1.health <= 0) {
-					Display.display.game.handle.giveWinnings(player2,player1);
-					} else {
-					Display.display.game.handle.giveWinnings(player1,player2);
-					}
+					if(Display.display.game.handle.giveWinnings(player2,player1))
+						moneyWon=true;
+				} else {
+					if(Display.display.game.handle.giveWinnings(player1,player2))
+						moneyWon=true;
+				}
 
 				}
 			
 			
-			if(displayStage==stageTimes.length){	
+			if(displayStage==stageTimes.length||(!moneyWon&&displayStage==6)){	
 				if (battleNumber >= newCompetetors.length) {
 					System.out.println(competetors.length);
 					battleNumber = 0;
@@ -177,6 +179,12 @@ public class Tournament extends Game {
 	}
 
 	protected void newGame() {
+		for (Projectile p : destroiedProjectiles) {
+			projectiles.remove(p);
+		}
+		
+		destroiedProjectiles.clear();
+		
 		if(player1==null)
 			displayStage=0;
 		else if(player1.health<=0||player2.health<=0){

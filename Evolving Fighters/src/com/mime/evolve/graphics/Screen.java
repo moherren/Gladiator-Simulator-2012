@@ -14,19 +14,7 @@ public class Screen extends Render{
 		render=new Render2D(width,height);
 	}
 	public void render(Controller game){
-		Arrays.fill(render.depthMap, 0);
-		render.Arena();
-		
-		render.Player(game.player1);
-		render.Player(game.player2);
-		if(game.execusioner!=null)
-			render.Player(game.execusioner);
-		
-		for(Projectile p:game.projectiles){
-			render.drawProjectile(p);
-		}
-		
-		render.displayFightInformation(game);
+		render.renderFight(game);
 		
 		draw(render,0,0);
 	}

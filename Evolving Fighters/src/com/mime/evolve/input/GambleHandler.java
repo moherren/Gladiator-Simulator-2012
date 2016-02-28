@@ -40,10 +40,9 @@ public class GambleHandler {
 	 * finishedPlacingBets is used to tell the handler that a specific player has finished taking bets
 	 */
 	public void finishPlacingBet(User user){
-		user.cp=new CoinPile(user.money,0,0);
+		user.updateCoins();
 		if(gamblers.size()>++currentGambler){
 			takeBet(gamblers.get(currentGambler));
-			
 		}
 		else{
 			al.actionPerformed(new ActionEvent(this,0,"bets done"));
@@ -59,11 +58,15 @@ public class GambleHandler {
 		while(!sortList(copy));
 		return copy;
 	}
-	public void giveWinnings(Player winner,Player loser) {
+	public boolean giveWinnings(Player winner,Player loser) {
+		boolean moneyWon=false;
 		for(User u:gamblers){
+			if(u.getBet(winner)>0||u.getBet(loser)>0)
+				moneyWon=true;
 			u.winMoney(u.getBet(winner)*2,winner);
 			u.removeBet(loser);
 		}
+		return moneyWon;
 	}
 	/*
 	 * PlayerFinished is used to distribute winnings to those who bet on a specific player
@@ -76,7 +79,7 @@ public class GambleHandler {
 			return true;
 		boolean inOrder=true;
 		for(int i=0;i<list.size()-1;i++){
-			if(list.get(i).moneyWon<list.get(i+1).moneyWon){
+			if(list.get(i).cp.size<list.get(i+1).cp.size){
 				inOrder=false;
 				User u=list.get(i+1);
 				list.remove(i+1);
@@ -91,6 +94,9 @@ public class GambleHandler {
 	 */
 	public void takeAllBets(Player[] players){
 		this.players=players;
+		gamblers=getOrderedList();
+		for(User u:gamblers)
+			u.moneyBefore=u.money;
 		if(gamblers.size()!=0){
 			currentGambler=0;
 			takeBet(gamblers.get(currentGambler));
